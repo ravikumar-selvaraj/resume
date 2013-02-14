@@ -1,0 +1,28 @@
+body{
+	background: #931717;
+}
+
+.sidebar-nav .nav-header {
+  border-top: 1px solid #991414;
+  border-bottom: 1px solid #1A0303;
+  border-left: none;
+  color: #ddd;
+  display: block;
+  background: #6C0808 ;
+  background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #6C0808 ), color-stop(1, #7D0707 ));
+  background: -ms-linear-gradient(bottom, #6C0808 , #7D0707 );
+  background: -moz-linear-gradient(center bottom, #6C0808  0%, #7D0707  100%);
+  background: -o-linear-gradient(bottom, #6C0808 , #7D0707 );
+  filter: progid:dximagetransform.microsoft.gradient(startColorStr='#e6e6e6', EndColorStr='#ffffff');
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#404040',EndColorStr='#333333')";
+  font-weight: bold;
+  font-weight: normal;
+  font-size: 1em;
+  line-height: 2.5em;
+  padding: 0em .25em;
+  margin-bottom: 0px;
+  text-shadow: none;
+  text-transform: none;
+  /*Change the arrow direction if the item is collapsed*/
+
+}
