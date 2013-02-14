@@ -8,11 +8,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 <?php echo $this->html->css(array('lib/bootstrap/css/bootstrap','stylesheets/theme','lib/font-awesome/css/font-awesome','validationEngine.jquery')); 
-echo $this->html->script(array('jquery-1.7.2.min','js/bootstrap','jquery.validationEngine','languages/jquery.validationEngine-en')); 
+     echo $this->html->script(array('jquery-1.7.2.min','js/bootstrap','jquery.validationEngine','languages/jquery.validationEngine-en')); 
 ?>
 
 <script type="text/javascript">
-
 	jQuery(document).ready(function(){		
 		jQuery("#myblog").validationEngine();
 		jQuery("#mycareer").validationEngine();
@@ -66,7 +65,6 @@ echo $this->html->script(array('jquery-1.7.2.min','js/bootstrap','jquery.validat
   <!--[if (gt IE 9)|!(IE)]><!--> 
   <body class=""> 
   <!--<![endif]-->
-    
     <div class="navbar">
         <div class="navbar-inner">
                 <ul class="nav pull-right">

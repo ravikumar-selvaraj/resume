@@ -1,7 +1,7 @@
 
 <div class="content">        
         <div class="header">            
-            <h1 class="page-title">View Blog</h1>
+            <h1 class="page-title">View Career Advice</h1>
         </div>        
                 <ul class="breadcrumb">
 					<li><a href="<?php echo BASE_URL;?>admin">Home</a> <span class="divider">/</span></li>
@@ -31,7 +31,7 @@
 										</div>
 										<div class="control-group">
 											<label class="control-label">Content :</label>
-											<div class="controls"> <?php echo h($careers['Career']['content']); ?>	</div>
+											<div class="controls"> <?php echo html_entity_decode(h($careers['Career']['content'])); ?>	</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">Image :</label>

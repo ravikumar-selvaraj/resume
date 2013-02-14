@@ -13,10 +13,11 @@ class StaticpagesController extends AppController {
  * @return void
  */
  
-    public $layout = 'admin';
+    public $layout = 'webpage';
 	public $components = array('Session','Image');
 	public $helpers = array('Session');
-    public $paginate = array('limit'=>5);
+    public $paginate = array('limit'=>2);
+	
    
   public function checkadmin(){
 		$check=$this->Session->read('Adminlogin');
@@ -26,10 +27,12 @@ class StaticpagesController extends AppController {
 	}
 		  
 	public function index() {
-		$this->checkadmin();
-		$this->Staticpage->recursive = 0;
-		$this->set('staticpages', $this->paginate());
+		$options = $this->Staticpage->find('first', array('conditions' => array('Staticpage.sta_url' =>$this->params['pass'][1])));
+		$this->set('page', $options);
+		
 	}
+	
+	
 
 /**
  * view method
@@ -44,6 +47,7 @@ class StaticpagesController extends AppController {
 			throw new NotFoundException(__('Invalid staticpage'));
 		}
 		$options = array('conditions' => array('Staticpage.' . $this->Staticpage->primaryKey => $id));
+		
 		$this->set('staticpage', $this->Staticpage->find('first', $options));
 	}
 
@@ -124,7 +128,7 @@ class StaticpagesController extends AppController {
 	
 	public function admin_index() {
 		$this->checkadmin();
-		//$this->layout='mani';
+		$this->layout='admin';
 		$this->Staticpage->recursive = 0;
 		$this->set('staticpages', $this->paginate());
 	}
@@ -138,10 +142,13 @@ class StaticpagesController extends AppController {
  */
 	public function admin_view($id = null) {
 		$this->checkadmin();
-		//$this->layout='mani';
+		$this->layout='admin';
 		if (!$this->Staticpage->exists($id)) {
 			throw new NotFoundException(__('Invalid staticpage'));
 		}
+		
+		//$options = $this->Staticpage->find('first', array('conditions' => array('Staticpage.sta_url' => 'about')));
+		//
 		$options = array('conditions' => array('Staticpage.' . $this->Staticpage->primaryKey => $id));
 		$this->set('staticpage', $this->Staticpage->find('first', $options));
 	}
@@ -153,7 +160,7 @@ class StaticpagesController extends AppController {
  */
 	public function admin_add() {
 		$this->checkadmin();
-		//$this->layout='mani';
+		$this->layout='admin';
 		if ($this->request->is('post')) {
 			$this->Staticpage->create();
 			if ($this->Staticpage->save($this->request->data)) {
@@ -175,8 +182,9 @@ class StaticpagesController extends AppController {
  * @return void
  */
 	public function admin_edit($id = null) {
+		
 		$this->checkadmin();
-		//$this->layout='mani';
+		$this->layout='admin';
 		$this->Staticpage->sta_id = $id;
 		if (!$this->Staticpage->exists($id)) {
 			throw new NotFoundException(__('Invalid staticpage'));
@@ -195,6 +203,7 @@ class StaticpagesController extends AppController {
 			$this->request->data = $this->Staticpage->find('first', $options);
 		}
 		$this->set('languageOptions', array('opt1' => 'Choose Status', 'opt2' => 'Active', 'opt3' => 'Inactive', 'opt4' => 'Trash'));
+		$this->set('lan',array('opt5'=>'Inactive'));
 	}
 
 /**

@@ -60,15 +60,16 @@ class EmailcampaignsController extends AppController {
 		//pr($this->request->data);exit;
 		if ($this->request->is('post')) {
 			if(!empty($this->request->data)){ 
-			$date=date('Y-m-d H:m:s');
-			$this->request->data['created_date']=$date;
+			//$date=date('Y-m-d H:m:s');
+			//$this->request->data['created_date']=$date;
 			//pr($this->request->data);exit;
-			$this->Emailcampaign->create();
-			if ($this->Emailcampaign->save($this->request->data)) {
-				$this->Session->setFlash(__('The emailcampaign has been saved'));
+			//$this->Emailcampaign->create();
+			$this->request->data['message'] = htmlentities($this->request->data['message'],ENT_QUOTES);
+			$this->Emailcampaign->save($this->request->data);
+				$this->Session->setFlash(__('The email campaign has been saved'));
 				$this->redirect(array('action' => 'index'));
-			}} else {
-				$this->Session->setFlash(__('The emailcampaign could not be saved. Please, try again.'));
+			} else {
+				$this->Session->setFlash(__('The email campaign could not be saved. Please, try again.'));
 			}
 		}
 	}
@@ -85,11 +86,13 @@ class EmailcampaignsController extends AppController {
 			throw new NotFoundException(__('Invalid emailcampaign'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
-			if ($this->Emailcampaign->save($this->request->data)) {
-				$this->Session->setFlash(__('The emailcampaign has been saved'));
+			if(!empty($this->request->data)){
+				$this->request->data['message'] = htmlentities($this->request->data['message'],ENT_QUOTES);
+				$this->Emailcampaign->save($this->request->data);
+				$this->Session->setFlash(__('The email campaign has been updated'));
 				$this->redirect(array('action' => 'index'));
 			} else {
-				$this->Session->setFlash(__('The emailcampaign could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The email campaign could not be update. Please, try again.'));
 			}
 		} else {
 			$options = array('conditions' => array('Emailcampaign.' . $this->Emailcampaign->primaryKey => $id));
@@ -111,7 +114,7 @@ class EmailcampaignsController extends AppController {
 		$this->layout = '';
 		$this->Emailcampaign->id = $id;
 		$this->Emailcampaign->delete(array('bid'=>$id));
-		$this->Session->setFlash(__('Emailcampaign deleted'));
+		$this->Session->setFlash(__('Email campaign deleted'));
 		$this->redirect(array('action' => 'index'));
 		$this->render(false);
 	}

@@ -1,7 +1,7 @@
 <?php echo $this->html->script(array('ckeditor/ckeditor'));?>
 <div class="content">        
         <div class="header">            
-            <h1 class="page-title">New Career Advice</h1>
+            <h1 class="page-title">Edit Career Advice</h1>
         </div>        
                 <ul class="breadcrumb">
 					<li><a href="index.html">Home</a> <span class="divider">/</span></li>

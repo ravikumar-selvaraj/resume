@@ -6,7 +6,6 @@
     <li><a href="<?php echo BASE_URL;?>admin">Home</a> <span class="divider">/</span></li>
     <li><a href="<?php echo BASE_URL;?>admin/staticpages">Static pages</a> <span class="divider">/</span></li>
     <li class="active">Edit Static pages</li>
-    <li class="active">Edit Static pages</li>
   </ul>
   <div class="container-fluid">
     <div class="row-fluid">
@@ -31,8 +30,13 @@
 				echo $this->Form->input('sta_metakeyword');
 				echo $this->Form->input('sta_metadescription');
 				echo $this->Form->input('sta_content');
-				echo $this->Form->input('status', array('class' => 'chzn-select', 'options' => $languageOptions,'selected' => '2', 'label' => false, 'div' => array('class' =>'formRight noSearch')));
+				//echo $this->Form->input('status', array('class' => 'chzn-select', 'options' => $languageOptions,'selected' =>'opt5', 'label' => false, 'div' => array('class' =>'formRight noSearch')));
 	?>
+          <label>Status</label>
+						<select name="data[status]" id="status" class="validate[required] input-xlarge">
+						  <option value="Active" <?php if($this->request->data['Staticpage']['status'] == 'Active') echo 'selected="selected"';;?>>Active</option>
+						  <option value="Inactive"  <?php if($this->request->data['Staticpage']['status'] == 'Inactive') echo 'selected="selected"';?>>Inactive</option>
+					</select>
           </fieldset>
           <?php //echo $this->Form->end(__('Submit')); ?>
           <div class="btn-toolbar">

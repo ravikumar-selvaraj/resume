@@ -1,5 +1,16 @@
+
+
+
 <div class="row-fluid">
     <div class="dialog">
+	<?php 
+			if(!empty($_SESSION['Message']['flash'])) { ?>
+	 		
+		<div class="alert alert-info">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<strong><?php echo $_SESSION['Message']['flash']['message'];?> </strong>
+		</div>
+     <?php } ?>
         <div class="block">
             <p class="block-heading">Sign In</p>
             <div class="block-body">

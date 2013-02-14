@@ -28,25 +28,27 @@
     <table class="table">
       <thead>
         <tr>
-          	<th><?php echo $this->Paginator->sort('cid'); ?></th>
+          	<th><?php echo $this->Paginator->sort('cid','#'); ?></th>
 			<th><?php echo $this->Paginator->sort('title'); ?></th>
             <th><?php echo $this->Paginator->sort('category'); ?></th>
 			<th><?php echo $this->Paginator->sort('content'); ?></th>
 			<th><?php echo $this->Paginator->sort('image'); ?></th>
-			<th><?php echo $this->Paginator->sort('created_date'); ?></th>
+			<!--<th><?php echo $this->Paginator->sort('created_date'); ?></th>-->
 			<th><?php echo $this->Paginator->sort('status'); ?></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
         </tr>
       </thead>
       <tbody>
-	  	<?php foreach ($careers as $careers): ?>
+	  	<?php
+		$i=$this->Paginator->countresult();
+		 foreach ($careers as $careers){ ?>
         <tr>
           	<td><?php echo h($careers['Career']['cid']); ?>&nbsp;</td>
 			<td><?php echo h($careers['Career']['title']); ?>&nbsp;</td>
             <td><?php echo h($careers['Career']['category']); ?>&nbsp;</td>
 			<td><?php echo substr(strip_tags($careers['Career']['content']),0,30); if(strlen($careers['Career']['content'])>30) echo '...'; ?>&nbsp;</td>
 			<td><?php echo $this->html->image('career-image/small/'.$careers['Career']['image'],array('border'=>0,'alt'=>h($careers['Career']['title']))); ?>&nbsp;</td>
-			<td><?php echo h($careers['Career']['created_date']); ?>&nbsp;</td>
+			<!--<td><?php echo h($careers['Career']['created_date']); ?>&nbsp;</td>-->
 			<td><?php echo h($careers['Career']['status']); ?>&nbsp;</td>
 			<td class="actions">
 				<a href="<?php echo BASE_URL?>admin/careers/view/<?php echo $careers['Career']['cid'];?>"><i class="icon-zoom-in"></i></a>
@@ -54,7 +56,7 @@
               	<a rel="<?php echo BASE_URL?>admin/careers/delete/<?php echo $careers['Career']['cid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 			</td>
         </tr>
-		<?php endforeach; ?>
+		<?php $i++; } ?>
 		
       </tbody>
     </table>

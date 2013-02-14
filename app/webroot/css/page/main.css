@@ -1,0 +1,195 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+/* ==========================================================================
+   Default styles
+   ========================================================================== */
+
+@font-face {
+    font-family: 'lucida_sansregular';
+    src: url('../../fonts/lsans-webfont.eot');
+    src: url('../../fonts/lsans-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/lsans-webfont.woff') format('woff'),
+         url('../../fonts/lsans-webfont.ttf') format('truetype'),
+         url('../../fonts/lsans-webfont.svg#lucida_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'lucida_sansdemibold_roman';
+    src: url('../../fonts/lsansd-webfont.eot');
+    src: url('../../fonts/lsansd-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/lsansd-webfont.woff') format('woff'),
+         url('../../fonts/lsansd-webfont.ttf') format('truetype'),
+         url('../../fonts/lsansd-webfont.svg#lucida_sansdemibold_roman') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+@font-face {
+    font-family: 'lucida_sansdemibold_italic';
+    src: url('../../fonts/lsansdi-webfont.eot');
+    src: url('../../fonts/lsansdi-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../../fonts/lsansdi-webfont.woff') format('woff'),
+         url('../../fonts/lsansdi-webfont.ttf') format('truetype'),
+         url('../../fonts/lsansdi-webfont.svg#lucida_sansdemibold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+header{
+    margin-bottom: 30px;
+}
+.primary_btn{
+	background: #63a119;
+	color: #fff;
+}
+
+.primary_btn:hover{
+	background: #5A9218;
+	color: #fff;
+}
+
+.secondary_btn{
+ 	background: #edebeb;
+ 	color:#606060;
+}
+
+.primary_btn, .secondary_btn{
+	padding: 10px 15px;
+	font-size: 16px;
+	text-shadow:none;
+	border: 0;
+	box-shadow: none;
+}
+
+.topbar{
+	background: #606060;
+	color: #d6d6d6;
+	font-size: 13px;
+	padding: 5px 0;
+}
+
+.site_links{
+    text-align: right;
+}
+
+.site_links a{
+	color: #d6d6d6;
+	margin: 5px;
+}
+
+.site_links a:hover{
+	color: #c8c6c6;
+	text-decoration: none;
+}
+
+.lang_active{
+	padding: 4px;
+	background: #484545;
+}
+
+.brand_bar{
+	padding: 20px 0;
+}
+
+.signup_btn{
+    margin-left: 32px;
+}
+
+.language{
+    text-align: right;
+}
+
+.color_bar{
+    height: 5px;
+    background: linear-gradient(to right, #e75239 0%,#e75239 10%,#ff961c 10%,#ff961c 30%,#ffcc27 30%,#ffcc27 45%,#fce62f 45%,#fce62f 50%,#cde35b 50%,#cde35b 70%,#82cc33 70%,#82cc33 85%,#41bece 85%,#41bece 100%);
+}
+
+.slider_container{
+    background: url(../../img/page/slider_bg.jpg);
+    padding-top: 35px; 
+    position: relative;
+}
+
+.headline{
+    font-family: 'lucida_sansdemibold_roman';
+    font-size: 40px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: normal;
+    margin: 0 auto;
+    text-align: center;
+    float: none;
+    line-height: 50px;
+}
+
+.slider_btn{
+    background: #383432;
+    font-size: 24px;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 25px auto;
+    display: block;
+}
+
+.slide{
+    margin-bottom: 0;
+}
+
+.shadow{
+     box-shadow: 0 -5px 5px -5px #595959 inset;
+     height: 10px;
+     position: absolute;
+     bottom: 0;  width: 100%;
+}
+
+.carousel-inner > .item img{
+    margin: 0 auto;
+}
+
+#main_slider .carousel-indicators{
+    left: 50%;
+    top: 540px;
+}
+
+#main_slider .carousel-indicators li{
+    border:#878787 4px solid;
+    border-radius: 10px;
+    width: 5px;
+    height: 5px;
+    cursor: pointer;
+}
+
+    #main_slider .carousel-indicators .active{
+        border:#389de3 4px solid;
+    }
+
+.footer{
+    background: #0d6aab;
+    color: #b6e1ff;
+    padding-top: 10px;
+    margin-top: 30px;
+    font-size: 12px;
+}
+
+.footer-links li a{
+    color: #b6e1ff;
+
+}
+
+.footer-links li a:hover{
+    text-decoration: none;
+    color: #d1ecff;
+}

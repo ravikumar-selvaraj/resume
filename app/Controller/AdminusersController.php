@@ -231,27 +231,31 @@ class AdminusersController extends AppController {
 	
 	public function admin_changepassword($id = null) {
 		$this->checkadmin();
+		
 		if (!$this->Adminuser->exists($id)) {
 			throw new NotFoundException(__('Invalid adminuser'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
-			pr($this->request->data);
-			$options = array('conditions' => array('Adminuser.' . $this->Adminuser->primaryKey => $id));
-			$this->request->data = $this->Adminuser->find('first', $options);
-			$this->set('password', $this->Career->find('first', $options));
-			echo $password['password'] ;
-			//if()
-			
-			exit;
+				$pass = $this->Adminuser->read(null, $id);
+				//pr($pass);exit;
+			if($pass['Adminuser']['password']==$this->request->data['old'])
+			{
 			if ($this->Adminuser->save($this->request->data)) {
-				$this->Session->setFlash(__('The adminuser has been saved'));
-				$this->redirect(array('action' => 'myaccount/'.$this->params['pass'][0]));
+				$this->Session->setFlash(__('The password has been changed'));
+				$this->redirect(array('action' => 'changepassword/'.$this->params['pass'][0]));
 			} else {
-				$this->Session->setFlash(__('The adminuser could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The password could not be changed. Please, try again.'));
+			}
+			}
+			else
+			{
+				$this->Session->setFlash(__('The old password is wrong. Please, try again.'));
+				$this->redirect(array('action' => 'changepassword/'.$this->params['pass'][0]));
 			}
 		} else {
 			$options = array('conditions' => array('Adminuser.' . $this->Adminuser->primaryKey => $id));
 			$this->request->data = $this->Adminuser->find('first', $options);
+			 $this->set('adminuser', $this->Adminuser->find('first', $options));
 		}
 	}
 }

@@ -194,11 +194,11 @@ class CareersController extends AppController {
 				}
 				//pr($this->request->data);exit;
 				$this->Career->save($this->request->data);
-				$this->Session->setFlash(__('The Career has been saved'));
+				$this->Session->setFlash(__('The Career has been updated'));
 				$this->redirect(array('action' => 'index'));
 			}
 			 else {
-				$this->Session->setFlash(__('The career could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The career could not be updated. Please, try again.'));
 			}
 		} else {
 			$options = array('conditions' => array('Career.' . $this->Career->primaryKey => $id));

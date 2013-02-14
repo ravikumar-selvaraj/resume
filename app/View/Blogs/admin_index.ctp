@@ -28,7 +28,7 @@
     <table class="table">
       <thead>
         <tr>
-          	<th><?php echo $this->Paginator->sort('bid'); ?></th>
+          	<th><?php echo $this->Paginator->sort('bid','#'); ?></th>
 			<th><?php echo $this->Paginator->sort('title'); ?></th>
 			<th><?php echo $this->Paginator->sort('content'); ?></th>
 			<th><?php echo $this->Paginator->sort('image'); ?></th>
@@ -38,9 +38,11 @@
         </tr>
       </thead>
       <tbody>
-	  	<?php foreach ($blogs as $blogs): ?>
+	  	<?php 
+		$i=$this->Paginator->countresult();
+		foreach ($blogs as $blogs){ ?>
         <tr>
-          	<td><?php echo h($blogs['Blog']['bid']); ?>&nbsp;</td>
+          	<td><?php echo $i; ?>&nbsp;</td>
 			<td><?php echo h($blogs['Blog']['title']); ?>&nbsp;</td>
 			<td><?php echo h($blogs['Blog']['content']); ?>&nbsp;</td>
 			<td><?php echo $this->html->image('blog-images/small/'.$blogs['Blog']['image'],array('border'=>0,'alt'=>h($blogs['Blog']['title']))); ?>&nbsp;</td>
@@ -52,7 +54,7 @@
               	<a rel="<?php echo BASE_URL?>admin/blogs/delete/<?php echo $blogs['Blog']['bid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 			</td>
         </tr>
-		<?php endforeach; ?>
+		<?php $i++; } ?>
 		
       </tbody>
     </table>

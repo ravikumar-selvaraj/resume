@@ -1,11 +1,11 @@
-
+<?php echo $this->html->script(array('ckeditor/ckeditor'));?>
 <div class="content">        
         <div class="header">            
             <h1 class="page-title">New staticpages</h1>
         </div>        
                 <ul class="breadcrumb">
 					<li><a href="<?php echo BASE_URL;?>staticpages">Home</a> <span class="divider">/</span></li>
-					<li><a href="<?php echo BASE_URL;?>admin/staticpages">Blogs</a> <span class="divider">/</span></li>
+					<li><a href="<?php echo BASE_URL;?>admin/staticpages">Staticpages</a> <span class="divider">/</span></li>
 					<li class="active">New staticpages</li>
 				</ul>
 
@@ -23,28 +23,34 @@
 <div class="well">
  
  <div class="tab-pane active in" id="home">
-<?php echo $this->Form->create('Staticpage'); ?>
-	<fieldset>
-		<legend><?php echo __('Add Staticpage'); ?></legend>
-	<?php
-	
-		echo $this->Form->input('sta_title');
-		echo $this->Form->input('sta_name');
-		echo $this->Form->input('sta_link');
-		echo $this->Form->input('sta_type');
-		echo $this->Form->input('sta_url');
-		echo $this->Form->input('sta_title');
-		echo $this->Form->input('sta_metakeyword');
-		echo $this->Form->input('sta_metadescription');
-		echo $this->Form->input('sta_content');
-		echo $this->Form->input('status', array('class' => 'chzn-select', 'options' => array('opt1' => 'Select Status', 'opt2' => 'Active', 'opt3' => 'Inactive', 'opt4' => 'Trash'), 'label' => false, 'div' => array('class' => 'formRight noSearch')));
-	   
-	    ?>
-	
-	</fieldset>
-<?php echo $this->Form->button(__('Submit', true), array('div' => false,'class'=>'btn btn-primary')).'&nbsp;'?>
-<?php echo $this->Form->button('Reset', array('type'=>'reset','div' => false,'class'=>'btn'))?>
-<?php echo $this->Form->end(); ?>
+ 
+ <form action="" name="blog" id="myblog" method="post" enctype="multipart/form-data">
+						<label>Name</label>
+						<input type="text" name="data[sta_name]" id="sta_name" value="" class="validate[required] input-xlarge">
+                        <label>URL</label>
+						<input type="text" name="data[sta_url]" id="sta_url" value="" class="validate[required] input-xlarge">
+						<label>Title</label>
+						<input type="text" name="data[sta_title]" id="sta_title" value="" class="validate[required] input-xlarge">
+                        <label>Meta Keyword</label>
+						<input type="text" name="data[sta_metakeyword]" id="sta_metakeyword" value="" class="validate[required] input-xlarge">
+                        <label>Meta Description</label>
+						<input type="text" name="data[sta_metadescription]" id="sta_metadescription" value="" class="validate[required] input-xlarge">
+						<label>Content</label>
+						<textarea name="data[sta_content]" id="content" rows="5" class="validate[required] input-xlarge ckeditor"></textarea>
+						<label>Status</label>
+						<select name="data[status]" id="status" class="validate[required]">
+						  <option value="Active">Active</option>
+						  <option value="Inactive">Inactive</option>
+					</select>
+					<div class="btn-toolbar">
+				<button class="btn btn-primary"><i class="icon-save"></i> Save</button>
+				<a href="#myModal" data-toggle="modal" class="btn">Delete</a>
+			  	<div class="btn-group"> </div>
+			</div>
+					</form>
+ 
+ 
+
 </div>
 
                  

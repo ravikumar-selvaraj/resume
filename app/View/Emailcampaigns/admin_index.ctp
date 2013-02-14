@@ -1,6 +1,6 @@
 <div class="content">        
         <div class="header">            
-            <h1 class="page-title">Career Advice</h1>
+            <h1 class="page-title">Email Campaign</h1>
         </div>        
         <ul class="breadcrumb">
 					<li><a href="index.html">Home</a> <span class="divider">/</span></li>
@@ -28,22 +28,22 @@
     <table class="table">
       <thead>
         <tr>
-          	<th><?php echo $this->Paginator->sort('ecid'); ?></th>
+          	<th><?php echo $this->Paginator->sort('ecid','#'); ?></th>
 			<th><?php echo $this->Paginator->sort('name'); ?></th>
 			<th><?php echo $this->Paginator->sort('subject'); ?></th>
 			<th><?php echo $this->Paginator->sort('from'); ?></th>
-			<th><?php echo $this->Paginator->sort('to'); ?></th>
-			<th><?php echo $this->Paginator->sort('reply'); ?></th>
+		<!--	<th><?php echo $this->Paginator->sort('to'); ?></th>
+			<th><?php echo $this->Paginator->sort('reply'); ?></th>-->
 			<th><?php echo $this->Paginator->sort('message'); ?></th>
-			<th><?php echo $this->Paginator->sort('option'); ?></th>
-			<th><?php echo $this->Paginator->sort('created_date'); ?></th>
+			<!--<th><?php echo $this->Paginator->sort('option'); ?></th>
+			<th><?php echo $this->Paginator->sort('created_date'); ?></th>-->
 			<th class="actions"><?php echo __('Actions'); ?></th>
         </tr>
       </thead>
       <tbody>
 	  
 	  	<?php 
-		$i = 1;
+		$i=$this->Paginator->countresult();
 		foreach ($emailcampaigns as $emailcampaign){
 		?>
         <tr>
@@ -51,11 +51,11 @@
 		<td><?php echo h($emailcampaign['Emailcampaign']['name']); ?>&nbsp;</td>
 		<td><?php echo h($emailcampaign['Emailcampaign']['subject']); ?>&nbsp;</td>
 		<td><?php echo h($emailcampaign['Emailcampaign']['from']); ?>&nbsp;</td>
-		<td><?php echo h($emailcampaign['Emailcampaign']['to']); ?>&nbsp;</td>
-		<td><?php echo h($emailcampaign['Emailcampaign']['reply']); ?>&nbsp;</td>
+	<!--	<td><?php echo h($emailcampaign['Emailcampaign']['to']); ?>&nbsp;</td>
+		<td><?php echo h($emailcampaign['Emailcampaign']['reply']); ?>&nbsp;</td>-->
 		<td><?php echo substr(strip_tags($emailcampaign['Emailcampaign']['message']),0,30); if(strlen($emailcampaign['Emailcampaign']['message'])>30) echo '...'; ?>&nbsp;</td>
-		<td><?php echo h($emailcampaign['Emailcampaign']['option']); ?>&nbsp;</td>
-		<td><?php echo h($emailcampaign['Emailcampaign']['created_date']); ?>&nbsp;</td>
+		<!--<td><?php echo h($emailcampaign['Emailcampaign']['option']); ?>&nbsp;</td>
+		<td><?php echo h($emailcampaign['Emailcampaign']['created_date']); ?>&nbsp;</td>-->
 			<td class="actions">
 				<a href="<?php echo BASE_URL?>admin/emailcampaigns/view/<?php echo $emailcampaign['Emailcampaign']['ecid'];?>"><i class="icon-zoom-in"></i></a>
 				<a href="<?php echo BASE_URL?>admin/emailcampaigns/edit/<?php echo $emailcampaign['Emailcampaign']['ecid'];?>"><i class="icon-pencil"></i></a>

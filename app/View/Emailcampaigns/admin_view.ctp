@@ -1,7 +1,7 @@
 
 <div class="content">        
         <div class="header">            
-            <h1 class="page-title">View Blog</h1>
+            <h1 class="page-title">View Email Campaign</h1>
         </div>        
                 <ul class="breadcrumb">
 					<li><a href="<?php echo BASE_URL;?>admin">Home</a> <span class="divider">/</span></li>

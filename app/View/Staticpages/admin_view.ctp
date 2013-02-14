@@ -23,18 +23,6 @@
                   <div class="controls"> <?php echo h($staticpage['Staticpage']['sta_title']); ?></div>
                 </div>
                 <div class="control-group">
-                  <label class="control-label"><?php echo __('Parent'); ?>:</label>
-                  <div class="controls"> <?php echo h($staticpage['Staticpage']['sta_name']); ?></div>
-                </div>
-                <div class="control-group">
-                  <label class="control-label"><?php echo __('Place'); ?>:</label>
-                  <div class="controls"> <?php echo h($staticpage['Staticpage']['sta_link']); ?></div>
-                </div>
-                <div class="control-group">
-                  <label class="control-label"><?php echo __('Position'); ?>:</label>
-                  <div class="controls"> <?php echo h($staticpage['Staticpage']['sta_type']); ?></div>
-                </div>
-                <div class="control-group">
                   <label class="control-label"><?php echo __('Link'); ?> :</label>
                   <div class="controls"> <?php echo h($staticpage['Staticpage']['sta_url']); ?></div>
                 </div>
@@ -52,7 +40,7 @@
                 </div>
                 <div class="control-group">
                   <label class="control-label"><?php echo __('Content'); ?>:</label>
-                  <div class="controls"> <?php echo h($staticpage['Staticpage']['sta_content']); ?></div>
+                  <div class="controls"> <?php echo h(strip_tags($staticpage['Staticpage']['sta_content'])); ?></div>
                 </div>
                 <div class="control-group">
                   <label class="control-label"><?php echo __('Status'); ?>:</label>

@@ -25,8 +25,9 @@
 					  <div class="tab-pane active in" id="home">
 					<form action="" name="users" id="users" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="data[aid]" value="<?php echo $this->params['pass'][0];?>" />
+                   
 						<label>Old Password </label>
-						<input type="password" name="data[password]" id="old" value="<?php echo $this->request->data('adminname');?>" class="validate[required] input-xlarge">
+						<input type="password" name="data[old]" id="old" value="<?php echo $this->request->data('adminname');?>" class="validate[required] input-xlarge">
 						<label>New Password</label>
 						<input type="password" name="data[password]" id="password" value="<?php echo $this->request->data('password');?>" class="validate[required] input-xlarge">
 					

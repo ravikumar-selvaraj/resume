@@ -1,60 +1,29 @@
-<div class="staticpages index">
-	<h2><?php echo __('Staticpages'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('sid'); ?></th>
-			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th><?php echo $this->Paginator->sort('parent'); ?></th>
-			<th><?php echo $this->Paginator->sort('place'); ?></th>
-			<th><?php echo $this->Paginator->sort('position'); ?></th>
-			<th><?php echo $this->Paginator->sort('link'); ?></th>
-			<th><?php echo $this->Paginator->sort('title'); ?></th>
-			<th><?php echo $this->Paginator->sort('metakeyword'); ?></th>
-			<th><?php echo $this->Paginator->sort('metadescription'); ?></th>
-			<th><?php echo $this->Paginator->sort('content'); ?></th>
-			<th><?php echo $this->Paginator->sort('status'); ?></th>
-			<th><?php echo $this->Paginator->sort('createddate'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($staticpages as $staticpage): ?>
-	<tr>
-		<td><?php echo h($staticpage['Staticpage']['sid']); ?>&nbsp;</td>
-		<td><?php echo h($staticpage['Staticpage']['name']); ?>&nbsp;</td>
-		<td><?php echo h($staticpage['Staticpage']['parent']); ?>&nbsp;</td>
-		<td><?php echo h($staticpage['Staticpage']['place']); ?>&nbsp;</td>
-		<td><?php echo h($staticpage['Staticpage']['position']); ?>&nbsp;</td>
-		<td><?php echo h($staticpage['Staticpage']['link']); ?>&nbsp;</td>
-		<td><?php echo h($staticpage['Staticpage']['title']); ?>&nbsp;</td>
-		<td><?php echo h($staticpage['Staticpage']['metakeyword']); ?>&nbsp;</td>
-		<td><?php echo h($staticpage['Staticpage']['metadescription']); ?>&nbsp;</td>
-		<td><?php echo h($staticpage['Staticpage']['content']); ?>&nbsp;</td>
-		<td><?php echo h($staticpage['Staticpage']['status']); ?>&nbsp;</td>
-		<td><?php echo h($staticpage['Staticpage']['createddate']); ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $staticpage['Staticpage']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $staticpage['Staticpage']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $staticpage['Staticpage']['id']), null, __('Are you sure you want to delete # %s?', $staticpage['Staticpage']['id'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
+<div id="main-body">
+       <div id="content">
+        <div id="inner-content">
+<div class="about_para1" style="border-radius:10px; border:1px solid #d6d6d6; padding:20px;">
+		<h2><?php echo h($page['Staticpage']['sta_title']); ?> </h2>
+		<p><?php echo h(strip_tags($page['Staticpage']['sta_content'])); ?></p>
+        
+    </div>        
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Staticpage'), array('action' => 'add')); ?></li>
-	</ul>
 </div>
+</div>	
+
+<style>
+#main-body {
+	padding:0px;
+	margin: 0px;
+	overflow:hidden;
+	margin-bottom:20px;
+}
+#content {
+	padding:0px;
+	margin: 0px;
+}
+#inner-content {
+	width:1000px;
+	padding:0px;
+	margin:0px auto;
+}
+</style>

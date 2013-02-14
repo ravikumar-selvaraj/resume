@@ -24,29 +24,29 @@
   <div class="btn-group">
   </div>
 </div>
+    <?php echo $this->Paginator->numbers(); ?>
      <div class="well">
     <table class="table">
           <tr>
           <?php /*?>  <th><?php echo $this->Paginator->sort('sid'); ?></th><?php */?>
-            <th><?php echo $this->Paginator->sort('sta_title'); ?></th>
-            <th><?php echo $this->Paginator->sort('sta_name'); ?></th>
-            <th><?php echo $this->Paginator->sort('sta_link'); ?></th>
-            <th><?php echo $this->Paginator->sort('sta_type'); ?></th>
-            <th><?php echo $this->Paginator->sort('sta_url'); ?></th>
-            <th><?php echo $this->Paginator->sort('status'); ?></th>
-            <th><?php echo $this->Paginator->sort('createddate'); ?></th>
+            <th><?php echo $this->Paginator->sort('No'); ?></th> 
+            <th><?php echo $this->Paginator->sort('Name'); ?></th>
+            <th><?php echo $this->Paginator->sort('Title'); ?></th>
+            <th><?php echo $this->Paginator->sort('URL'); ?></th>
+            <th><?php echo $this->Paginator->sort('Status'); ?></th>
+          
             <th class="actions"><?php echo __('Actions'); ?></th>
           </tr>
-          <?php foreach ($staticpages as $staticpage): ?>
+          <?php 
+		  $i=$this->Paginator->countresult();
+		  foreach ($staticpages as $staticpage): ?>
           <tr>
           <?php /*?>  <td><?php echo h($staticpage['Staticpage']['sid']); ?>&nbsp;</td><?php */?>
-            <td><?php echo h($staticpage['Staticpage']['sta_title']); ?>&nbsp;</td>
+           <td><?php echo h($i); ?>&nbsp;</td>
             <td><?php echo h($staticpage['Staticpage']['sta_name']); ?>&nbsp;</td>
-            <td><?php echo h($staticpage['Staticpage']['sta_link']); ?>&nbsp;</td>
-            <td><?php echo h($staticpage['Staticpage']['sta_type']); ?>&nbsp;</td>
+             <td><?php echo h($staticpage['Staticpage']['sta_title']); ?>&nbsp;</td>
             <td><?php echo h($staticpage['Staticpage']['sta_url']); ?>&nbsp;</td>
             <td><?php echo h($staticpage['Staticpage']['status']); ?>&nbsp;</td>
-            <td><?php echo h($staticpage['Staticpage']['createdate']); ?>&nbsp;</td>
              
              <td class="actions">
 			<?php echo $this->Html->link(__(''), array('action' => 'view', $staticpage['Staticpage']['sta_id'],'admin'=>'true'),array('class' => 'icon-eye-open')); ?>
@@ -56,7 +56,7 @@
              
              
           </tr>
-          <?php endforeach; ?>
+          <?php $i++; endforeach; ?>
         </table>
       </div>
  <div class="pagination">

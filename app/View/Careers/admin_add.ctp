@@ -31,12 +31,13 @@
 						<textarea name="data[content]" id="content" rows="5" class="validate[required] input-xlarge ckeditor"></textarea>
 						<label>Status</label>
 						<select name="data[status]" id="status" class="validate[required] input-xlarge">
+                       
 						  <option value="Active">Active</option>
 						  <option value="Inactive">Inactive</option>
 					</select>
 					<div class="btn-toolbar">
 				<button class="btn btn-primary"><i class="icon-save"></i> Save</button>
-				<a href="#myModal" data-toggle="modal" class="btn">Delete</a>
+				
 			  	<div class="btn-group"> </div>
 			</div>
 					</form>
