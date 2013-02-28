@@ -1,7 +1,7 @@
 <?php
 App::uses('AppModel', 'Model');
 /**
- * Setting Model
+ * User Model
  *
  */
 class User extends AppModel {
@@ -12,12 +12,5 @@ class User extends AppModel {
  * @var string
  */
 	public $primaryKey = 'uid';
-
-/**
- * Display field
- *
- * @var string
- */
-	public $displayField = 'uid';
 
 }

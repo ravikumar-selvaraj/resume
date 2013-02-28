@@ -3,7 +3,7 @@
     <h1 class="page-title">View Static pages</h1>
   </div>
   <ul class="breadcrumb">
-    <li><a href="<?php echo BASE_URL;?>admin">Home</a> <span class="divider">/</span></li>
+    <li><a href="#">Home</a> <span class="divider">/</span></li>
     <li><a href="<?php echo BASE_URL;?>admin/staticpages">Static pages</a> <span class="divider">/</span></li>
     <li class="active">View Static pages</li>
   </ul>

@@ -17,9 +17,7 @@
          url('../../fonts/lsans-webfont.svg#lucida_sansregular') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
-
 
 @font-face {
     font-family: 'lucida_sansdemibold_roman';
@@ -30,9 +28,7 @@
          url('../../fonts/lsansd-webfont.svg#lucida_sansdemibold_roman') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
-
 
 @font-face {
     font-family: 'lucida_sansdemibold_italic';
@@ -43,9 +39,18 @@
          url('../../fonts/lsansdi-webfont.svg#lucida_sansdemibold_italic') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
 
+input[type="password"]{
+    font-family: tahoma;
+    letter-spacing: 1px;
+}
+
+
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
 header{
     margin-bottom: 30px;
 }
@@ -115,6 +120,10 @@ header{
     background: linear-gradient(to right, #e75239 0%,#e75239 10%,#ff961c 10%,#ff961c 30%,#ffcc27 30%,#ffcc27 45%,#fce62f 45%,#fce62f 50%,#cde35b 50%,#cde35b 70%,#82cc33 70%,#82cc33 85%,#41bece 85%,#41bece 100%);
 }
 
+
+/* ==========================================================================
+   MAIN SLIDER
+   ========================================================================== */
 .slider_container{
     background: url(../../img/page/slider_bg.jpg);
     padding-top: 35px; 
@@ -172,10 +181,213 @@ header{
     cursor: pointer;
 }
 
-    #main_slider .carousel-indicators .active{
-        border:#389de3 4px solid;
+#main_slider .carousel-indicators .active{
+    border:#389de3 4px solid;
+}
+#main_slider .carousel-control{
+    width: 35px;
+    height: 54px;
+    border: none;
+    outline: none;
+}
+
+#main_slider a.left{
+    background:url(../../img/page/slider-nav.png) 0 0 no-repeat;
+    left: 60px;
+}
+
+#main_slider a.right{
+    background:url(../../img/page/slider-nav.png) -35px 0 no-repeat;
+    right: 45px;
+}
+
+/* ==========================================================================
+   Dashboard styles
+   ========================================================================== */
+.acc_settings_menu{
+    background: #e6f2f9;
+    margin: 15px 0 0 0;
+    padding:10px;
+    border-radius: 3px;
+}
+
+.profile_pic{
+    display: block;
+    width: 30px;
+    margin-right: 10px;
+}
+
+.acc_settings_menu a.dropdown-toggle{
+    margin-top: 5px;
+    color: #7e7e7e;
+}
+
+.acc_settings_menu ul{
+    margin: 5px 0 0 0;
+}
+
+.acc_settings_menu .dropdown-menu{
+    left:-60px;
+    top: 30px;
+}
+
+.box-container{
+    background: #fff;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.no-boxshadow .box-container {
+
+    border: #EDEDED 5px solid;
+}
+
+.app-header{
+    background: #f1f1f1;
+    margin-bottom: 20px;
+}
+.inner-header{
+    margin-bottom: 0;
+}
+
+.progress{
+    height:28px;
     }
 
+.progress .bar{
+    font-size: 15px;
+    padding: 5px 0 0 10px;
+}
+
+.box-container h2{
+    text-transform: uppercase;
+    border-bottom: #B8B8B8 1px dotted;
+    margin: 0 0 20px 0;
+}
+
+.resume_head h3{
+    margin-bottom: 0; 
+    line-height: 25px;
+    font-size: 18.5px;
+}
+
+.resume_head .progress {
+    margin-top: 15px;
+}
+
+.completeion-tips{
+    margin-top: 20px;}   
+
+.completeion-tips ul{
+    column-count: 2;
+    column-gap: 10px;
+    width: 690px;
+    font-size: 12px;
+    margin-top: 10px;   
+}
+
+.completeion-tips li{
+    border-radius: 4px;
+    padding: 5px 10px;
+    margin-bottom: 5px;
+	color:#7e7e7e;
+}
+
+.completeion-tips li a{
+    color: #7e7e7e;
+    margin: 5px 0 0 5px;
+    padding-top: 5px;
+}
+.clear{
+    clear: both;
+}
+
+.new-users{
+    column-count: 2;
+    column-gap: 10px;
+    width: 690px;
+}
+
+.new-users .media a{
+    text-decoration: none;
+}
+
+.new-users .media-heading{
+    color: #696969;
+    margin-bottom: 0;
+    line-height: 10px;
+}
+
+.designation{
+    color: #696969;
+    font-size: 13px;
+}
+
+.right-box{
+    border: #EAEAEA 1px solid;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.right-box h2{
+    margin-top: 0;
+}
+
+.right-col{
+
+}
+
+.newsletter{
+    background: #F1F1F1 url(../img/mail.png) no-repeat right bottom;
+}
+
+.newsletter, .newsletter label{
+    font-size: 12px;
+}
+
+.newsletter strong{
+    margin-bottom: 5px;
+    display: block;
+}
+
+.newsletter .btn{
+    margin-top: 8px;
+}
+
+h2#myModalLabel{
+    border: none;
+    margin: 10px 0;
+}
+
+#update-resume form select{
+    width: auto;
+}
+
+#update-resume form label{
+    font-size: 13px;
+}
+
+#update-resume .control-group{
+    margin-bottom: 20px;
+    float: left;
+    margin-right: 20px;
+}
+
+#update-resume .control-group input[type=text]{
+    width: 196px;
+}
+
+#update-resume .modal-footer label{
+    text-align: left;
+}
+#update-resume form{
+	margin-bottom:0;
+}
+/* ==========================================================================
+   Footer styles
+   ========================================================================== */
 .footer{
     background: #0d6aab;
     color: #b6e1ff;

@@ -4,7 +4,7 @@
             <h1 class="page-title">View Email Campaign</h1>
         </div>        
                 <ul class="breadcrumb">
-					<li><a href="<?php echo BASE_URL;?>admin">Home</a> <span class="divider">/</span></li>
+					<li><a href="#">Home</a> <span class="divider">/</span></li>
 					<li><a href="<?php echo BASE_URL;?>admin/emailcampaigns">Email Campaign</a> <span class="divider">/</span></li>
 					<li class="active">View Email Campaign</li>
 				</ul>

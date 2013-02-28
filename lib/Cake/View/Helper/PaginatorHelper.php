@@ -618,6 +618,25 @@ class PaginatorHelper extends AppHelper {
 		
 		return $start;
 	}
+	
+	function resultsPerPage($options = array())
+    {
+		
+       if (is_string($options)) {
+			$options = array('format' => $options);
+		}
+
+          $options = array_merge(
+			array(
+				'model' => $this->defaultModel(),
+				'format' => 'pages',
+				'separator' => __d('cake', ' of ')
+			),
+		$options);
+
+       
+    }
+	
 
 /**
  * Returns a counter string for the paged result set
@@ -725,6 +744,7 @@ class PaginatorHelper extends AppHelper {
  * @link http://book.cakephp.org/2.0/en/core-libraries/helpers/paginator.html#PaginatorHelper::numbers
  */
 	public function numbers($options = array()) {
+		
 		if ($options === true) {
 			$options = array(
 				'before' => ' | ', 'after' => ' | ', 'first' => 'first', 'last' => 'last'
@@ -737,7 +757,7 @@ class PaginatorHelper extends AppHelper {
 			'currentClass' => 'current', 'currentTag' => null
 		);
 		$options += $defaults;
-
+		
 		$params = (array)$this->params($options['model']) + array('page' => 1);
 		unset($options['model']);
 
@@ -761,6 +781,7 @@ class PaginatorHelper extends AppHelper {
 				$end = $params['pageCount'];
 			}
 			$start = $params['page'] - ($modulus - ($end - $params['page']));
+			pr($start);exit;
 			if ($start <= 1) {
 				$start = 1;
 				$end = $params['page'] + ($modulus - $params['page']) + 1;

@@ -23,7 +23,8 @@
 }
 table.display thead th {
     cursor: pointer;
-    padding: 3px 0 3px 10px;
+    padding: 8px 0 3px 10px;
+	background:#eaeaea;
 }
 div.dataTables_wrapper .ui-widget-header {
     font-weight: normal;
@@ -40,7 +41,7 @@ table.display thead th div.DataTables_sort_wrapper span {
 }
 .dataTables_wrapper {
     clear: both;
-    min-height: 302px;
+    min-height: 335px;
     position: relative;
 }
 .dataTables_processing {
@@ -71,6 +72,7 @@ table.display thead th div.DataTables_sort_wrapper span {
 .dataTables_paginate {
     float: right;
     text-align: right;
+	
 }
 .paginate_disabled_previous, .paginate_enabled_previous, .paginate_disabled_next, .paginate_enabled_next {
     float: left;
@@ -104,7 +106,7 @@ table.display tr.heading2 td {
     border-bottom: 1px solid #AAAAAA;
 }
 table.display td {
-    padding: 3px 10px;
+    padding: 6px 10px;
 }
 table.display td.center {
     text-align: center;
@@ -149,7 +151,7 @@ table.display tr.even.gradeU {
     background-color: #EEEEEE;
 }
 tr.odd {
-    background-color: #EEEEEE;
+    background-color: #fcfcfc;
 }
 tr.even {
     background-color: white;
@@ -214,7 +216,7 @@ table.display tr.odd.row_selected td {
     background-color: #9FAFD1;
 }
 tr.odd td.sorting_1 {
-    background-color: #EEEEEE;
+    background-color: #fcfcfc;
 }
 tr.odd td.sorting_2 {
     background-color: #DADCFF;

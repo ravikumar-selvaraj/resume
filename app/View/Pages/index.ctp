@@ -10,18 +10,33 @@
                     <div class="carousel-inner">
                         <div class="active item ">
                             <div class="headline span8 ">Create an elegant and effective resume for free</div>
+                            <?php if(!isset($_SESSION['User']['uid'])) {?>
                             <button type="button" data-toggle="modal" data-target="#signup" class="slider_btn">Create a cv now</button>
+                             <?php } else {?>
+                             <a href="<?php echo BASE_URL?>pages/dashboard"> <button type="button"   class="slider_btn">Create a cv now</button></a>
+                              <?php }?>
                             <img src="img/page/template_screens.png" alt="">
                         </div>
                         <div class="item">  <div class="headline span8 ">Create an elegant and effective resume for free</div>
+                           <?php if(!isset($_SESSION['User']['uid'])) {?>
                             <button type="button" data-toggle="modal" data-target="#signup" class="slider_btn">Create a cv now</button>
+                             <?php } else {?>
+                             <a href="<?php echo BASE_URL?>pages/dashboard"> <button type="button"   class="slider_btn">Create a cv now</button></a>
+                              <?php }?>
                             <img src="img/page/template_screens.png" alt="">
                         </div>
                         <div class="item">  <div class="headline span8 ">Create an elegant and effective resume for free</div>
+                            <?php if(!isset($_SESSION['User']['uid'])) {?>
                             <button type="button" data-toggle="modal" data-target="#signup" class="slider_btn">Create a cv now</button>
+                             <?php } else {?>
+                             <a href="<?php echo BASE_URL?>pages/dashboard"> <button type="button"   class="slider_btn">Create a cv now</button></a>
+                              <?php }?>
                             <img src="img/page/template_screens.png" alt="">
                         </div>
                     </div>
+                     <!-- Carousel nav -->
+                    <a class="carousel-control left" href="#main_slider" data-slide="prev"></a>
+                    <a class="carousel-control right" href="#main_slider" data-slide="next"></a>
                 </div>
                 <div class="shadow"></div>
             </div>

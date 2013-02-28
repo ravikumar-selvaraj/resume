@@ -27,7 +27,7 @@ class SettingsController extends AppController {
  	public function checkadmin(){
 		$check=$this->Session->read('Adminlogin');
 		if(empty($check) && $check !='True'){			
-			$this->redirect(array('controller'=>'adminpanel','action'=>'index'));
+			$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
 		}
 	}
 	

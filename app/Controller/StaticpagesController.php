@@ -16,20 +16,25 @@ class StaticpagesController extends AppController {
     public $layout = 'webpage';
 	public $components = array('Session','Image');
 	public $helpers = array('Session');
-    public $paginate = array('limit'=>2);
+    public $paginate = array('limit'=>5);
 	
    
   public function checkadmin(){
 		$check=$this->Session->read('Adminlogin');
 		if(empty($check) && $check !='True'){			
-			$this->redirect(array('controller'=>'staticpages','action'=>'index'));
+			$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
 		}
 	}
 		  
 	public function index() {
+		
+		if(isset($this->params['pass'][1])){
 		$options = $this->Staticpage->find('first', array('conditions' => array('Staticpage.sta_url' =>$this->params['pass'][1])));
 		$this->set('page', $options);
-		
+		}
+		else
+		{$this->redirect(array('controller'=>'pages','action'=>'index'));
+		}
 	}
 	
 	
@@ -130,7 +135,8 @@ class StaticpagesController extends AppController {
 		$this->checkadmin();
 		$this->layout='admin';
 		$this->Staticpage->recursive = 0;
-		$this->set('staticpages', $this->paginate());
+		//$this->set('staticpages', $this->paginate());
+		$this->set('staticpages', $this->Staticpage->find('all'));
 	}
 
 /**

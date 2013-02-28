@@ -32,7 +32,7 @@
 						<input type="password" name="data[password]" id="password" value="<?php echo $this->request->data('password');?>" class="validate[required] input-xlarge">
 					
 						<label>Confirm Password</label>
-						<input type="password" name="data[cpassword]" id="cpassword" value="<?php echo $this->request->data('cpassword');?>" class="validate[required,equals[password]] input-xlarge"></textarea>
+						<input type="password" name="data[cpassword]" id="cpassword" value="<?php echo $this->request->data('cpassword');?>" class="validate[required,equals[password]] input-xlarge"  />
 						
 					<div class="btn-toolbar">
 				<button class="btn btn-primary"><i class="icon-save"></i> Save</button>

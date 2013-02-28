@@ -3,7 +3,7 @@
             <h1 class="page-title">Blogs</h1>
         </div>        
         <ul class="breadcrumb">
-					<li><a href="<?php echo BASE_URL;?>adminpanel">Home</a> <span class="divider">/</span></li>
+					<li><a href="#">Home</a> <span class="divider">/</span></li>
 					<li class="active">Blogs</li>
 				</ul>
 
@@ -25,24 +25,24 @@
   </div>
 </div>
 <div class="well">
-    <table class="table">
+    <table id="example" style="border:1px solid #aaa; padding:10px; margin-bottom:20px;"class="table display">
       <thead>
         <tr>
-          	<th><?php echo $this->Paginator->sort('bid','#'); ?></th>
-			<th><?php echo $this->Paginator->sort('title'); ?></th>
-			<th><?php echo $this->Paginator->sort('content'); ?></th>
-			<th><?php echo $this->Paginator->sort('image'); ?></th>
-			<th><?php echo $this->Paginator->sort('created_date'); ?></th>
-			<th><?php echo $this->Paginator->sort('status'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
+          	<th>No</th>
+			<th>Title</th>
+			<th>Content</th>
+			<th>Image</th>
+			<th>Created_date</th>
+			<th>Status</th>
+			<th class="actions">Actions</th>
         </tr>
       </thead>
       <tbody>
 	  	<?php 
-		$i=$this->Paginator->countresult();
-		foreach ($blogs as $blogs){ ?>
+		$i=1;
+		foreach ($blogs as $blogs): ?>
         <tr>
-          	<td><?php echo $i; ?>&nbsp;</td>
+          	<td><?php echo h($i); ?></td>
 			<td><?php echo h($blogs['Blog']['title']); ?>&nbsp;</td>
 			<td><?php echo h($blogs['Blog']['content']); ?>&nbsp;</td>
 			<td><?php echo $this->html->image('blog-images/small/'.$blogs['Blog']['image'],array('border'=>0,'alt'=>h($blogs['Blog']['title']))); ?>&nbsp;</td>
@@ -54,19 +54,19 @@
               	<a rel="<?php echo BASE_URL?>admin/blogs/delete/<?php echo $blogs['Blog']['bid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 			</td>
         </tr>
-		<?php $i++; } ?>
+		<?php $i++;  endforeach; ?>
 		
       </tbody>
     </table>
 </div>
 
-<div class="pagination">
+<?php /*?><div class="pagination">
     <ul>
         <li><?php echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));?></li>
         <li><?php echo $this->Paginator->numbers(array('separator' => ''));?></li>
         <li><?php echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));?></li>
     </ul>
-</div>
+</div><?php */?>
 
 <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">

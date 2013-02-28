@@ -19,7 +19,7 @@ class AdminusersController extends AppController {
 	public function checkadmin(){
 		$check=$this->Session->read('Adminlogin');
 		if(empty($check) && $check !='True'){			
-			$this->redirect(array('controller'=>'adminpanel','action'=>'index'));
+			$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
 		}
 	}
  
@@ -120,7 +120,8 @@ class AdminusersController extends AppController {
 		$this->checkadmin();
 		//$this->layout = 'admin';
 		$this->Adminuser->recursive = 0;
-		$this->set('adminusers', $this->paginate());
+		//$this->set('adminusers', $this->paginate());
+		$this->set('adminusers', $this->Adminuser->find('all'));
 	}
 
 /**

@@ -4,7 +4,7 @@
             <h1 class="page-title">New Blog</h1>
         </div>        
                 <ul class="breadcrumb">
-					<li><a href="<?php echo BASE_URL;?>adminpanel">Home</a> <span class="divider">/</span></li>
+					<li><a href="#">Home</a> <span class="divider">/</span></li>
 					<li><a href="<?php echo BASE_URL;?>admin/blogs">Blogs</a> <span class="divider">/</span></li>
 					<li class="active">New Blog</li>
 				</ul>

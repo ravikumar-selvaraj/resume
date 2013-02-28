@@ -4,7 +4,7 @@
             <h1 class="page-title">New staticpages</h1>
         </div>        
                 <ul class="breadcrumb">
-					<li><a href="<?php echo BASE_URL;?>staticpages">Home</a> <span class="divider">/</span></li>
+					<li><a href="#">Home</a> <span class="divider">/</span></li>
 					<li><a href="<?php echo BASE_URL;?>admin/staticpages">Staticpages</a> <span class="divider">/</span></li>
 					<li class="active">New staticpages</li>
 				</ul>

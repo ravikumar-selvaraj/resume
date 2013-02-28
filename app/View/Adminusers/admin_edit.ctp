@@ -3,7 +3,7 @@
             <h1 class="page-title">Edit User</h1>
         </div>        
                 <ul class="breadcrumb">
-					<li><a href="<?php echo BASE_URL;?>adminpanel">Home</a> <span class="divider">/</span></li>
+					<li><a href="#">Home</a> <span class="divider">/</span></li>
 					<li><a href="<?php echo BASE_URL;?>admin/adminusers">Users</a> <span class="divider">/</span></li>
 					<li class="active">Edit User</li>
 				</ul>

@@ -57,7 +57,7 @@ class AdminpanelController extends AppController {
 	public function index() {
 		$this->checkadmin();
 		if($this->request->is('post')){
-			$check_username = $this->Adminuser->find('first',array('username'=>$this->request->data('username')));
+			$check_username = $this->Adminuser->find('first',array('conditions'=>array('username'=>$this->request->data('username'))));
 			if(!empty($check_username)){
 				if($check_username['Adminuser']['password'] == $this->request->data('password')){
 					if($check_username['Adminuser']['status'] == 'Active'){
@@ -78,7 +78,7 @@ class AdminpanelController extends AppController {
 	
 	public function forgetpassword() {
 		if($this->request->is('post')){
-			$check_email = $this->Adminuser->find('first',array('email'=>$this->request->data('email')));
+			$check_email = $this->Adminuser->read(array('email'=>$this->request->data('email')));
 			if(!empty($check_email)){
 				// email function comes here
 				$this->Session->setFlash('Your password details sent to your email address.','');
@@ -90,15 +90,17 @@ class AdminpanelController extends AppController {
 	}
 	
 	public function checkadmin(){
+		
 		$check=$this->Session->read('Adminlogin');
-		if(!empty($check) && $check =='True'){			
-			$this->redirect(array('controller'=>'admin','action'=>'blogs'));
+		if(!empty($check) && $check =='True'){		
+			//$this->redirect(array('controller'=>'admin','action'=>'blogs'));
+			$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
 		}
 	}
 	
 	public function logout() {
 		$this->Session->delete('Adminuser');
 		$this->Session->delete('Adminlogin');
-		$this->redirect(array('controller'=>'adminpanel','action'=>'index'));
+		$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
 	}
 }

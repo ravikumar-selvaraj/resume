@@ -437,6 +437,7 @@ a.block-heading:hover,
   -moz-background-clip: padding;
   -webkit-background-clip: padding-box;
   background-clip: padding-box;
+  overflow:hidden;
 }
 /*Faq*/
 .faq-content ul,

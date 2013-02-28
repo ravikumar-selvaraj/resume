@@ -33,7 +33,7 @@ class BlogsController extends AppController {
  	public function checkadmin(){
 		$check=$this->Session->read('Adminlogin');
 		if(empty($check) && $check !='True'){			
-			$this->redirect(array('controller'=>'adminpanel','action'=>'index'));
+			$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
 		}
 	}
 	
@@ -132,8 +132,9 @@ class BlogsController extends AppController {
  */
 	public function admin_index() {
 		$this->checkadmin();
-		$this->Blog->recursive = 2;
-		$this->set('blogs', $this->paginate());
+		$this->Blog->recursive = 0;
+		//$this->set('blogs', $this->paginate());
+		$this->set('blogs', $this->Blog->find('all'));
 	}
 
 /**

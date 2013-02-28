@@ -3,7 +3,7 @@
             <h1 class="page-title">Settings</h1>
         </div>        
                 <ul class="breadcrumb">
-					<li><a href="<?php echo BASE_URL;?>adminpanel">Home</a> <span class="divider">/</span></li>
+					<li><a href="#">Home</a> <span class="divider">/</span></li>
 					<li class="active">Settings</li>
 				</ul>
 
@@ -26,8 +26,15 @@
 					<input type="hidden" name="data[sid]" value="<?php echo $this->request->data['Setting']['sid'] ?>" />
 						<label>Logo</label>
 						<input type="file" name="data[logo]" id="logo" value="" class="validate[optional,custom[image]] input-xlarge">
+						
 						<label>Image</label>
 						<?php echo $this->html->image('site-logo/small/'.$this->request->data['Setting']['logo'],array('border'=>0,'alt'=>'LOGO'));?>
+						
+						<label>Linkedin appkey</label>
+						<input type="text" name="data[linkedin_appkey]" id="linkedin_appkey" value="<?php echo $this->request->data['Setting']['linkedin_appkey'] ?>" class="validate[required]] input-xlarge">
+						
+						<label>Linkedin secret key</label>
+						<input type="text" name="data[linkedin_secret]" id="linkedin_secret" value="<?php echo $this->request->data['Setting']['linkedin_secret'] ?>" class="validate[required] input-xlarge">
 						
 					<div class="btn-toolbar">
 				<button class="btn btn-primary"><i class="icon-save"></i> Save</button>

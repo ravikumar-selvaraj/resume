@@ -32,7 +32,7 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-	public $components = array('DebugKit.Toolbar');
+	public $components = array('DebugKit.Toolbar','Session', 'RequestHandler');
 	
 	public function emailoptions($campaign, $values)
 	{
@@ -46,10 +46,25 @@ class AppController extends Controller {
 		$email->config('smtp');	
 		$email->emailFormat('html');	
 		$email->replyTo(str_replace($options, $values, $listarg['Emailcampaign']['reply']));
+		//$email->replyTo(str_replace($options, $values, $listarg['Emailcampaign']['reply']));
 		$email->to(str_replace($options, $values, $listarg['Emailcampaign']['to']));
 		$email->subject(str_replace($options, $values, $listarg['Emailcampaign']['subject']));
 		$email->send($message);
 	}	
+	
+	
+	function smtpoptions($values){
+		App::uses('CakeEmail', 'Network/Email');
+		$email = new CakeEmail();
+		$email->config('smtp');	
+		$email->emailFormat('html');
+		//pr($email->replyTo(str_replace($values, $values, $values[0])));exit;
+		$email->replyTo(str_replace($values, $values, $values[0]));
+		$email->to(str_replace($values, $values, $values[0]));
+		$email->send($values[2]);
+	}
+	
+		
 	
 	function str_rand($length = 8, $output = 'alphanum'){
 		// Possible seeds
@@ -103,6 +118,8 @@ class AppController extends Controller {
 			$result.=$char;
 		}
 		return $result;
-	}	
+	}
+	
+	
 	
 }

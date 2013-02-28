@@ -14,7 +14,7 @@ class CareersController extends AppController {
  * @var array
  */
 	public $components = array('Session','Image');
-	public $layout = 'admin';
+	//public $layout = 'admin';
 	public $paginate = array('limit'=>5);
 
 
@@ -24,15 +24,15 @@ class CareersController extends AppController {
  * @return void
  */
  
- 	public function checkadmin(){
+ 	/*public function checkadmin(){
 		$check=$this->Session->read('Adminlogin');
 		if(empty($check) && $check !='True'){			
-			$this->redirect(array('controller'=>'adminpanel','action'=>'index'));
+			$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
 		}
-	}
+	}*/
 	
 	public function index() {
-		$this->checkadmin();
+		$this->layout = 'webpage';
 		$this->Career->recursive = 0;
 		$this->set('careers', $this->paginate());
 	}
@@ -124,7 +124,8 @@ class CareersController extends AppController {
 	public function admin_index() {
 		$this->checkadmin();
 		$this->Career->recursive = 0;
-		$this->set('careers', $this->paginate());
+		//$this->set('careers', $this->paginate());
+		$this->set('careers', $this->Career->find('all'));
 	}
 
 /**

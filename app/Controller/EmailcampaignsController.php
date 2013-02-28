@@ -26,13 +26,14 @@ class EmailcampaignsController extends AppController {
  	public function checkadmin(){
 		$check=$this->Session->read('Adminlogin');
 		if(empty($check) && $check !='True'){			
-			$this->redirect(array('controller'=>'adminpanel','action'=>'index'));
+			$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
 		}
 	}
 	public function admin_index() {
 		$this->checkadmin();
 		$this->Emailcampaign->recursive = 0;
-		$this->set('emailcampaigns', $this->paginate());
+		$this->set('emailcampaigns', $this->Emailcampaign->find('all'));
+		//$this->set('emailcampaigns', $this->paginate());
 	}
 
 /**

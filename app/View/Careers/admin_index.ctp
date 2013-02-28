@@ -3,7 +3,7 @@
             <h1 class="page-title">Career Advice</h1>
         </div>        
         <ul class="breadcrumb">
-					<li><a href="index.html">Home</a> <span class="divider">/</span></li>
+					<li><a href="#">Home</a> <span class="divider">/</span></li>
 					<li class="active">Careers List</li>
 				</ul>
 
@@ -25,22 +25,22 @@
   </div>
 </div>
 <div class="well">
-    <table class="table">
+    <table class="table display" id="example" style="border:1px solid #aaa; padding:10px; margin-bottom:20px;">
       <thead>
         <tr>
-          	<th><?php echo $this->Paginator->sort('cid','#'); ?></th>
-			<th><?php echo $this->Paginator->sort('title'); ?></th>
-            <th><?php echo $this->Paginator->sort('category'); ?></th>
-			<th><?php echo $this->Paginator->sort('content'); ?></th>
-			<th><?php echo $this->Paginator->sort('image'); ?></th>
+          	<th>No</th>
+			<th>Title</th>
+            <th>Category</th>
+			<th>Content</th>
+			<th>Image</th>
 			<!--<th><?php echo $this->Paginator->sort('created_date'); ?></th>-->
-			<th><?php echo $this->Paginator->sort('status'); ?></th>
+			<th>Status</th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
         </tr>
       </thead>
       <tbody>
 	  	<?php
-		$i=$this->Paginator->countresult();
+		$i=1;
 		 foreach ($careers as $careers){ ?>
         <tr>
           	<td><?php echo h($careers['Career']['cid']); ?>&nbsp;</td>
@@ -62,13 +62,13 @@
     </table>
 </div>
 
-<div class="pagination">
+<?php /*?><div class="pagination">
     <ul>
         <li><?php echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));?></li>
         <li><?php echo $this->Paginator->numbers(array('separator' => ''));?></li>
         <li><?php echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));?></li>
     </ul>
-</div>
+</div><?php */?>
 
 <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">

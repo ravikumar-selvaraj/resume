@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-<?php echo $this->html->css(array('lib/bootstrap/css/bootstrap','stylesheets/theme','lib/font-awesome/css/font-awesome','validationEngine.jquery')); 
-     echo $this->html->script(array('jquery-1.7.2.min','js/bootstrap','jquery.validationEngine','languages/jquery.validationEngine-en')); 
+<?php echo $this->html->css(array('lib/bootstrap/css/bootstrap','stylesheets/theme','lib/font-awesome/css/font-awesome','validationEngine.jquery','demo_table','demo_table_jui')); 
+     echo $this->html->script(array('jquery-1.7.2.min','jquery.dataTables','bootstrap','jquery.validationEngine','languages/jquery.validationEngine-en')); 
 ?>
 
 <script type="text/javascript">
@@ -77,6 +77,7 @@
                         </a>
 
                         <ul class="dropdown-menu">
+                     
                             <li><a tabindex="-1" href="<?php echo BASE_URL;?>admin/adminusers/myaccount/<?php echo $_SESSION['Adminuser']['aid'] ?>">My Account</a></li>
 							<li class="divider"></li>
 							<li><a tabindex="-1" href="<?php echo BASE_URL;?>admin/adminusers/changepassword/<?php echo $_SESSION['Adminuser']['aid'] ?>">Change password</a></li>
@@ -109,11 +110,12 @@
             <li ><a href="<?php echo BASE_URL;?>admin/careers">Career Advice</a></li>
             <li ><a href="<?php echo BASE_URL;?>admin/staticpages">Static Pages</a></li>
             <li ><a href="<?php echo BASE_URL;?>admin/emailcampaigns">Email Campaign</a></li>
+            <li ><a href="<?php echo BASE_URL;?>admin/users">User Management</a></li>
             
             
         </ul>
 
-        <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Account<span class="label label-info">+3</span></a>
+       <!-- <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Account<span class="label label-info">+3</span></a>
         <ul id="accounts-menu" class="nav nav-list collapse">
             <li ><a href="sign-in.html">Sign In</a></li>
             <li ><a href="sign-up.html">Sign Up</a></li>
@@ -135,12 +137,11 @@
         </ul>		
 		
         <a href="help.html" class="nav-header" ><i class="icon-question-sign"></i>Help</a>
-        <a href="faq.html" class="nav-header" ><i class="icon-comment"></i>Faq</a>
+        <a href="faq.html" class="nav-header" ><i class="icon-comment"></i>Faq</a>-->
     </div>
 	
 	
 	<?php echo $this->fetch('content'); ?>
-	
 	
 	
 	
@@ -153,7 +154,13 @@
 			<?php $_SESSION['Message']['flash'] = ''; ?>
 			});
     </script>
-	
+	 <script>
+$(document).ready(function() {
+$('#example').dataTable( {
+"sPaginationType": "bootstrap"
+} );
+} );
+</script>
 	
         <div class="navbar">
         <div class="navbar-inner">

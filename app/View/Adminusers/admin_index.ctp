@@ -6,7 +6,7 @@
         </div>
         
                 <ul class="breadcrumb">
-            <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+            <li><a href="#">Home</a> <span class="divider">/</span></li>
             <li class="active">Users</li>
         </ul>
 
@@ -31,15 +31,15 @@
   </div>
 </div>
 <div class="well">
-    <table class="table">
+    <table class="table display" id="example" style="border:1px solid #aaa; padding:10px; margin-bottom:20px;">
       <thead>
         <tr>
-          	<th><?php echo $this->Paginator->sort('aid'); ?></th>
-			<th><?php echo $this->Paginator->sort('adminname'); ?></th>
-			<th><?php echo $this->Paginator->sort('username'); ?></th>
-			<th><?php echo $this->Paginator->sort('email'); ?></th>
-			<th><?php echo $this->Paginator->sort('createddate'); ?></th>
-			<th><?php echo $this->Paginator->sort('status'); ?></th>
+          	<th>No</th>
+			<th>Adminname</th>
+			<th>Username</th>
+			<th>Email</th>
+			<th>Createddate</th>
+			<th>Status</th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
         </tr>
       </thead>
@@ -53,22 +53,22 @@
 			<td><?php echo h($adminuser['Adminuser']['createddate']); ?>&nbsp;</td>
 			<td><?php echo h($adminuser['Adminuser']['status']); ?>&nbsp;</td>
 			<td class="actions">
-				<a href="<?php echo BASE_URL?>admin/adminusers/view/<?php echo $adminuser['Adminuser']['aid'];?>"><i class="icon-zoom-in"></i></a>
-				<a href="<?php echo BASE_URL?>admin/adminusers/edit/<?php echo $adminuser['Adminuser']['aid'];?>"><i class="icon-pencil"></i></a>
-              	<a rel="<?php echo BASE_URL?>admin/adminusers/delete/<?php echo $adminuser['Adminuser']['aid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+				<a href="<?php echo BASE_URL?>/admin/adminusers/view/<?php echo $adminuser['Adminuser']['aid'];?>"><i class="icon-zoom-in"></i></a>
+				<a href="<?php echo BASE_URL?>/admin/adminusers/edit/<?php echo $adminuser['Adminuser']['aid'];?>"><i class="icon-pencil"></i></a>
+              	<a rel="<?php echo BASE_URL?>/admin/adminusers/delete/<?php echo $adminuser['Adminuser']['aid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 			</td>
         </tr>
 		<?php endforeach; ?>
       </tbody>
     </table>
 </div>
-<div class="pagination">
+<?php /*?><div class="pagination">
     <ul>
         <li><?php echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));?></li>
         <li><?php echo $this->Paginator->numbers(array('separator' => ''));?></li>
         <li><?php echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));?></li>
     </ul>
-</div>
+</div><?php */?>
 
 <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">

@@ -3,7 +3,7 @@
             <h1 class="page-title">Email Campaign</h1>
         </div>        
         <ul class="breadcrumb">
-					<li><a href="index.html">Home</a> <span class="divider">/</span></li>
+					<li><a href="#">Home</a> <span class="divider">/</span></li>
 					<li class="active">Email Campaign List</li>
 				</ul>
 
@@ -25,16 +25,16 @@
   </div>
 </div>
 <div class="well">
-    <table class="table">
+    <table class="table display" id="example" style="border:1px solid #aaa; padding:10px; margin-bottom:20px;">
       <thead>
         <tr>
-          	<th><?php echo $this->Paginator->sort('ecid','#'); ?></th>
-			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th><?php echo $this->Paginator->sort('subject'); ?></th>
-			<th><?php echo $this->Paginator->sort('from'); ?></th>
+          	<th>No</th>
+			<th>Name</th>
+			<th>Subject</th>
+			<th>From</th>
 		<!--	<th><?php echo $this->Paginator->sort('to'); ?></th>
 			<th><?php echo $this->Paginator->sort('reply'); ?></th>-->
-			<th><?php echo $this->Paginator->sort('message'); ?></th>
+			<th>Message</th>
 			<!--<th><?php echo $this->Paginator->sort('option'); ?></th>
 			<th><?php echo $this->Paginator->sort('created_date'); ?></th>-->
 			<th class="actions"><?php echo __('Actions'); ?></th>
@@ -43,7 +43,7 @@
       <tbody>
 	  
 	  	<?php 
-		$i=$this->Paginator->countresult();
+		$i=1;
 		foreach ($emailcampaigns as $emailcampaign){
 		?>
         <tr>
@@ -68,13 +68,13 @@
     </table>
 </div>
 
-<div class="pagination">
+<?php /*?><div class="pagination">
     <ul>
         <li><?php echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));?></li>
         <li><?php echo $this->Paginator->numbers(array('separator' => ''));?></li>
         <li><?php echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));?></li>
     </ul>
-</div>
+</div><?php */?>
 
 <div class="modal small hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-header">
