@@ -30,6 +30,10 @@
 											<div class="controls"> <?php echo h($careers['Career']['category']); ?>	</div>
 										</div>
 										<div class="control-group">
+											<label class="control-label">Category :</label>
+											<div class="controls"> <?php echo h($careers['Career']['tag']); ?>	</div>
+										</div>
+										<div class="control-group">
 											<label class="control-label">Content :</label>
 											<div class="controls"> <?php echo html_entity_decode(h($careers['Career']['content'])); ?>	</div>
 										</div>

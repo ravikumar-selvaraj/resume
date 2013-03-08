@@ -22,7 +22,7 @@
                       <span class="help-inline" id="present_code_div_error"></span> </div>
                   </div>
                   
-      <div class="control-group" id="size_div">
+      <!--<div class="control-group" id="size_div">
         <div class="controls">
       <a href='http://www.dailymotion.com' target="_blank" style="margin-left:20px;"><img src="img/dailymotion.png"  style="border:0;"/></a>
        <a href="http://www.vimeo.com" target="_blank" style="margin-left:20px;"><img src="img/vimeo.png"  style="border:0;"/></a>
@@ -30,7 +30,7 @@
          
           <br />
           <span class="info"></span> </div>
-      </div>
+      </div>-->
       
       <div class="control-group" id="job_title_div">
     <div class="controls">
@@ -49,8 +49,8 @@
     <div class="modal-footer">
      
       <label class="checkbox" style="display:block;">
-        <input type="checkbox" name="data[display]" value="1">
-        <span style="margin-left:5px; float:left; font-size:12px;"><?php echo __("Display on Home page");?></span> </label>
+        <input type="hidden" name="data[display]" value="1">
+        <!--<span style="margin-left:5px; float:left; font-size:12px;"><?php echo __("Display on Home page");?></span>--> </label>
       <button type="submit" id="port_present_btn" class="btn btn-primary "><?php echo __("Submit");?></button>
     </div>
     

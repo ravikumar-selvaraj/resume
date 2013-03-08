@@ -25,8 +25,8 @@
     <div class="modal-footer">
      
       <label class="checkbox" style="display:block;">
-        <input type="checkbox" value="1" name="data[display]">
-        <span style="margin-left:5px; float:left; font-size:12px;"><?php echo __("Display on home page");?></span> </label>
+        <input type="hidden" value="1" name="data[display]">
+        <!--<span style="margin-left:5px; float:left; font-size:12px;"><?php echo __("Display on home page");?></span>--> </label>
       <button type="submit" id="port_photo_btn23" class="btn btn-primary " name="submit"><?php echo __("Submit");?></button>
     </div>
     <!--</div>-->

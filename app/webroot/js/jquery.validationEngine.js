@@ -1180,6 +1180,5 @@
             $.error('Method ' + method + ' does not exist in jQuery.validationEngine');
         }
     };
-//})(jQuery);
-});
+})(jQuery);
 

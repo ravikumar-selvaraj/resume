@@ -53,6 +53,7 @@ jQuery.extend({
         s = jQuery.extend({}, jQuery.ajaxSettings, s);
         var id = new Date().getTime()        
 		var form = jQuery.createUploadForm(id, s.fileElementId);
+		
 		var io = jQuery.createUploadIframe(id, s.secureuri);
 		var frameId = 'jUploadFrame' + id;
 		var formId = 'jUploadForm' + id;		

@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-      <head>
+    <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>CVomg _ Beautifully Simple Online Resume Builder _ Maker _ Generator</title>
@@ -11,27 +11,45 @@
         <meta name="viewport" content="width=device-width">
 
       <?php	
-		echo $this->html->css(array('user/normalize.min','user/bootstrap','user/resume','user/datepicker')); 
-		echo $this->html->script(array('jquery','jquery.min','jquery-ui-min','jquery-ui-1.8.16.custom.min','user/vendor/modernizr-2.6.2-respond-1.1.0.min','jquery.validationEngine'));
+		echo $this->html->css(array('user/normalize.min','user/bootstrap','user/datepicker','user/bootstrapSwitch')); 
+		echo $this->html->script(array('jquery','user/vendor/modernizr-2.6.2-respond-1.1.0.min','user/uploadimg'));
 		 
 ?>
+	<?php $template=ClassRegistry::init('User')->find(array('username'=>Configure::read('userpage'))); 
+	
+	
+	switch ($template['User']['template']) {
+		case 'red':
+			echo $this->html->css(array('user/red')); 
+			break;
+		case 'blue':
+			echo $this->html->css(array('user/blue')); 
+			break;
+		case 'black':
+			echo $this->html->css(array('user/black')); 
+			break;
+		default:
+       		echo $this->html->css(array('user/resume')); 
+	}
+	
+	
+	?>
+    
+    
     </head>
-    <body>
+    <body >
 		
-
+		
  	
 <?php echo $this->fetch('content'); ?>
     
 
 
- <?php	
-		echo $this->html->script(array('page/vendor/jquery-1.9.1.min','user/bootstrap','user/plugins','user/main','user/bootstrap-datepicker','bootbox'));
-?>
+ <?php	echo $this->html->script(array('page/vendor/jquery-1.9.1.min','user/bootstrap','user/plugins','user/main','user/bootstrap-datepicker','bootbox','user/bootstrapSwitch'));?>
 <?php echo $this->html->script(array('jquery.filestyle','ajaxfileupload'));?> 
 <!--[if IE 9]>
  <?php  echo $this->html->script(array('ajaxfileupload1'));?> 
 <![endif]--> 
-
 <script>
 <?php
 $msg = $this->Session->flash();
@@ -43,23 +61,54 @@ if(!empty($msg)){ ?>
 
      <script type="text/javascript">
 $(document).ready(function(){
-		/*$(".open").click(function(){
-			$(this).removeClass('open');
-			$(this).addClass('closed active');	
-		$('.tab-content').css('display','block');
-		//alert('hi');
-		});
-		$(".close").click(function(){
-			$(this).removeClass('closed active');
-			$(this).addClass('open');
-			$('.tab-content').css('display','none');
-		});*/
+	
+	// edit--hover
+	/*$("#ex2").popover({
+					title: "Hello",
+					content: "Finally, I can speak!"
+				});*/
+	
+	$("#info").mouseover(function(){
+		$("#edit_in").show();
+	});
+	$("#info").mouseout(function(){
+		$("#edit_in").hide();
+	});
+	
+	$("#edit_cont1").mouseover(function(){
+		$("#edit_cont_in").show();
+	});
+	$("#edit_cont1").mouseout(function(){
+		$("#edit_cont_in").hide();
+	});
+	
+	$("#about").mouseover(function(){
+		$("#about_in").show();
+	});
+	$("#about").mouseout(function(){
+		$("#about_in").hide();
+	});
+	$("#pro").mouseover(function(){
+		$("#pro_in").show();
+	});
+	$("#pro").mouseout(function(){
+		$("#pro_in").hide();
+	});
+	
+	$("#link").mouseover(function(){
+		$("#link_in").show();
+	});
+	$("#link").mouseout(function(){
+		$("#link_in").hide();
+	});
+		
+		
 		
 		$("#addin").click(function(){
 			
 			$("#addin").css('display','none');
 			$("#addout").css('display','block');
-			$("#addout").addClass('closed active');	
+		//$("#addout").addClass('active');	
 			$('#addcon').css('display','block');
 		});
 		
@@ -68,27 +117,11 @@ $(document).ready(function(){
 			$("#addout").css('display','none');
 			$("#addin").css('display','block');
 			$('#addcon').css('display','none');
-			//$(this).addClass('closed active');	
+			//$("#addin").removeclass('active');	
 			//$('.tab-content').css('display','none');
 		});
 		
-		$(".menu-on").click(function(){
-			
-			$(this).removeClass('menu-on').addClass('menu-off');
-			/*$("#addin").css('display','none');
-			$("#addout").css('display','block');
-			$("#addout").addClass('closed active');	*/
-			$('#addcon').css('display','block');
-		});
-		$("#resume-config-tabs li.active").click(function(){
-			alert('');
-			$(this).removeClass('active');
-			$(this).removeClass('menu-off').addClass('menu-on');
-			/*$("#addin").css('display','none');
-			$("#addout").css('display','block');
-			$("#addout").addClass('closed active');	*/
-			$('#addcon').css('display','none');
-		});
+	
 		
 		/*$("#addin").click(function(){
 			$("#addin").addClass('active');
@@ -170,16 +203,6 @@ $(document).ready(function(){
 		$('#Professional_edit').css('display','none');
 		$('#Professional_edit1').css('display','block');
 		});
-		
-		
-		function mousein()
-		{
-		 $('.edith').css('display','block');
-		}
-		function mouseout()
-		{
-		 $('.edith').css('display','none');
-		}
 		
 		
 </script>
@@ -593,7 +616,7 @@ $('.edit_proffessional').click(function(){
 	var exp_id = $(this).attr('rel');
 	$.ajax({
 					type: "POST",
-					url: "<?php echo BASE_URL?>pages/session_set",
+					url : "<?php echo BASE_URL?>pages/session_set",
 					data: "exp_id="+exp_id,
 					success: function(msg){
 						}
@@ -602,6 +625,436 @@ $('.edit_proffessional').click(function(){
 });
 </script>
 
+<script type="text/javascript">
+$("#general_settings_edit").click(function(){
+	var general_uid = $("#general_uid").val();
+	var general_resume_title = $("#general_resume_title").val();
+	var general_resume_desc = $("#general_resume_desc").val();
+		$.ajax({
+					type: "POST",
+					url: "<?php echo BASE_URL?>users/general_settings",
+					data: "uid="+general_uid+"&resume_title="+general_resume_title+"&resume_desc="+general_resume_desc,
+					success: function(msg){
+						if(msg == "success"){
+							$("#general_success").html("<font color='#006633'><?php echo __('Your changes have been saved!!');?></font>").fadeIn('slow');
+							setTimeout(function(){  $('#general_success').fadeOut(); }, 2000);
+						}
+					}
+				});
+});
+</script>
 
-     </body>
+  
+  <script type="text/javascript">
+  $('#publish_resume').on('switch-change', function (e, data) { 
+  	var value = data.value;
+	var uid = $("#publish_uid").val();
+		if(value == true)
+		var cval = 1;
+		else
+		var cval = 0;
+			$.ajax({
+					type: "POST",
+					url: "<?php echo BASE_URL?>pages/publish_resume",
+					data: "uid="+uid+"&webpage_view="+cval,
+					success: function(msg){
+						if(msg == "success")
+							$("#publish_resume_box_success").html("<font color='#006633'><?php echo __('Your changes have been saved!!');?></font>").fadeIn('slow');
+							setTimeout(function(){  $('#publish_resume_box_success').fadeOut(); }, 2000);
+						}
+					});
+		
+  });
+  </script>
+  
+  <script type="text/javascript">
+  $('#broadcast_resume').on('switch-change', function (e, data) { 
+  	var value = data.value;
+	var uid = $("#broadcast_uid").val();
+		if(value == true)
+		var cval = 1;
+		else
+		var cval = 0;
+			$.ajax({
+					type: "POST",
+					url: "<?php echo BASE_URL?>pages/broadcast_resume",
+					data: "uid="+uid+"&broad_resume="+cval,
+					success: function(msg){
+						if(msg == "success")
+							$("#broadcast_resume_success").html("<font color='#006633'><?php echo __('Your changes have been saved!!');?></font>").fadeIn('slow');
+							setTimeout(function(){  $('#broadcast_resume_success').fadeOut(); }, 2000);
+						}
+					});
+		
+  });
+  </script>
+  
+  <script type="text/javascript">
+  $('#protect_resume').on('switch-change', function (e, data) { 
+  	var value = data.value;
+	var uid = $("#protect_uid").val();
+		if(value == true){
+			var cval = 1;
+			$("#password_block").show();
+			$("#protect_pwd").val('');
+		}
+		else{
+			var cval = 0;
+			$("#password_block").hide();
+			var pwd = '';
+		}
+			$.ajax({
+					type: "POST",
+					url: "<?php echo BASE_URL?>pages/protect_resume",
+					data: "uid="+uid+"&set_password="+cval+"&resume_password="+pwd,
+					success: function(msg){
+						if(msg == "success")
+							$("#password_block_success").html("<font color='#006633'><?php echo __('Your changes have been saved!!');?></font>").fadeIn('slow');
+							setTimeout(function(){  $('#password_block_success').fadeOut(); }, 2000);
+						}
+					});
+		
+  });
+  
+  $("#password_block_btn").click(function(){
+	 	var uid = $("#protect_uid").val();
+		var pwd = $("#protect_pwd").val();
+		$.ajax({
+					type: "POST",
+					url: "<?php echo BASE_URL?>pages/protect_resume",
+					data: "uid="+uid+"&set_password=1"+"&resume_password="+pwd,
+					success: function(msg){
+						if(msg == "success")
+							$("#password_block_success").html("<font color='#006633'><?php echo __('Your resume is now password protected!!');?></font>").fadeIn('slow');
+							setTimeout(function(){  $('#password_block_success').fadeOut(); }, 2000);
+						}
+					});	
+  });
+  </script>
+  
+
+
+<?php /*?><div class="resume_footer" style="display:none" id="refoot">
+<div class="resume_footer_rec"><span style="padding-left:10px;"><img src="../img/add.png" ></span><span>Recommentation</span></div> 
+<div class="resume_footer_skill">
+<?php foreach($recmd as $recmd1) { ?>
+<a><span class="re_skill"><?php echo $recmd1['Skill']['skill_area']; ?></span><span class="re_skill2">2</span></a>
+<?php } ?>
+<a href="#" id="ex2" data-placement="top">Please, let me speak!</a>
+<div id="popover_content" style="display:none">
+  <div class="container">
+                <div class="row">  
+                    <section class="span8 pull-left footer-links">
+                        <ul class="unstyled inline">
+                            <li><a href="<?php echo Router::url('/'); ?>"><?php echo __("Home");?></a></li>
+                            <li><a href="<?php echo Router::url('/'); ?>staticpages/about"><?php echo __("About us");?></a></li>
+                            <li><a href="<?php echo Router::url('/'); ?>staticpages/contact"><?php echo __("Contact us");?></a></li>
+                           
+                        </ul> 
+                        <p>© 2013 CVomg.com</p>
+                    </section>
+                </div>
+            </div>
+</div>
+ </div> 
+<div class="resume_back"><a onClick="changefoot1();">old</a> </div>
+</div>
+<div class="resume_footer1" id="refoot1"><a onClick="changefoot();">new</a></div><?php */?>
+
+	<script type="text/javascript">
+
+$(".edutab").click(function(){	
+	$(".news").append('<div class="control-group" id="detais_div2"><label class="control-label" for="inputInfo"><?php echo __("Details");?></label><div class="controls"><input type="text" id="extra_curricular1" name="data[extra_curricular][]" /><span class="help-inline" id="details_error"></span></div></div>');
+	return false;
+});
+
+					
+	/*	$('.extra_delete_btn').live('click',function(){
+	    $(this).closest('.news').remove();
+		});
+					
+$(".extra_delete_btn").click(function(){
+	$(this).find("#extra_curricular").attr('disabled','disabled');
+	$(this).parent().parent().hide();
+	
+});*/
+</script>
+<?php  if(isset($_SESSION['User']['uid']) && $_SESSION['User']['username']==Configure::read('userpage')) { ?>
+ <script type="text/javascript">
+	$('.exp').click(function(){
+		var expid=$(this).attr('rel');
+		//alert($('#editexp'+expid).children().find('.exp_image').html());
+		$.ajax({
+			type: "POST",
+			data: "eid="+expid,
+			url: "<?php echo BASE_URL;?>users/cimage",
+			success: function(msg){
+				$('#editexp'+expid).children().find('.exp_image').html(msg);
+			}
+		});
+		
+	});
+	$('.close').click(function(){
+		var cid=$(this).attr('rel');
+		$.ajax({
+			type: "POST",
+			data: "eid="+cid,
+			url: "<?php echo BASE_URL;?>users/imgcheck",
+			success: function(msg){
+				if(msg==''){
+					var inmsg='';
+				}else{
+					var inmsg='<img src="<?php echo BASE_URL;?>img/users/small/'+msg+'" width="50" height="30" />';
+				}
+				$('#'+cid).children().find('.pimg').html(inmsg);
+			}
+		});
+	});
+</script>
+<?php 
+
+echo $this->html->script(array('user/jquery-ui'));
+
+?> 
+
+<script>
+//var J = jQuery.noConflict();
+
+
+//var $ = jQuery.noConflict();
+   $('.column').sortable({
+	connectWith: '.column',
+	handle: 'h2',
+	cursor: 'move',
+	placeholder: 'placeholder',
+	forcePlaceholderSize: true,
+	opacity: 0.4,
+        stop: function(event, ui){
+            saveState();
+        }
+})
+.disableSelection();
+$('.column').bind('click.sortable mousedown.sortable',function(ev){
+	ev.target.focus();
+});
+
+
+function saveState(){
+    var items = [];
+    // traverse all column div and fetch its id and its item detail. 
+    $(".column").each(function(){
+        var columnId = $(this).attr("id");
+         $(".dragbox", this).each(function(i){ // here i is the order, it start from 0 to...
+           var item = {
+               id: $(this).attr("id"),
+               column_no: columnId,
+               order: i +1
+           }
+           items.push(item);
+        });
+        
+    });
+     $("#results").html("loading..");
+    var shortorder = {items : items};
+        $.ajax({
+          url: "<?php echo BASE_URL;?>pages/update_dashboard/<?php echo $this->Session->read('User.uid')?>",
+          async: false, 
+          data: shortorder,
+          dataType: "html",
+          type: "POST",
+          success: function(html){
+             $("#results").html(html);
+          }
+        });    
+}
+
+</script>
+
+<script>
+  $('.experience').sortable({
+	connectWith: '.experience',
+	handle: 'h3',
+	cursor: 'move',
+	placeholder: 'placeholder',
+	forcePlaceholderSize: true,
+	opacity: 0.4,
+        stop: function(event, ui){
+            saveexp();
+        }
+})
+.disableSelection();
+
+function saveexp(){
+    var items = [];
+    // traverse all column div and fetch its id and its item detail. 
+    $(".experience").each(function(){
+        var columnId = $(this).attr("id");
+        $(".dragexp", this).each(function(i){ // here i is the order, it start from 0 to...
+           var item = {
+               id: $(this).attr("id"),
+               column_no: columnId,
+               order: i +1
+           }
+           items.push(item);
+        });
+        
+    });
+    $("#results").html("loading..");
+    var shortorder = {items : items};
+        $.ajax({
+          url: "<?php echo BASE_URL;?>pages/update_experience/<?php echo $this->Session->read('User.uid')?>",
+          async: false, 
+          data: shortorder,
+          dataType: "html",
+          type: "POST",
+          success: function(html){
+            $("#results").html(html);
+          }
+        });    
+}
+
+
+</script>
+
+<script>
+  $('.education').sortable({
+	connectWith: '.education',
+	handle: 'h3',
+	cursor: 'move',
+	placeholder: 'placeholder',
+	forcePlaceholderSize: true,
+	opacity: 0.4,
+        stop: function(event, ui){
+            saveedu();
+        }
+})
+.disableSelection();
+
+function saveedu(){
+    var items = [];
+    // traverse all column div and fetch its id and its item detail. 
+    $(".education").each(function(){
+        var columnId = $(this).attr("id");
+        $(".dragedu", this).each(function(i){ // here i is the order, it start from 0 to...
+           var item = {
+               id: $(this).attr("id"),
+               column_no: columnId,
+               order: i +1
+           }
+           items.push(item);
+        });
+        
+    });
+    $("#results").html("loading..");
+    var shortorder = {items : items};
+        $.ajax({
+          url: "<?php echo BASE_URL;?>pages/update_education/<?php echo $this->Session->read('User.uid')?>",
+          async: false, 
+          data: shortorder,
+          dataType: "html",
+          type: "POST",
+          success: function(html){
+            $("#results").html(html);
+          }
+        });    
+}
+
+
+</script>
+
+<script>
+  $('.interest').sortable({
+	connectWith: '.interest',
+	handle: 'h3',
+	cursor: 'move',
+	placeholder: 'placeholder',
+	forcePlaceholderSize: true,
+	opacity: 0.4,
+        stop: function(event, ui){
+            saveint();
+        }
+})
+.disableSelection();
+
+function saveint(){
+    var items = [];
+    // traverse all column div and fetch its id and its item detail. 
+    $(".interest").each(function(){
+        var columnId = $(this).attr("id");
+        $(".dragint", this).each(function(i){ // here i is the order, it start from 0 to...
+           var item = {
+               id: $(this).attr("id"),
+               column_no: columnId,
+               order: i +1
+           }
+           items.push(item);
+        });
+        
+    });
+    $("#results").html("loading..");
+    var shortorder = {items : items};
+        $.ajax({
+          url: "<?php echo BASE_URL;?>pages/update_interest/<?php echo $this->Session->read('User.uid')?>",
+          async: false, 
+          data: shortorder,
+          dataType: "html",
+          type: "POST",
+          success: function(html){
+            $("#results").html(html);
+          }
+        });    
+}
+
+
+</script>
+
+<script>
+  $('.skills').sortable({
+	connectWith: '.skills',
+	handle: 'h3',
+	cursor: 'move',
+	placeholder: 'placeholder',
+	forcePlaceholderSize: true,
+	opacity: 0.4,
+        stop: function(event, ui){
+            saveskil();
+        }
+})
+.disableSelection();
+
+function saveskil(){
+    var items = [];
+    // traverse all column div and fetch its id and its item detail. 
+    $(".skills").each(function(){
+        var columnId = $(this).attr("id");
+        $(".dragskil", this).each(function(i){ // here i is the order, it start from 0 to...
+           var item = {
+               id: $(this).attr("id"),
+               column_no: columnId,
+               order: i +1
+           }
+           items.push(item);
+        });
+        
+    });
+    $("#results").html("loading..");
+    var shortorder = {items : items};
+        $.ajax({
+          url: "<?php echo BASE_URL;?>pages/update_skills/<?php echo $this->Session->read('User.uid')?>",
+          async: false, 
+          data: shortorder,
+          dataType: "html",
+          type: "POST",
+          success: function(html){
+            $("#results").html(html);
+          }
+        });    
+}
+
+
+</script>
+
+<?php  } ?>
+	
+	 </body>
 </html>

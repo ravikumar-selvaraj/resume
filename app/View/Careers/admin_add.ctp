@@ -24,6 +24,13 @@
 						  <option value="Get a great resume">Get a great resume</option>
                           <option value="Manage your career">Manage your career</option>
 					</select>
+					
+					<label>Tags</label>
+					<select name="data[tag][]" id="tag" multiple="multiple" class="validate[required] input-xlarge">
+					<?php foreach($tags as $tag){?>
+					<option value="<?php echo $tag['Tag']['tag_name'];?>"><?php echo $tag['Tag']['tag_name'];?></option>
+					<?php } ?>
+					</select>
 						
 						<label>Image</label>
 						<input type="file" name="data[image]" id="image" class="validate[required,custom[image]] input-xlarge">

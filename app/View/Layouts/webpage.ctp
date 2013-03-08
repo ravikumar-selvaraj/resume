@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -14,6 +15,16 @@
 		echo $this->html->css(array('page/normalize.min','page/bootstrap','page/main')); 
 		echo $this->html->script(array('jquery','page/vendor/modernizr-2.6.2-respond-1.1.0.min','jquery.validationEngine','chart/highcharts','chart/exporting'));
 ?>
+<style>
+#myres
+{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	color:#FFF;
+	text-decoration:none;
+	padding-left:15px;
+}
+</style>
   </head>
 
     <body>
@@ -22,15 +33,22 @@
         <![endif]-->
 		
        <!-- MAIN HEADER -->
-        <header>
+        <header >
             <div class="topbar row">
-                <div class="container">
+               <div class="container">
                     <div class="row">
-                        <div class="span4 site_links offset6">
-                            <a href=""><?php echo __("Features");?></a>
-                            <a href=""><?php echo __("Career advice");?></a>
-                            <a href=""><?php echo __("Blog");?></a>
-                            <a href=""><?php echo __("Contact");?></a>
+					<?php if(isset($_SESSION['User']['username'])) { ?>
+					<div class="pull-left">
+                        <a class="return-dash" href="<?php echo BASE_URL;?>pages/dashboard"><img alt="" src="<?php echo BASE_URL;?>img/dashboard_icon.png"></a>
+                        <a href="<?php echo BASE_URL.$this->Session->read('User.username');?>" class="site_links">My Resume</a>
+                    </div>
+					<?php } ?>
+                        <div class="span4 site_links offset4">
+						
+                            <a href="<?php echo BASE_URL;?>features"><?php echo __("Features");?></a>
+                            <a href="<?php echo BASE_URL;?>careers"><?php echo __("Career advice");?></a>
+                            <a href="<?php echo BASE_URL;?>blogs"><?php echo __("Blog");?></a>
+                            <a href="<?php echo BASE_URL;?>sitecontacts"><?php echo __("Contact");?></a>
 							
                         </div>
 

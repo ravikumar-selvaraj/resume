@@ -21,6 +21,7 @@
     }
 }());
 
+
 // Place any jQuery/helper plugins in here.
 
 
@@ -41,3 +42,86 @@ StyleFix.camelCase(b)in p&&-1===i.indexOf(b)&&i.push(b)}};if(0<f.length)for(var 
 "transform-origin");a.properties.sort();e=function(a,b){r[b]="";r[b]=a;return!!r[b]};b={"linear-gradient":{property:"backgroundImage",params:"red, teal"},calc:{property:"width",params:"1px + 5%"},element:{property:"backgroundImage",params:"#foo"},"cross-fade":{property:"backgroundImage",params:"url(a.png), url(b.png), 50%"}};b["repeating-linear-gradient"]=b["repeating-radial-gradient"]=b["radial-gradient"]=b["linear-gradient"];h={initial:"color","zoom-in":"cursor","zoom-out":"cursor",box:"display",
 flexbox:"display","inline-flexbox":"display",flex:"display","inline-flex":"display"};a.functions=[];a.keywords=[];var r=document.createElement("div").style,l;for(l in b)k=b[l],f=k.property,k=l+"("+k.params+")",!e(k,f)&&e(a.prefix+k,f)&&a.functions.push(l);for(var m in h)f=h[m],!e(m,f)&&e(a.prefix+m,f)&&a.keywords.push(m);l=function(a){s.textContent=a+"{}";return!!s.sheet.cssRules.length};m={":read-only":null,":read-write":null,":any-link":null,"::selection":null};e={keyframes:"name",viewport:null,
 document:'regexp(".")'};a.selectors=[];a.atrules=[];var s=j.appendChild(document.createElement("style")),q;for(q in m)b=q+(m[q]?"("+m[q]+")":""),!l(b)&&l(a.prefixSelector(b))&&a.selectors.push(q);for(var t in e)b=t+" "+(e[t]||""),!l("@"+b)&&l("@"+a.prefix+b)&&a.atrules.push(t);j.removeChild(s);a.valueProperties=["transition","transition-property"];j.className+=" "+a.prefix;StyleFix.register(a.prefixCSS)}})(document.documentElement);
+
+
+
+/*
+ * Bootstrap Carousel Animate JS 1.0
+ * https://github.com/blueimp/Bootstrap-Carousel-Animate
+ *
+ * Copyright 2012, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+!function ($) {
+
+  "use strict"; // jshint ;_;
+
+  $.extend($.fn.carousel.defaults, {
+    duration: 600
+  , easing: 'swing'
+  , adjustHeight: false
+  })
+
+  var originalSlide = $.fn.carousel.Constructor.prototype.slide
+
+  $.fn.carousel.Constructor.prototype.slide = function (type, next) {
+    var $active = this.$element.find('.active')
+      , $next = next || $active[type]()
+      , isCycling = this.interval
+      , direction = type == 'next' ? 'left' : 'right'
+      , fallback  = type == 'next' ? 'first' : 'last'
+      , that = this
+      , e = $.Event('slide')
+      , duration = this.options.duration
+      , easing = this.options.easing
+    
+    if (this.options.adjustHeight) {
+      this.$element.css({height: $active.height()})
+      this.$element.filter('.slide').one('slid', function () {
+        var $element = $(this)
+          , height = $element.find('.active').height()
+        // Adjust the height of the carousel for the active content:
+        if (!$.support.transition)
+          $element.animate({height: height}, duration, easing)
+        else
+          $(this).css({height: height})
+      })
+    }
+    
+    if(!$.support.transition && this.$element.hasClass('slide')) {
+      this.$element.find('.item').stop(true, true);
+
+      this.sliding = true
+
+      isCycling && this.pause()
+
+      $next = $next.length ? $next : this.$element.find('.item')[fallback]()
+
+      if ($next.hasClass('active')) return
+
+      this.$element.trigger(e)
+      if (e.isDefaultPrevented()) return
+      $next.addClass(type)
+      $active.animate({left: (direction == 'right' ? '100%' : '-100%')}, duration, easing, function(){
+        $active.removeClass(['active', direction].join(' ')).css('left', '')
+        that.sliding = false
+        setTimeout(function () { that.$element.trigger('slid') }, 0)
+      })
+      $next.animate({left: '0%'}, duration, easing, function(){
+        $next.removeClass([type, direction].join(' ')).addClass('active').css('left', '')
+      })
+
+      isCycling && this.cycle()
+
+      return this
+    }
+    
+    return originalSlide.call(this, type, next)
+  }
+    
+}(window.jQuery);
+

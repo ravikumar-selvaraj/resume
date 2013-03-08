@@ -8,13 +8,13 @@
                         <h2 class="text-right">Portfolio</h2>
                      <?php if(!empty($portimg)){  ?>
                         
-                        <div class="exp-box clearfix">
+                        
                         <h3><a>Photo's</a></h3>
-                        <?php     
+                        <?php     $p=1;  
                         foreach($portimg as $portimg) { 
                         //pr($portimg);
                         ?>
-                         
+                         <div class="exp-box clearfix" onmouseover="exp_div_show('p_photo_edit_<?php echo $p;?>','p_photo_del_<?php echo $p;?>')" onmouseout="exp_div_hide('p_photo_edit_<?php echo $p;?>','p_photo_del_<?php echo $p;?>')">
                         <div class="port-imge">
                          <h5><?php echo $portimg['Portimage']['image_title']?></h5>
                          
@@ -25,22 +25,36 @@
                         </a>
                         </li>
                         </ul>
-                        </div>
-                        <?php }?>
-                        </div>
+                        
+                        <?php /*?><a  href=""  class="pull-right"   data-toggle="modal" data-target="#editportimg<?php echo $portimg['Portimage']['piid']; ?>" >Edit</a> 
+                  <?php echo $this->Element('editportimage',array('piid'=>$portimg['Portimage']['piid'])); ?><?php */?>
+                <?php  if(isset($_SESSION['User']['uid'])) { if(($_SESSION['User']['username']==Configure::read('userpage'))) { ?>   
+                    <div class="editdelete">
+              
+                <a  href=""  class="pull-right"   data-toggle="modal" data-target="#delete_Portimage<?php echo $portimg['Portimage']['piid']; ?>" id="p_photo_del_<?php echo $p;?>" style="padding-left:3px;"  >Delete</a>   <a  href=""  class="pull-right"   data-toggle="modal" data-target="#editportimg<?php echo $portimg['Portimage']['piid']; ?>"  id="p_photo_edit_<?php echo $p;?>"  >Edit | </a>   
+                 </div>
+                  <?php echo $this->Element('editportimage',array('piid'=>$portimg['Portimage']['piid'])); ?>
+                  <?php echo $this->Element('delete',array('did'=>$portimg['Portimage']['piid'],'model'=>'Portimage','wid'=>'piid','rid'=>Configure::read('userpage').'/portfolio')); ?>
+                  
+                  <?php } } ?>  
+                        </div> </div> 
+                        
+                        <?php $p++; }?>
+                        
+                       
+                        
                        
                     <?php } ?>
                     <!--Display Portfolio Video-->
                      <?php if(!empty($portvid)){  ?>
                         <div class="proff-exp ">
-                        <div class="exp-box clearfix">
+                        
                         <h3><a>Video's</a></h3>
-                        <?php     
-                        //pr($portvid);
+                        <?php   $v=1;    
                         foreach($portvid as $portvid) { 
                     
                         ?>
-                         
+                         <div class="exp-box clearfix" onmouseover="exp_div_show('p_video_edit_<?php echo $v;?>','p_video_del_<?php echo $v;?>')" onmouseout="exp_div_hide('p_video_edit_<?php echo $v;?>','p_video_del_<?php echo $v;?>')">
                         <div class="port-imge">
                          <h5><?php echo $portvid['Portvideo']['video_title']?></h5>
                        
@@ -53,19 +67,29 @@
                         </td></tr>
                         </table>
                         </div>
-                        <?php }?>
-                        </div>
+                           <?php /*?> <a  href=""  class="pull-right"   data-toggle="modal" data-target="#editportvideo<?php echo $portvid['Portvideo']['pvid']; ?>" >Edit</a> 
+                  <?php echo $this->Element('editportvideo',array('pv'=>$portvid['Portvideo']['pvid'])); ?><?php */?>
+                  
+                    <div class="editdelete"> 
+                         <a  href=""  class="pull-right"   data-toggle="modal" data-target="#delete_Portvideo<?php echo $portvid['Portvideo']['pvid']; ?>" id="p_video_del_<?php echo $v;?>" style="padding-left:3px;"  >Delete</a>
+                <a  href=""  class="pull-right"   data-toggle="modal" data-target="#editportvideo<?php echo $portvid['Portvideo']['pvid']; ?>" id="p_video_edit_<?php echo $v;?>" >Edit  | </a> 
+               
+                 </div>
+                  <?php echo $this->Element('editportvideo',array('pv'=>$portvid['Portvideo']['pvid'])); ?>
+                  <?php echo $this->Element('delete',array('did'=>$portvid['Portvideo']['pvid'],'model'=>'Portvideo','wid'=>'pvid','rid'=>Configure::read('userpage').'/portfolio')); ?>
+                        
+                        </div><?php $v++;}?>
                         </div>
                     <?php } ?>
                     <!--Display Portfolio Document-->
                      <?php if(!empty($portdoc)){  ?>
                         <div class="proff-exp ">
-                        <div class="exp-box clearfix">
+                      
                         <h3><a>Document's</a></h3>
-                        <?php     
+                        <?php     $g = 1;
                         //pr($portdoc);
                         foreach($portdoc as $portdoc) { 
-                        ?>
+                        ?>  <div class="exp-box clearfix" onmouseover="exp_div_show('p_doc_edit_<?php echo $g;?>','p_doc_del_<?php echo $g;?>')" onmouseout="exp_div_hide('p_doc_edit_<?php echo $g;?>','p_doc_del_<?php echo $g;?>')">
                         <div class="port-imge">
                          <h5><?php echo $portdoc['Portdocument']['document_title']?></h5>
                         <table cellpadding="0" cellspacing="5" width="100%">
@@ -83,22 +107,33 @@
                         
                         </table>
                         </div>
-                        <?php }?>
-                        </div>
+                        <?php /*?>  <a  href=""  class="pull-right"   data-toggle="modal" data-target="#editportdoc<?php echo $portdoc['Portdocument']['pdid']; ?>" >Edit</a> 
+                  <?php echo $this->Element('editportdocu',array('pd'=>$portdoc['Portdocument']['pdid'])); ?><?php */?>
+                  
+                   <div class="editdelete"> <a  href=""  class="pull-right"   data-toggle="modal" data-target="#delete_Portdocument<?php echo $portdoc['Portdocument']['pdid']; ?>" id="p_doc_del_<?php echo $g;?>"  style="padding-left:3px;" >Delete</a>
+                <a  href=""  class="pull-right"   data-toggle="modal" data-target="#editportdoc<?php echo $portdoc['Portdocument']['pdid']; ?>" id="p_doc_edit_<?php echo $g;?>" >Edit | </a>  
+               
+                 </div>
+                 
+                  <?php echo $this->Element('editportdocu',array('pd'=>$portdoc['Portdocument']['pdid'])); ?>
+                  <?php echo $this->Element('delete',array('did'=>$portdoc['Portdocument']['pdid'],'model'=>'Portdocument','wid'=>'pdid','rid'=>Configure::read('userpage').'/portfolio')); ?>
+                        
+                        </div><?php $g++;}?>
                         </div>
                     <?php } ?>
+                    
                      <!--Display Portfolio Audio-->
                      <?php
 					 
 					  if(!empty($portaud)){  ?>
                         <div class="proff-exp ">
-                        <div class="exp-box clearfix">
+                       
                         <h3><a>Audio</a></h3>
                         <?php     
-                      
+                      $au = 1;
                         foreach($portaud as $portaud) { 
 						// pr($portaud);
-                        ?>
+                        ?> <div class="exp-box clearfix" onmouseover="exp_div_show('p_aud_edit_<?php echo $au;?>','p_aud_del_<?php echo $au;?>')" onmouseout="exp_div_hide('p_aud_edit_<?php echo $au;?>','p_aud_del_<?php echo $au;?>')">
                         <div class="port-imge">
                          <h5><?php echo $portaud['Portaudio']['audio_title']?></h5>
                         <table cellpadding="0" cellspacing="5" width="100%">
@@ -117,9 +152,20 @@
                         </tr>
                         
                         </table>
+                       <?php /*?> <a  href=""  class="pull-right"   data-toggle="modal" data-target="#editportaudio<?php echo $portaud['Portaudio']['paid']; ?>" >Edit</a> 
+                  <?php echo $this->Element('editportaudio',array('pa'=>$portaud['Portaudio']['paid'])); ?><?php */?>
+                  
+                   <div class="editdelete"> <a  href=""  class="pull-right"   data-toggle="modal" data-target="#delete_Portaudio<?php echo $portaud['Portaudio']['paid']; ?>" id="p_aud_del_<?php echo $au;?>"  style="padding-left:3px;" >Delete</a>
+                <a  href=""  class="pull-right"   data-toggle="modal" data-target="#editportaudio<?php echo $portaud['Portaudio']['paid']; ?>" id="p_aud_edit_<?php echo $au;?>" >Edit | </a> 
+               
+                 </div>
+                 
+                  <?php echo $this->Element('editportaudio',array('pa'=>$portaud['Portaudio']['paid'])); ?>
+                  <?php echo $this->Element('delete',array('did'=>$portaud['Portaudio']['paid'],'model'=>'Portaudio','wid'=>'paid','rid'=>Configure::read('userpage').'/portfolio')); ?>
+                  
                         </div>
-                        <?php }?>
-                        </div>
+                       
+                        </div> <?php $au++;}?>
                         </div>
                     <?php } ?>
                      <!--Display Portfolio Presentation-->
@@ -128,13 +174,13 @@
 					 
 					  if(!empty($portpre)){  ?>
                         <div class="proff-exp ">
-                        <div class="exp-box clearfix">
+                        
                         <h3><a>Audio</a></h3>
                         <?php     
-                      
+                      $l =1;
                         foreach($portpre as $pres) { 
 						// pr($portaud);
-                        ?>
+                        ?><div class="exp-box clearfix" onmouseover="exp_div_show('p_pre_edit_<?php echo $l;?>','p_pre_del_<?php echo $l;?>')" onmouseout="exp_div_hide('p_pre_edit_<?php echo $l;?>','p_pre_del_<?php echo $l;?>')">
                         <div class="port-imge">
                          <h5><?php echo $pres['Portpresent']['present_title']?></h5>
                         <table cellpadding="0" cellspacing="5" width="100%">
@@ -156,9 +202,20 @@
                         </tr>
                         
                         </table>
-                        </div>
-                        <?php }?>
-                        </div>
+                        <?php /*?> <a  href=""  class="pull-right"   data-toggle="modal" data-target="#editportpres<?php echo $pres['Portpresent']['ppid']; ?>" >Edit</a> 
+                  <?php echo $this->Element('editportpres',array('pp'=>$pres['Portpresent']['ppid'])); ?><?php */?>
+                  
+                    <div class="editdelete">  <a  href=""  class="pull-right"   data-toggle="modal" data-target="#delete_Portpresent<?php echo $pres['Portpresent']['ppid']; ?>" id="p_pre_del_<?php echo $l;?>" style="padding-left:3px;"  >Delete</a>
+               <a  href=""  class="pull-right"   data-toggle="modal" data-target="#editportpres<?php echo $pres['Portpresent']['ppid']; ?>" id="p_pre_edit_<?php echo $l;?>" >Edit  |</a>
+              
+                 </div>
+                 
+                   <?php echo $this->Element('editportpres',array('pp'=>$pres['Portpresent']['ppid'])); ?>
+                  <?php echo $this->Element('delete',array('did'=>$pres['Portpresent']['ppid'],'model'=>'Portpresent','wid'=>'ppid','rid'=>Configure::read('userpage').'/portfolio')); ?>
+                  
+                        </div> </div>
+                        <?php $l++;}?>
+                       
                         </div>
                     <?php } ?>
                     

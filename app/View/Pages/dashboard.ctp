@@ -26,10 +26,16 @@
                             <div class="span7 resume_head">
                  <h3><?php echo $this->Html->link(''.$user['User']['firstname']."\t".$user['User']['lastname']."-".$user['User']['resume_title'].'',array('controller'=>'','action'=>$user['User']['username'])); ?></h3>
                               <?php /*?>  <h3><a href=""> <?php echo $user['User']['firstname']."\t".$user['User']['lastname'];?> - <?php echo $user['User']['resume_title'];?></a></h3><?php */?>
-                                <small class="muted">Last updated:<?php echo date("F  j,Y", strtotime($_SESSION['User']['created_date']));?></small>  
+                                <small class="muted">Last updated:<?php echo date("F  j,Y", strtotime($_SESSION['User']['created_date']));?></small> 
+                                 <?php if($_SESSION['percentage']!=100) { ?>
                                 <div class="progress progress-striped progress-danger active">
-                                    <div class="bar" style="width:  <?php echo $_SESSION['percentage'].'%';?>;">Resume Completion  <?php echo $_SESSION['percentage'];?>%</div>
+                                    <div class="bar" style="width:<?php echo $_SESSION['percentage'].'%';?>;">Resume Completion  <?php echo $_SESSION['percentage'];?>%</div>
                                 </div>
+                                 <?php } else { ?>
+                                  <div class="progress progress-striped progress-success active">
+                                    <div class="bar" style="width:<?php echo $_SESSION['percentage'].'%';?>;">Resume Completed  <?php echo $_SESSION['percentage'];?>%</div>
+                                </div>
+                                <?php } ?>
                                 
                                 <a href="<?php echo BASE_URL?><?php echo $user['User']['username'];?>" style="text-decoration:none;color:#fff;">
                                  <button class="btn btn-inverse " type="button">Update </button></a>

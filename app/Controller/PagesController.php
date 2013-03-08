@@ -39,7 +39,7 @@ class PagesController extends AppController {
 	public $name = 'Pages';
 	public $helpers = array('Session');
 	public $layout = 'webpage';
-    public $uses = array('User','Country','Skill','Education','Experience','Interest','Portfolio','Portimage','Portaudio','Portdocument','Portpresent','Portvideo','Profileview');
+    public $uses = array('User','Country','Skill','Education','Experience','Interest','Portfolio','Portimage','Portaudio','Portdocument','Portpresent','Portvideo','Profileview','Userdashboard','Recommentation','Recomment');
 	//public $paginate = array('limit'=>1);
 
 /**
@@ -72,6 +72,24 @@ class PagesController extends AppController {
 		
 		 $this->render(false);
 	 }
+	 
+	 function addrec()
+	 {
+		  if($this->request->is('post')){
+				 $this->request->data['user_key'] = $this->str_rand();
+				 $this->request->data['password'] = $this->ecrypt($this->request->data['password']);
+				  $this->request->data['status'] = 'Inactive';
+				 
+				 $this->User->save($this->request->data);
+				 $link = BASE_URL.'/pages/useractivation/'.$this->request->data['user_key'];
+				 $options = array($this->request->data['email'],$this->request->data['email'],$link);
+				 $this->emailoptions(2,$options);
+				 $this->Session->setFlash(__('Please check your mail to complete the registration process'));
+				 $this->redirect(array('action'=>'index'));
+			 }
+	 }
+	 
+	 
 	 
 	 public function signup()
 	 {
@@ -185,6 +203,45 @@ class PagesController extends AppController {
 			$this->redirect(array('controller'=>'pages','action'=>'index'));
 		}
 	 }
+	 
+	 public function publish_resume(){
+		 $this->layout = '';
+		 if($this->User->save($this->request->data)){
+			$user_details = $this->User->find('first',array('conditions'=>array('uid'=>$this->request->data['uid'])));
+			$this->Session->delete('User');
+			$this->Session->write($user_details);
+		 echo "success";
+		 }
+		 else
+		 echo "failed";
+		 $this->render(false);
+	 }
+	 
+	 public function broadcast_resume(){
+		 $this->layout = '';
+		 if($this->User->save($this->request->data)){
+			$user_details = $this->User->find('first',array('conditions'=>array('uid'=>$this->request->data['uid'])));
+			$this->Session->delete('User');
+			$this->Session->write($user_details);
+		 echo "success";
+		 }
+		 else
+		 echo "failed";
+		 $this->render(false);
+	 }
+	 
+	 public function protect_resume(){
+		 $this->layout = '';
+		 if($this->User->save($this->request->data)){
+			$user_details = $this->User->find('first',array('conditions'=>array('uid'=>$this->request->data['uid'])));
+			$this->Session->delete('User');
+			$this->Session->write($user_details);
+		 echo "success";
+		 }
+		 else
+		 echo "failed";
+		 $this->render(false);
+	 }
 	
 	public function signin()
 	{
@@ -261,6 +318,25 @@ class PagesController extends AppController {
 				$user=$this->User->find('first',array('conditions'=>array('user_key'=>$this->params['pass'][0])));
 				$this->Session->write($user);
 				$this->Session->write(array("Userlogin"=>'True'));
+				
+				$user_dashboard_array = array('experience','education','portfolio','skills','interest');
+				$i = 1; $j = 1;
+				foreach($user_dashboard_array as $dash){
+					$this->request->data['uid'] = $user['User']['uid'];
+					$this->request->data['widget'] = $dash;
+					if($i<=3)
+					$this->request->data['column_name'] = 'span5 middle-col';
+					else 
+					$this->request->data['column_name'] = 'span4 right-col';
+					$this->request->data['order'] = $j;
+					
+					$this->Userdashboard->saveAll($this->request->data);
+					$i++; $j++;
+					if($j>3)
+					$j = 1;
+				}
+				
+				
 				$this->redirect(array('controller'=>'pages','action'=>'dashboard'));
 			}
 	  }
@@ -449,9 +525,80 @@ class PagesController extends AppController {
 				echo 'yes';
 				}
 	  
-	 
+	 public function update_dashboard() {
+		 $this->layout = '';
+		 $items=$_REQUEST['items'];
+		 $i = 0;
+		 foreach($items as $item){
+			 $dashes = $this->Userdashboard->find('first',array('conditions'=>array('uid'=>$this->params['pass'][0],'widget'=>$item['id'])));
+			 $this->request->data['udid'] = $dashes['Userdashboard']['udid'];
+			 $this->request->data['uid'] = $this->params['pass'][0];
+			 $this->request->data['widget'] = $item['id'];
+			 $this->request->data['column_name'] = $item['column_no'];
+			 $this->request->data['order'] = $item['order'];
+			 $this->Userdashboard->saveAll($this->request->data);
+			 $i++;
+		 }
+		 $this->render(false);
+	 }
 	  
+	public function update_experience() {
+		$this->layout = '';
+		$item=$_REQUEST['items'];
+		$experiences = $this->Experience->find('all',array('conditions'=>array('uid'=>$this->params['pass'][0])));
+		$i=0;
+		foreach($experiences as $exp){
+			$this->request->data['eid'] = $item[$i]['id'];
+			$this->request->data['order'] = $item[$i]['order'];
+			$this->Experience->save($this->request->data);
+			$i++;
+		}
+		$this->render(false);
+	}
 	
+	public function update_education() {
+		$this->layout = '';
+		$item=$_REQUEST['items'];
+		//pr($item);
+		$educations = $this->Education->find('all',array('conditions'=>array('uid'=>$this->params['pass'][0])));
+		$i=0;
+		foreach($educations as $exp){
+			$this->request->data['eid'] = $item[$i]['id'];
+			$this->request->data['order'] = $item[$i]['order'];
+			$this->Education->save($this->request->data);
+			$i++;
+		}
+		$this->render(false);
+	}
 	
+	public function update_interest() {
+		$this->layout = '';
+		$item=$_REQUEST['items'];
+		//pr($item);
+		$interests = $this->Interest->find('all',array('conditions'=>array('uid'=>$this->params['pass'][0])));
+		$i=0;
+		foreach($interests as $exp){
+			$this->request->data['iid'] = $item[$i]['id'];
+			$this->request->data['order'] = $item[$i]['order'];
+			$this->Interest->save($this->request->data);
+			$i++;
+		}
+		$this->render(false);
+	}
+	
+	public function update_skills() {
+		$this->layout = '';
+		$item=$_REQUEST['items'];
+		//pr($item);
+		$skills = $this->Skill->find('all',array('conditions'=>array('uid'=>$this->params['pass'][0])));
+		$i=0;
+		foreach($skills as $exp){
+			$this->request->data['sid'] = $item[$i]['id'];
+			$this->request->data['order'] = $item[$i]['order'];
+			$this->Skill->save($this->request->data);
+			$i++;
+		}
+		$this->render(false);
+	}
 
 }

@@ -120,6 +120,20 @@ header{
     background: linear-gradient(to right, #e75239 0%,#e75239 10%,#ff961c 10%,#ff961c 30%,#ffcc27 30%,#ffcc27 45%,#fce62f 45%,#fce62f 50%,#cde35b 50%,#cde35b 70%,#82cc33 70%,#82cc33 85%,#41bece 85%,#41bece 100%);
 }
 
+ a.site_links{
+    color: #d6d6d6;
+    margin-left: 15px;
+ }
+
+a.return-dash{
+      border-left: 1px solid #989090;
+    border-right: 1px solid #989090;
+    display: inline-block;
+    margin: 0 0 0 20px;
+    padding: 0 10px;
+}
+
+
 
 /* ==========================================================================
    MAIN SLIDER
@@ -151,6 +165,7 @@ header{
     border-radius: 4px;
     margin: 25px auto;
     display: block;
+	width:225px;
 }
 
 .slide{
@@ -227,7 +242,7 @@ header{
 }
 
 .acc_settings_menu .dropdown-menu{
-    left:-60px;
+    left:-35px;
     top: 30px;
 }
 
@@ -278,7 +293,9 @@ header{
 }
 
 .completeion-tips{
-    margin-top: 20px;}   
+	margin-top: 20px;
+}   
+
 
 .completeion-tips ul{
     column-count: 2;
@@ -340,7 +357,7 @@ header{
 }
 
 .newsletter{
-    background: #F1F1F1 url(../img/mail.png) no-repeat right bottom;
+    background: #F1F1F1 url(../../img/mail.png) no-repeat right bottom;
 }
 
 .newsletter, .newsletter label{
@@ -385,6 +402,111 @@ h2#myModalLabel{
 #update-resume form{
 	margin-bottom:0;
 }
+
+/* ==========================================================================
+  Account Settings styles
+   ========================================================================== */
+.alert h4{
+    margin: 10px 0;
+}
+
+
+
+/* ==========================================================================
+  Career advice Styles
+   ========================================================================== */
+
+
+ .right-col h5{
+    margin-top: 0;
+ }
+
+.right-col .well{
+    padding: 10px;
+}
+
+.search .form-search{
+    margin: 0;
+}
+
+.article ul, .article p{
+    font-size: 13px;
+    color: #7E7E7E;
+}
+
+.article h4{
+    color: #636161;
+    margin-top: 25px;
+}
+
+.popular-post{
+    border-bottom: #D6D6D6 1px solid;
+    padding-bottom: 10px;
+}
+
+.popular-post img{
+    margin-right: 10px;
+}
+
+.popular-post p{
+    font-size: 12px;
+}
+#tags ul {
+    margin: 1em 0;
+    text-align: center;
+}
+#tags li {
+    display: inline;
+    list-style: none outside none;
+    margin: 0;
+    padding: 0;
+}
+#tags li a {
+    padding: 0 2px;
+    text-decoration: none;
+}
+
+.tag1 {
+    font-size: 100%;
+}
+.tag2 {
+    font-size: 120%;
+}
+.tag3 {
+    font-size: 140%;
+}
+.tag4 {
+    font-size: 160%;
+}
+.tag5 {
+    font-size: 180%;
+}
+#tags .alt {
+    background: none repeat scroll 0 0 transparent;
+    padding: 0;
+    text-align: left;
+}
+#tags .alt li {
+    background: none repeat scroll 0 0 #EFEFEF;
+    display: block;
+    padding: 2px 10px;
+}
+#tags .alt .tag1, #tags .alt .tag2, #tags .alt .tag3, #tags .alt .tag4, #tags .alt .tag5 {
+    font-size: 100%;
+}
+
+/* ==========================================================================
+    Features styles
+   ========================================================================== */
+
+.features .thumbnail a:hover, .features .thumbnail a:focus{
+    text-decoration: none;
+    outline: none;
+}
+.thumbnail:hover{
+    background: #F4F4F4;
+}
+
 /* ==========================================================================
    Footer styles
    ========================================================================== */

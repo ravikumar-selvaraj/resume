@@ -30,7 +30,7 @@
         return this.each(function() {
             
             var self = this;
-            var wrapper = $('<div id="display">')
+            var wrapper = $('<div class="display">')
                             .css({
                                 "width": settings.imagewidth + "px",
                                 "height": settings.imageheight + "px",
@@ -41,7 +41,7 @@
                                 "overflow": "hidden"
                             });
                             
-            var filename = $('<input class="file" id="hai"  readonly>')
+            var filename = $('<input class="file" class="hai"  readonly>')
                              .addClass($(self).attr("class"))
                              .css({
                                  "display": "none",
@@ -51,8 +51,8 @@
 							 
 							 
 							$(".upload").change(function(){
-							$('#submit').show();
-							$('#display').css({"display": "none"});
+							$('.submit1').show();
+							$('.display').css({"display": "none"});
 							$('.file').css({"display": ""});
 							});				 
 

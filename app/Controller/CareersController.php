@@ -14,8 +14,9 @@ class CareersController extends AppController {
  * @var array
  */
 	public $components = array('Session','Image');
-	//public $layout = 'admin';
+	public $layout = 'admin';
 	public $paginate = array('limit'=>5);
+	public $uses = array('Career','Tag');
 
 
 /**
@@ -24,17 +25,36 @@ class CareersController extends AppController {
  * @return void
  */
  
- 	/*public function checkadmin(){
+ 	public function checkadmin(){
 		$check=$this->Session->read('Adminlogin');
 		if(empty($check) && $check !='True'){			
 			$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
 		}
-	}*/
+	}
 	
 	public function index() {
 		$this->layout = 'webpage';
 		$this->Career->recursive = 0;
+		if($this->request->is('post')){
+			$this->paginate = array('conditions' => array('title LIKE ' =>"%".$this->request->data('search')."%"),'limit' =>5);
+			$this->set('careers', $this->paginate());
+		}
+		if(!empty($this->params['pass'][0]) && $this->params['pass'][0] != 'tags' ){
+			$this->paginate = array('conditions' => array('category LIKE ' =>"%".$this->params['pass'][0]."%"),'limit' =>5);
+			$this->set('careers', $this->paginate());
+		}
+		else if(!empty($this->params['pass'][0]) && $this->params['pass'][0] == 'tags' ){
+			$this->paginate = array('conditions' => array('tag LIKE ' =>"%".$this->params['pass'][1]."%"),'limit' =>5);
+			$this->set('careers', $this->paginate());
+		}
+		else
 		$this->set('careers', $this->paginate());
+		
+		// for most-popular
+		//$this->paginate = array('limit' =>3, 'order' => array('view' => 'desc'));
+		$this->set('populars', $this->Career->find('all',array('limit'=>3,'order'=>'view desc')));
+		$this->set('tags',$this->Tag->find('all'));
+		
 	}
 
 /**
@@ -45,11 +65,17 @@ class CareersController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-		if (!$this->Career->exists($id)) {
-			throw new NotFoundException(__('Invalid career'));
-		}
-		$options = array('conditions' => array('Career.' . $this->Career->primaryKey => $id));
-		$this->set('career', $this->Career->find('first', $options));
+		$this->layout = 'webpage';
+		$options = array('conditions' => array('key' => $id));
+		$careers = $this->Career->find('first', $options);
+		$this->set('career',$careers);
+		
+		$this->request->data['cid'] = $careers['Career']['cid'];
+		$this->request->data['view'] = $careers['Career']['view'] + 1;
+		$this->Career->save($this->request->data);
+		$this->set('populars', $this->Career->find('all',array('limit'=>3,'order'=>'view desc')));
+		$this->set('tags',$this->Tag->find('all'));
+		
 	}
 
 /**
@@ -142,7 +168,10 @@ class CareersController extends AppController {
 		}
 		$options = array('conditions' => array('Career.' . $this->Career->primaryKey => $id));
 		$this->set('careers', $this->Career->find('first', $options));
+		
+		
 	}
+	
 
 /**
  * admin_add method
@@ -153,12 +182,15 @@ class CareersController extends AppController {
 	
 	public function admin_add() {
 		$this->checkadmin();
+		$this->set('tags',$this->Tag->find('all'));
 		if ($this->request->is('post')) {
 			if(!empty($this->request->data)){ 
 			//pr( $this->request->data);exit;				
 				if($this->request->data['image']['name'] !=''){
 					$this->request->data['image'] = $this->Image->upload_image_and_thumbnail($this->request->data['image'],573,380,150,150, "career-image");	
 				}
+				$this->request->data['tag'] = implode(',',$this->request->data['tag']);
+				$this->request->data['key'] = $this->str_rand();
 				$this->Career->save($this->request->data);
 				$this->Session->setFlash(__('The Career has been saved'));
 				$this->redirect(array('action' => 'index'));
@@ -177,6 +209,7 @@ class CareersController extends AppController {
  */
 	public function admin_edit($id = null) {
 		$this->checkadmin();
+		$this->set('tags',$this->Tag->find('all'));
 		if (!$this->Career->exists($id)) {
 			throw new NotFoundException(__('Invalid career'));
 		}
@@ -193,7 +226,7 @@ class CareersController extends AppController {
 				$edit=$this->Career->find('first', $options);
 				$this->request->data['image']=$edit['Career']['image'];
 				}
-				//pr($this->request->data);exit;
+				$this->request->data['tag'] = implode(',',$this->request->data['tag']);
 				$this->Career->save($this->request->data);
 				$this->Session->setFlash(__('The Career has been updated'));
 				$this->redirect(array('action' => 'index'));

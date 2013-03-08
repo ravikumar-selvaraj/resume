@@ -12,12 +12,11 @@
 ?>
 
 <script type="text/javascript">
-	jQuery(document).ready(function(){		
+	jQuery(document).ready(function(){	
 		jQuery("#myblog").validationEngine();
 		jQuery("#mycareer").validationEngine();
 		jQuery("#mycampaign").validationEngine();
 		jQuery("#users").validationEngine();
-		jQuery("#myblog").validationEngine('attach', {autoPositionUpdate : true});
 	});
 </script>
    
@@ -111,8 +110,8 @@
             <li ><a href="<?php echo BASE_URL;?>admin/staticpages">Static Pages</a></li>
             <li ><a href="<?php echo BASE_URL;?>admin/emailcampaigns">Email Campaign</a></li>
             <li ><a href="<?php echo BASE_URL;?>admin/users">User Management</a></li>
-            
-            
+            <li ><a href="<?php echo BASE_URL;?>admin/sitecontacts">Contact Management</a></li>
+			<li ><a href="<?php echo BASE_URL;?>admin/tags">Tags Management</a></li>
         </ul>
 
        <!-- <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Account<span class="label label-info">+3</span></a>

@@ -11,7 +11,7 @@ class UsersController extends AppController {
 		public $name = 'Users';
 		public $helpers = array('Session','Html');
 		public $layout = 'resume';
-		public $uses = array('User','Country','Skill','Education','Experience','Interest','Mylink','Portimage','Portvideo','Portdocument','Portaudio','Portpresent','Contact','Profileview');
+		public $uses = array('User','Country','Skill','Education','Experience','Interest','Mylink','Portimage','Portvideo','Portdocument','Portaudio','Portpresent','Contact','Profileview','Userdashboard','Recommentation','Recomment');
 		//public $paginate = array('limit'=>1);
 		public $components = array('Lastrss','RequestHandler','Session','Image');
 	
@@ -213,17 +213,29 @@ class UsersController extends AppController {
  * @return void
  */
 	public function admin_delete($id = null) {
+		$this->checkadmin();
+		$this->layout = '';
 		$this->User->id = $id;
-		if (!$this->User->exists()) {
-			throw new NotFoundException(__('Invalid user'));
-		}
-		$this->request->onlyAllow('post', 'delete');
-		if ($this->User->delete()) {
-			$this->Session->setFlash(__('User deleted'));
-			$this->redirect(array('action' => 'index'));
-		}
-		$this->Session->setFlash(__('User was not deleted'));
+		$this->User->delete(array('uid'=>$id));
+		$this->Session->setFlash(__('User deleted'));
 		$this->redirect(array('action' => 'index'));
+		$this->render(false);
+	}
+	
+	public function general_settings() {
+		$this->layout = '';
+		$this->request->data['uid'] = $_REQUEST['uid'];
+		$this->request->data['resume_title'] = $_REQUEST['resume_title'];
+		$this->request->data['resume_desc'] = $_REQUEST['resume_desc'];
+		if($this->User->save($this->request->data)){
+			$user_details = $this->User->find('first',array('conditions'=>array('uid'=>$this->request->data['uid'])));
+			$this->Session->delete('User');
+			$this->Session->write($user_details);
+			echo "success";
+		}
+		else
+		echo "failed";
+		$this->render(false);
 	}
 	
 	function viewpdfdup()
@@ -251,7 +263,7 @@ class UsersController extends AppController {
 		
 		
 		
-		$exp =$this->Experience->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$exp =$this->Experience->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
 		$this->set('exp', $exp);
 		
 		$catlist =$this->Country->find('all');
@@ -260,13 +272,13 @@ class UsersController extends AppController {
         $cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
 		$this->set('cou',$cou);	
 		
-		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
 		$this->set('skill', $skills);
 		
-		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
 		$this->set('int', $int);
 		
-		$edu =$this->Education->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$edu =$this->Education->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
 		$this->set('edu', $edu);
 		
 		$portimg =$this->Portimage->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
@@ -284,6 +296,9 @@ class UsersController extends AppController {
 		
 		$portdoc =$this->Portdocument->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('portdoc', $portdoc);
+		
+		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('recmd', $recmd);
 		
 		$co=count($portdoc);
 		$co+=count($portvid);
@@ -306,6 +321,13 @@ class UsersController extends AppController {
 		
 		
 	 
+	}
+	
+	function cimage(){
+		$this->layout='';
+		$eid=$_REQUEST['eid'];
+		$exp =$this->Experience->find('first', array('conditions' => array('eid'=>$eid)));
+		$this->set('exp', $exp);
 	}
 	
 	public function blog()
@@ -386,11 +408,13 @@ class UsersController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {	
 		 if(!empty($this->request->data)){
+			 $options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
+					$data = $this->User->find('first', $options);
 			if($this->request->data['image']['name'] !=''){
+				$this->Image->delete_image($data['User']['image'],"user-images");
 					$this->request->data['image'] = $this->Image->upload_image_and_thumbnail($this->request->data['image'],100,100,80,80, "user-images");	
 				} else {
-						$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-					$data = $this->User->find('first', $options);
+						
 					$this->request->data['image'] = $data['User']['image'];
 				}
 			if ($this->User->save($this->request->data)) {
@@ -464,6 +488,7 @@ class UsersController extends AppController {
 	
 	
 	public function exp()
+	
 	{
 	       if(!empty($this->request->data)){
 			$resp = implode(',',$this->request->data['resp']);
@@ -575,6 +600,8 @@ class UsersController extends AppController {
 		
 		$exp =$this->Experience->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('exp', $exp);
+		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('recmd', $recmd);
 
 	    }
 		public function educations()
@@ -588,6 +615,15 @@ class UsersController extends AppController {
 		
 		$edu =$this->Education->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('edu', $edu);
+		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('recmd', $recmd);
+		$recedu23 =$this->Education->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('recedu23', $recedu23);
+		
+		$new1 =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
+		
+		$recedu =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recedu', $recedu);
 
 	    }
 		
@@ -602,6 +638,8 @@ class UsersController extends AppController {
 		
 		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('skill', $skills);
+		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('recmd', $recmd);
 
 	    }
 		
@@ -616,6 +654,8 @@ class UsersController extends AppController {
 		
 		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('int', $int);
+		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('recmd', $recmd);
 			
 
 	    }
@@ -643,6 +683,8 @@ class UsersController extends AppController {
 		
 		$portpre = $this->Portpresent->find('all', array('conditions' => array('Portpresent.uid' =>$new['User']['uid'])));
 		$this->set('portpre', $portpre);	
+		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('recmd', $recmd);
 
 	    }
 		
@@ -673,20 +715,34 @@ class UsersController extends AppController {
 		$this->layout='';
 		$this->render(false);
 		$image= $this->Image->upload_image_and_thumbnail($_FILES['file'], 800,800,180,180, "users");
-	   /* $this->request->data['uid'] = $this->Session->read('User.uid');
+	    $this->request->data['eid'] = $this->params['pass']['0'];
 		$this->request->data['logo'] = $image;
-		$this->Experience->save($this->request->data);*/
-		echo "{ msg: '".$image."' }";
+		$this->Experience->save($this->request->data);
+		echo "{ msg: 'success',id:'".$this->params['pass']['0']."' }";
 		
 	}
 		
 	public function delimage() {
+		$this->layout='';$this->render(false);
+		$val=$_REQUEST['id'];		
+		if(isset($_REQUEST['id'])){
+			$new=$this->Experience->find(array('eid'=>$_REQUEST['id']));
+			$this->Image->delete_image($new['Experience']['logo'],"users");
+			$this->Experience->updateAll(array('logo'=>"''"),array('eid'=>$new['Experience']['eid']));
+		}
+		echo "done";
+		
+	}
+	function imgcheck(){
 		$this->layout='';
 		$this->render(false);
-		$val=$_REQUEST['imgval'];
-		$this->Image->delete_image($val,"users");
-		//$this->Experience->delete(array('first','conditions'=> array('Experience.uid'=>$this->Session->read('User.uid'))));
-		echo "done";
+		$val=$_REQUEST['eid'];		
+		if(isset($_REQUEST['eid'])){
+			$new=$this->Experience->find(array('eid'=>$_REQUEST['eid']));
+			echo $new['Experience']['logo'];
+		}else{
+			echo "";
+		}
 	}
 	
 	public function edit_resume()
@@ -696,16 +752,31 @@ class UsersController extends AppController {
 		if(isset($_REQUEST['exp']))
 		{
 		if(!empty($this->request->data)){
-		
-		pr($this->request->data);exit;
+			pr($this->request->data);exit;
+		        $pic =$this->Experience->find('first', array('conditions' => array('eid'=>$this->request->data['eid'])));
+				$this->set('pic', $pic);
+				if($this->request->data['logo']!='')
+				{
+				$this->request->data['logo'] = $this->request->data['logo'];
+				}
+				else {
+				$this->request->data['logo'] = $pic['Experience']['logo'];
+				}
+				$this->Experience->save($this->request->data);
+				
+				$this->Session->setFlash(__('Photo updated successfully'));
+				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 		}
 		}
 		
 		if(isset($_REQUEST['edu']))
 		{
 		if(!empty($this->request->data)){
-		
-		pr($this->request->data);exit;
+			$extra_curriculars = implode(',',$this->request->data['extra_curricular']);
+			$this->request->data['extra_curricular'] = $extra_curriculars;
+			$this->Education->save($this->request->data);
+			$this->Session->setFlash(__('Education Updated Successfully'));
+			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 		}
 		}
 		
@@ -713,7 +784,7 @@ class UsersController extends AppController {
 		{
 		if(!empty($this->request->data)){
 		
-		pr($this->request->data);exit;
+		
 		}
 		}
 		if(isset($_REQUEST['int']))
@@ -732,21 +803,86 @@ class UsersController extends AppController {
 		
 		if(isset($_REQUEST['photo']))
 		{
-		if(!empty($this->request->data)){
-		
-		pr($this->request->data);exit;
+			if(!empty($this->request->data))
+				{
+				$pic =$this->Portimage->find('first', array('conditions' => array('piid'=>$this->request->data['piid'])));
+				$this->set('pic', $pic);
+				if($this->request->data['image']['name'] !='')
+				{
+				$this->Image->delete_image($pic['Portimage']['image'],"portfolio-images");
+				$this->request->data['image'] = $this->Image->upload_image_and_thumbnail($this->request->data['image'],573,380,150,150, "portfolio-images");	
+				}
+				else {
+				$this->request->data['image'] = $pic['Portimage']['image'];
+				}
+				$this->Portimage->save($this->request->data);
+				$this->Session->setFlash(__('Photo updated successfully'));
+				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+				}
 		}
+		if(isset($_REQUEST['video']))
+		{
+			if(!empty($this->request->data))
+				{
+				$width = '/width="[0-9]*"/';
+				$height = '/height="[0-9]*"/';
+				$video_code = preg_replace(array($width, $height), array('width="380"','height="315"'), $this->request->data['video_code']);
+				$this->request->data['video_code'] = $video_code;
+				$this->Portvideo->save($this->request->data);
+				$this->Session->setFlash(__('Video updated successfully'));
+				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+					
+				}
 		}
+		if(isset($_REQUEST['audio']))
+		{
+			if(!empty($this->request->data))
+				{
+				$aud =$this->Portaudio->find('first', array('conditions' => array('paid'=>$this->request->data['paid'])));
+				$this->set('aud', $aud);
+				if($this->request->data['audio_file']['name'] !='')	
+				{
+				//pr($this->request->data);exit;	
+				//$this->Image->delete_image($aud['Portaudio']['audio_file'],"portfolio-audios");
+				move_uploaded_file($this->request->data['audio_file']['tmp_name'],'files/portfolio-audios/'.$this->request->data['audio_file']['name']);
+			    $this->request->data['audio_file'] = $this->request->data['audio_file']['name'];
+				}
+				
+				else
+				{
+					  $this->request->data['audio_file'] = $aud['Portaudio']['audio_file'];
+				//pr($this->request->data);exit;
+				}
+				$this->Portaudio->save($this->request->data);
+				$this->Session->setFlash(__('Audio updated successfully'));
+				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+					
+				}
+		}
+
 
 	}
 	
 	function viewpdf()
 	{
 		$this->layout = 'pdf'; 
-		
 		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
 		$this->set('new', $new);
+		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
+		$this->set('edu', $edu);
+		$exp =$this->Experience->findAll(array('uid'=>$new['User']['uid']));
+		$this->set('exp', $exp);
+		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('skill', $skills);
+		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('int', $int);
 		
+	}
+	function viewpdf2()
+	{
+		$this->layout = 'pdf'; 
+		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
+		$this->set('new', $new);
 		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
 		$this->set('edu', $edu);
 		$exp =$this->Experience->findAll(array('uid'=>$new['User']['uid']));
@@ -757,6 +893,207 @@ class UsersController extends AppController {
 		$this->set('int', $int);
 
 	}
+	
+	function viewdoc()
+	{
+		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
+		$this->set('new', $new);
+		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
+		$this->set('edu', $edu);
+		$exp =$this->Experience->findAll(array('uid'=>$new['User']['uid']));
+		$this->set('exp', $exp);
+		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('skill', $skills);
+		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('int', $int);
+		$this->layout = 'docu'; 
+		//$this->render();
+		
+	}
+	function viewdoc2()
+	{
+		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
+		$this->set('new', $new);
+		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
+		$this->set('edu', $edu);
+		$exp =$this->Experience->findAll(array('uid'=>$new['User']['uid']));
+		$this->set('exp', $exp);
+		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('skill', $skills);
+		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('int', $int);
+		$this->layout = 'docu'; 
+		//$this->render();
+
+	}
+	
+	function viewodt()
+	{
+		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
+		$this->set('new', $new);
+		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
+		$this->set('edu', $edu);
+		$exp =$this->Experience->findAll(array('uid'=>$new['User']['uid']));
+		$this->set('exp', $exp);
+		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('skill', $skills);
+		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('int', $int);
+		$this->layout = 'odtcv'; 
+		//$this->render();
+		
+	}
+	function viewodt2()
+	{
+		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
+		$this->set('new', $new);
+		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
+		$this->set('edu', $edu);
+		$exp =$this->Experience->findAll(array('uid'=>$new['User']['uid']));
+		$this->set('exp', $exp);
+		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('skill', $skills);
+		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('int', $int);
+		$this->layout = 'odtcv'; 
+		//$this->render();
+
+	}
+	
+	public function edit_experiance(){
+		$new =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
+		$this->set('new', $new);	
+		if(!empty($this->request->data)){
+		        $pic =$this->Experience->find('first', array('conditions' => array('eid'=>$this->request->data['eid'])));
+				$this->set('pic', $pic);
+				if($this->request->data['logo']!='')
+				$this->request->data['logo'] = $this->request->data['logo'];
+				else
+				$this->request->data['logo'] = $pic['Experience']['logo'];
+				$resp = implode(',',$this->request->data['resp']);
+					$this->request->data['responsibility'] = $resp;
+				$this->Experience->save($this->request->data);
+				$this->Session->setFlash(__('Photo updated successfully'));
+				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+		}
+	}
+	
+	public function edit_education(){
+		$new =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
+		$this->set('new', $new);
+		if(!empty($this->request->data)){
+			$extra_curriculars = implode(',',$this->request->data['extra_curricular']);
+			$this->request->data['extra_curricular'] = $extra_curriculars;
+			$this->Education->save($this->request->data);
+			$this->Session->setFlash(__('Education Updated Successfully'));
+			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+		}
+	}
+	
+	public function edit_interests(){
+		$new =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
+		$this->set('new', $new);
+		//pr($this->request->data);exit;
+		if(!empty($this->request->data)){
+			$interests = implode(',',$this->request->data['interest']);
+			$this->request->data['interest'] = $interests;
+			$this->Interest->save($this->request->data);
+			$this->Session->setFlash(__('Interest Updated Successfully'));
+			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+		}
+	}
+	
+	public function edit_skills(){
+		$new =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
+		$this->set('new', $new);
+		if(!empty($this->request->data)){
+			$skills = implode(',',$this->request->data['skill']);
+			$this->request->data['skills'] = $skills;
+			$this->Skill->save($this->request->data);
+			$this->Session->setFlash(__('Skills Updated Successfully'));
+			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+		}
+	}
+	
+	public function edit_port_photo(){
+		$new =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
+		$this->set('new', $new);
+		if(!empty($this->request->data)){
+			$pic =$this->Portimage->find('first', array('conditions' => array('piid'=>$this->request->data['piid'])));
+			$this->set('pic', $pic);
+			if($this->request->data['image']['name'] !=''){
+				$this->Image->delete_image($pic['Portimage']['image'],"portfolio-images");
+				$this->request->data['image'] = $this->Image->upload_image_and_thumbnail($this->request->data['image'],573,380,150,150, "portfolio-images");
+			} else {
+				$this->request->data['image'] = $pic['Portimage']['image'];
+			}
+				$this->Portimage->save($this->request->data);
+				$this->Session->setFlash(__('Photo updated successfully'));
+				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+		}
+	}	
+
+	public function edit_port_video(){
+		$new =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
+		$this->set('new', $new);
+		if(!empty($this->request->data)){
+			$width = '/width="[0-9]*"/';
+			$height = '/height="[0-9]*"/';
+			$video_code = preg_replace(array($width, $height), array('width="380"','height="315"'), $this->request->data['video_code']);
+			$this->request->data['video_code'] = $video_code;
+			$this->Portvideo->save($this->request->data);
+			$this->Session->setFlash(__('Video updated successfully'));
+			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+		}
+	}
+	
+	public function edit_port_audio(){
+		$new =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
+		$this->set('new', $new);
+		if(!empty($this->request->data)){
+			$aud =$this->Portaudio->find('first', array('conditions' => array('paid'=>$this->request->data['paid'])));
+			$this->set('aud', $aud);
+			if($this->request->data['audio_file']['name'] !=''){
+				move_uploaded_file($this->request->data['audio_file']['tmp_name'],'files/portfolio-audios/'.$this->request->data['audio_file']['name']);
+				 $this->request->data['audio_file'] = $this->request->data['audio_file']['name'];
+			}else{
+				$this->request->data['audio_file'] = $aud['Portaudio']['audio_file'];
+			}
+				$this->Portaudio->save($this->request->data);
+				$this->Session->setFlash(__('Audio updated successfully'));
+				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+					
+		}
+	}
+	
+	public function edit_port_document(){
+		$new =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
+		$this->set('new', $new);
+		
+		if($this->request->is('post')){
+			$docu =$this->Portdocument->find('first', array('conditions' => array('pdid'=>$this->request->data['pdid'])));
+			//	pr($this->request->data);exit;
+			move_uploaded_file($this->request->data['document_file']['tmp_name'],'files/portfolio-documents/'.$this->request->data['document_file']['name']);
+			if(!empty($this->request->data['document_file']['name']))
+			$this->request->data['document_file'] = $this->request->data['document_file']['name'];
+			else
+			$this->request->data['document_file'] = $docu['Portdocument']['document_file'];
+			$this->Portdocument->save($this->request->data);
+			$this->Session->setFlash(__('Portfolio  documents updated successfully'));
+			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+		}
+	}
+	
+	public function edit_port_presentation(){
+		$new =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
+		$this->set('new', $new);
+		if($this->request->is('post')){
+			$this->Portpresent->save($this->request->data);
+			$this->Session->setFlash(__('Portfolio presentation updated successfully'));
+			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+		}
+	}
+	
 	
 	public function resume_sample()
 	{
@@ -771,7 +1108,7 @@ class UsersController extends AppController {
 		
 		
 		
-		$exp =$this->Experience->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$exp =$this->Experience->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
 		$this->set('exp', $exp);
 		
 		$catlist =$this->Country->find('all');
@@ -780,13 +1117,13 @@ class UsersController extends AppController {
         $cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
 		$this->set('cou',$cou);	
 		
-		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
 		$this->set('skill', $skills);
 		
-		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
 		$this->set('int', $int);
 		
-		$edu =$this->Education->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$edu =$this->Education->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
 		$this->set('edu', $edu);
 		
 		$portimg =$this->Portimage->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
@@ -804,6 +1141,9 @@ class UsersController extends AppController {
 		
 		$portdoc =$this->Portdocument->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('portdoc', $portdoc);
+		
+		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('recmd', $recmd);
 		
 		$co=count($portdoc);
 		$co+=count($portvid);
@@ -828,5 +1168,47 @@ class UsersController extends AppController {
 	 
 	}
 	
+	function resumedelete()
+	{
+		if($this->request->is('post')){
+			$model=$this->request->data['model'];
+			$wid=$this->request->data['wid'];
+			$did=$this->request->data['did'];
+			$rid=$this->request->data['rid'];
+			$this->$model->delete(array($wid=>$did));
+			$this->Session->setFlash(__('Deleted successfully'));
+			$this->redirect(array('controller'=>'','action'=>$rid));	
+		
+		}
+		
+	}
+	
+	function changetemplate(){
+		//$template=$_REQUEST['id'];
+		$this->layout = '';
+		$this->Render(false);
+		
+			if($this->request->is('ajax')){
+				$this->request->data['User']['uid']=$_SESSION['User']['uid'];
+				$this->request->data['User']['template']=$this->params['pass'][0];
+				$this->User->save($this->request->data);
+				echo 'success';
+			}else{
+				echo 'flop';
+			}
+	}
+	function recommentme()
+	 {
+		$this->render(false);
+		$this->layout=''; 
+		$user=$_REQUEST['recid'];
+		$skill=$_REQUEST['skill'];
+		$edu = $this->Recommentation->find(array('rid' =>$skill));
+		$rec = $this->Recomment->find(array('uid' =>$user,'rid'=>$skill));
+		if(empty($rec))
+		echo $user . $skill ;
+		else
+		echo "no";
+	 }
 	
 }

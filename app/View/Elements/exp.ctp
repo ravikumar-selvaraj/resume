@@ -1,4 +1,10 @@
-
+<style>
+.class
+{
+	position:relative;
+	top:15px;
+}
+</style>
  <div id="prof_exp" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <form class="form-inline" name="update" action="<?php echo Router::url('/'); ?>users/exp" method="post" style="margin-bottom:0px;" enctype="multipart/form-data">
     <div class="modal-header" style="margin-bottom:10px;padding-bottom:0px;">
@@ -10,11 +16,12 @@
     
       <div class="control-group" id="job_title_div">
        <label class="control-label" for="inputInfo" id="prof" style="width:310px; font-size:14px;font-family:arial;font-weight: bold;"><?php echo __("Job Title");?></label>
-       <div id="delme" style="display:none; float:left; width:50px;"><a id="delimg" onclick="return scat();" style="cursor:pointer; color:#foo"><img src="<?php echo Router::url('/'); ?>img/delete.png" /></a></div>
+       <div id="delme" style="display:none; float:left; width:50px;">
+       <a id="delimg" onclick="return scat();" style="cursor:pointer; color:#foo"><img src="<?php echo Router::url('/'); ?>img/delete.png" width="18" height="18" /></a></div>
         <div class="controls">
           <input type="text" placeholder="Job Title" id="job_title" name="data[job_title]" style="padding:2px; margin-right:25px;">
         <div class="cp-bl" style="width:150px; float:right;" id="mylogo2">
-        <input name="file" type="file" id="file" value="" class="box upload"  onchange="return ajaxFileUpload();"  >
+        <input name="file" type="file" id="file" value="" class="box upload hai"  onchange="return ajaxFileUpload();"  >
         <input type="submit" id="submiti" name="upload" value="upload" class="cp-bl-bu" style="display:none;float:right;cursor:pointer;" >
         <input type="hidden" name="data[logo]" value="0" id="user_logo" />
         </div>
@@ -85,7 +92,7 @@
             <tr>
               <td align="left" valign="middle" width="1%"><input type="text" id="resp" name="resp[]" class="team" placeholder="Responsibilities" style="width:425px;padding:2px; margin-bottom:10px;"  >
                 
-                <!--<input name="team1[]" maxlength="30" type="hidden" id="" value="fds" class="team" />--></td>
+                <input name="team1[]" maxlength="30" type="hidden" id="name23" value="fds" class="team" /></td>
               <td align="left" valign="top" width="1%"><a onClick="insRow()" style="cursor:pointer;" class="btn btn-mini btn-primary">
               <?php echo __("Add");?></a><br /></td>
             </tr>
@@ -101,8 +108,8 @@
     <div class="modal-footer">
      
       <label class="checkbox" style="display:block;">
-        <input type="checkbox" name="data[display_home]" value="">
-        <span style="margin-left:5px; float:left; font-size:12px;"><?php echo __("Display on home page");?></span> </label>
+        <input type="hidden" name="data[display_home]" value="1">
+        <!--<span style="margin-left:5px; float:left; font-size:12px;"><?php echo __("Display on home page");?></span>--> </label>
       <button type="submit" id="exp_btn" class="btn btn-primary "><?php echo __("Submit resume");?></button>
     </div>
     
@@ -131,8 +138,10 @@
 			 imageheight : 50,
 			 imagewidth : 146,
 			 width : 150,
-			 top : 10
-		 }); });
+			 top : 20
+		 });
+		 $(".display").css({'width' : '150px', 'padding-top' : '0px','top' :'15px'});
+		  });
 		 
 		
 </script>
@@ -150,7 +159,7 @@
 	$.ajaxFileUpload
 	(
 		{
-			url:'users/uploadimage',
+			url:'<?php echo BASE_URL; ?>users/uploadimage',
 			secureuri:false,
 			fileElementId:'file',
 			dataType: 'json',
@@ -193,13 +202,14 @@ function scat(){
 		$.ajax({
 		type: "POST",
 		data: "imgval="+logodel,
-		url: "users/delimage",
+		url: "<?php echo BASE_URL; ?>users/delimage",
 		success: function(msg){
 			$('#mylogo').hide();
 			$('#mylogo2').show();
-			$("#hai").css({'width' : '140px', 'padding-top' : '0px'})
+			$(".hai").css({'width' : '140px', 'padding-top' : '0px','top' :'15px'})
 			$("#delme").hide();
-			$('#display').show();
+			$('.display').show();
+			$(".display").css({'width' : '150px', 'padding-top' : '0px','top' :'15px'})
 				
 		}});
 	}
@@ -218,9 +228,9 @@ function scat(){
 			w.align='left';	
 			a.innerHTML='<input type="text"  class="team'+ax+' validate[required] text" name="resp[]"  placeholder="Responsibilities" style="width:425px;padding:2px; margin-bottom:10px;" >';
 		//w.innerHTML='<?php // echo $this->html->link('Delete',array('onclick'=>'deleteRow(this.parentNode.parentNode.rowIndex)','style'=>'cursor:pointer;','class'=>'btn btn-mini btn-primary')); ?>';
-		w.innerHTML='<a onClick="deleteRow(this.parentNode.parentNode.rowIndex)" style="cursor:pointer;" class="btn btn-mini btn-primary"> <?php echo __("Delete");?></a>';
+		w.innerHTML='<!--<a onClick="deleteRow(this.parentNode.parentNode.rowIndex)" style="cursor:pointer;" class="btn btn-mini btn-primary"> <?php //echo __("Delete");?></a>-->';
 			var comvalue=parseInt(ax)+1;
-			document.getElementById('name').value=comvalue;
+			document.getElementById('name23').value=comvalue;
 		}else{
 			alert("you can add only 5 keywords.");
 		}

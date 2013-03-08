@@ -55,7 +55,7 @@
 			<?php echo $this->Html->link(__(''), array('action' => 'view', $user['User']['uid'],'admin'=>'true'),array('class' => 'icon-eye-open')); ?>
 			<?php //echo $this->Html->link(__(''), array('action' => 'edit', $user['User']['uid']),array('class' => 'icon-pencil')); ?>
 			<?php //echo $this->Form->postLink(__(''), array('action' => 'delete', $staticpage['Staticpage']['sta_id']),array('class' => 'icon-trash test'), null, __('Are you sure you want to delete # %s?', $staticpage['Staticpage']['sta_id'])); ?>
-            	<a rel="<?php echo BASE_URL?>admin/staticpages/delete/<?php echo $user['User']['uid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+            	<a rel="<?php echo BASE_URL?>admin/users/delete/<?php echo $user['User']['uid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 		</td>
              
              

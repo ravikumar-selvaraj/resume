@@ -1,16 +1,17 @@
 
 <?php 
-	$app = explode('app', $_SERVER['PHP_SELF']);
-	$url = explode($app[0], $_SERVER['REQUEST_URI']);
+		$app = explode('app', $_SERVER['PHP_SELF']);
+		$url = explode($app[0], $_SERVER['REQUEST_URI']);
 		$url = explode('/', $url[1]);
  
 if(isset($_SESSION['User']['uid'])) {
 ?>
         <!-- RESUME NAV BAR -->
         <div class="row resume-navigations">
-         <?php echo  $this->html->link($this->html->image('logo-small.png',array('border'=>0,'alt'=>'logo','width'=>'150','height'=>'40','class'=>'brand span2 pull-left')),array('controller'=>'pages','action'=>'index'),array('escape'=>false)); ?>
-		 <?php echo  $this->html->link($this->html->image('dashboard_icon.png',array('border'=>0,'alt'=>'logo','class'=>'brand cv-logo pull-left')),array('controller'=>'pages','action'=>'dashboard'),array('escape'=>false,'class'=>'return-dash')); ?>
-           <!-- <a href="#" class="brand span3 pull-left"><img src="<?php echo Router::url('/'); ?>/img/logo-small.png" alt=""></a>-->
+         <?php echo  $this->html->link($this->html->image('logo-small.png',array('border'=>0,'alt'=>'logo','width'=>'20','height'=>'20','class'=>'brand span2 pull-left')),array('controller'=>'pages','action'=>'index'),array('escape'=>false)); ?>
+		 <?php echo  $this->html->link($this->html->image('dashboard_icon.png',array('border'=>0,'alt'=>'logo','class'=>'brand cv-logo pull-left','width'=>'20','height'=>'20')),array('controller'=>'pages','action'=>'dashboard'),array('escape'=>false,'class'=>'return-dash')); ?>
+         <?php echo  $this->html->link('My Resume',array('controller'=>'','action'=>$_SESSION['User']['username']),array('class'=>'site_links')); ?>
+         
         
 			
              <div class="pull-right acc_settings_menu">
@@ -48,8 +49,8 @@ if(isset($_SESSION['User']['uid'])) {
 	   if(($_SESSION['User']['username']==Configure::read('userpage'))) { ?>
         <div class="row resume-config">
             <ul class="nav nav-tabs resume-config-tabs" id="resume-config-tabs">
-				<li class="menu-on" id="" ><a href="#add-content" class="test">Add Content</a></li>
-               <!-- <li class="" id="addout" style="display:none"><a href="#add-content" class="test">Add Content</a></li>-->
+				<li class="" id="addin" style="display:block"><a href="#add-content" class="test">Add Content</a></li>
+                <li class="" id="addout" style="display:none"><a href="#add-content" class="test">Add Content</a></li>
                 <li><a href="#design" class="test">Design</a></li>
                 <li><a href="#share" class="test">Share</a></li>
                 <li><a href="#recommend" class="test">Recommendations</a></li>
@@ -98,17 +99,107 @@ if(isset($_SESSION['User']['uid'])) {
                         
                           <!--Import-->
                         <div class="tab-pane" id="messages">
-							<ul class="unstyled inline">
-                               <li class="blog-nav"><a href="<?php echo BASE_URL;?>linkedin" type="button"  class=""><span>Linked In</span></a></li>
+							<ul class="unstyled inline config-menus">
+                               <li class="linkedin-nav"><a href="<?php echo BASE_URL;?>linkedin" type="button"  class=""><span>Linkedin</span></a></li>
                             </ul>
 						</div>
 						
                     </div>
                 </div>
-                <div class="tab-pane" id="design">Under Construction</div>
-                <div class="tab-pane" id="share">Under Construction</div>
-                <div class="tab-pane" id="recommend">Under Construction</div>
-                <div class="tab-pane" id="settings">Under Construction</div>
+                <div class="tab-pane" id="design"> 
+                	 <img src="<?php echo BASE_URL;?>img/template1.png" width="200" height="200"  class="templateimg" id="yellow" />
+                 	 <img src="<?php echo BASE_URL;?>img/template2.jpg" width="200" height="200"  class="templateimg" id="red" />
+                 	 <img src="<?php echo BASE_URL;?>img/template3.jpg" width="200" height="200"  class="templateimg" id="blue" />
+                  	 <img src="<?php echo BASE_URL;?>img/template4.jpg" width="200" height="200"  class="templateimg" id="black" />
+                  </div>
+                <div class="tab-pane" id="share">
+					<ul class="nav nav-tabs sub-config" id="sub-config">
+						<li class="active"><a href="#social_share" >Share my resume on:</a></li>
+                    </ul>
+						<div class="tab-content">
+						<div class="tab-pane active" id="social_share">
+						<!-- AddThis Button BEGIN -->
+						<div class="addthis_toolbox">   
+							<div class="custom_images">
+								<ul class="unstyled inline config-menus">
+									<li class="facebook-nav"><a class="addthis_button_facebook"><span>Facebook</span></a></li>
+									<li class="twitter-nav"><a class="addthis_button_twitter"><span>Twitter</span></a></li>
+									<li class="linkedin-nav"><a class="addthis_button_linkedin"><span>Linkedin</span></a></li>
+								</ul>
+							</div>
+						</div>
+						<script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+						<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5138450745755372"></script>
+						<!-- AddThis Button END -->
+						</div>
+                </div>
+				</div>
+                <div class="tab-pane" id="recommend">
+            <a href="#" style="cursor:pointer;" class="btn btn-large btn-primary disabled " data-toggle="modal" data-target="#recommendmy">Recommentation</a>						                </div>
+                <div class="tab-pane" id="settings">
+				
+					<ul class="nav nav-tabs sub-config" id="sub-config">
+						<li class="active"><a href="#general_settings" >General</a></li>
+                        <li><a href="#privacy_settings">Privacy</a></li>
+                    </ul>
+						<div class="tab-content">
+							<div class="tab-pane active" id="general_settings">
+								<div class="control-group">
+									<label class="control-label" for="Title">Resume Title</label>
+										<div class="controls">
+											<input type="hidden" id="general_uid" name="data[uid]" value="<?php echo $this->Session->read('User.uid');?>"  />
+											<input type="text" id="general_resume_title" name="data[resume_title]" value="<?php echo $this->Session->read('User.resume_title');?>"  />
+										</div>
+								</div>
+								<div class="control-group">
+									<label class="control-label" for="Description">Description</label>
+										<div class="controls">
+										<textarea id="general_resume_desc" rows="3" name="data[resume_desc]" style="width:350px;"><?php echo $this->Session->read('User.resume_desc');?></textarea>
+										</div>
+								</div>
+								<div class="control-group">
+									<div class="controls">										
+										<button type="submit" id="general_settings_edit"  class="btn btn-primary">Save</button>
+										<span class="help-inline" id="general_success"></span>
+									</div>
+								</div>
+							</div>
+							
+							<div class="tab-pane" id="privacy_settings">
+								
+								<div class="well well-small" style="width:500px;"><span>Publish my resume on the web</span>
+									   <div class="switch pull-right" id="publish_resume">
+									   	<input type="hidden" id="publish_uid" name="data[uid]" value="<?php echo $this->Session->read('User.uid');?>"  />
+									   	<input type="checkbox" id="publish_resume_box" value="1" <?php if($this->Session->read('User.webpage_view')== 1) echo 'checked="checked"';?> />
+									</div>
+									<span class="help-inline" id="publish_resume_box_success"></span>
+								</div>
+								<div class="well well-small" style="width:500px;"><span>Protect my resume with a password</span>
+										<div class="switch pull-right" id="protect_resume">
+										<input type="hidden" id="protect_uid" name="data[uid]" value="<?php echo $this->Session->read('User.uid');?>"  />
+									   	<input type="checkbox" id="protect_resume_box" value="1" <?php if($this->Session->read('User.set_password')== 1) echo 'checked="checked"';?> />
+										</div>
+										
+										<div class="controls" id="password_block" <?php if($this->Session->read('User.set_password') != 1) echo 'style="display:none;"';?>>
+										<input type="text" id="protect_pwd" name="data[protect_pwd]" style="margin:2px;" value="<?php if($this->Session->read('User.set_password') == 1) echo $this->Session->read('User.resume_password');?>"  />										
+										<button type="submit" id="password_block_btn"  class="btn btn-primary">Save</button>
+										</div>
+										<span class="help-inline" id="password_block_success"></span>
+								
+								</div>
+								<div class="well well-small" style="width:500px;">
+										<span>Broadcast your resume on search engines</span>
+										<div class="switch pull-right" id="broadcast_resume">
+										<input type="hidden" id="broadcast_uid" name="data[uid]" value="<?php echo $this->Session->read('User.uid');?>"  />
+									   	<input type="checkbox" id="broadcast_resume_box" value="1" <?php if($this->Session->read('User.broad_resume')== 1) echo 'checked="checked"';?> />
+										</div>
+										<span class="help-inline" id="broadcast_resume_success"></span>
+								</div>
+								
+							</div>
+						</div>
+					
+				</div>
             </div>
         </div>
  <?php } } else {?> 
@@ -173,7 +264,7 @@ if(isset($_SESSION['User']['uid'])) {
                      <?php  
 					$inte=array('interest');
 					if(in_array($this->params['action'],$inte)):$current='active';else:$current='';endif;
-					if($int >=1){echo '<li class='.$current.'>'.$this->html->link('Interest',array('action'=>'viewpdf'),array()).'</li>'; }
+					if($int >=1){echo '<li class='.$current.'>'.$this->html->link('Interest',array('action'=>'interest'),array()).'</li>'; }
 			        ?>
                       <?php  
 					$ski=array('skill');
@@ -185,7 +276,12 @@ if(isset($_SESSION['User']['uid'])) {
 					if(in_array($this->params['action'],$por)):$current='active';else:$current='';endif;
 					if($port >=1){echo '<li class='.$current.'>'.$this->html->link('Portfolio',array('action'=>'portfolio'),array()).'</li>'; }
 			        ?>
-                         <li><?php echo $this->html->link('Contact',array('action'=>'#'));?> </li>
+                    
+                    
+                         <li><a href="" type="button" data-toggle="modal" data-target="#downloadfile" class=""><span>Downloads</span></a></li>
+                         
+                         <?php echo $this->Element('downloadfile');?>
+                         
                     </ul>
                 </nav>
             </div>
@@ -196,7 +292,8 @@ if(isset($_SESSION['User']['uid'])) {
                     <h1><?php echo $new['User']['firstname']."\t".$new['User']['lastname']?></h1>
                     
                  <!--Info-->
-                    <div class="left-col-widget clearfix" id="info" style="display:block" onmouseover="mousein()" onmouseout="mouseout()">
+                    <div class="left-col-widget clearfix" id="info" style="display:block;height:85px;
+                    ">
                     <?php 
                     if(empty($new['User']['image']))
                     echo $this->Html->image('profile_pic_default.jpg',array('border'=>0,'width'=>'70','height'=>'70','alt'=>'Resume','class'=>'profile-photo'));
@@ -206,7 +303,8 @@ if(isset($_SESSION['User']['uid'])) {
                     <?php 
                     if(!empty($new['User']['country'])) {echo $cou['Country']['country_name']."<br>";}
                     echo $new['User']['city']."<br>".$new['User']['zipcode']?>  </div>
-                    <?php  if(isset($_SESSION['User']['uid'])) { if(($_SESSION['User']['username']==Configure::read('userpage'))) { ?> <a href="#" class="pull-right edith" style="display:none" id="edit_in">Edit</a> <?php } } ?>
+                    <?php  if(isset($_SESSION['User']['uid'])) { if(($_SESSION['User']['username']==Configure::read('userpage'))) { ?> 
+                    <a href="#" class="pull-right edith" style="display:none;" id="edit_in">Edit</a> <?php } } ?>
                     </div>
                  <!--edit info-->
                     <div class="left-col-widget clearfix" id="edit_info" style="display:none;">
@@ -264,7 +362,7 @@ if(isset($_SESSION['User']['uid'])) {
                     </div>
                   
                  <!--Contact-->  
-                    <div id="edit_cont1" style="display:block" onmouseover="mousein()" onmouseout="mouseout()">
+                    <div id="edit_cont1" style="display:block">
                         <ul class="left-col-widget unstyled resume-contact"> 
                         
                         <li><i class="icon-envelope icon-white"></i><a><?php echo $new['User']['email']?></a></li>
@@ -324,7 +422,7 @@ if(isset($_SESSION['User']['uid'])) {
                     </div>
                  
                  <!--About me-->   
-                    <div style="display:block" id="about" onmouseover="mousein()" onmouseout="mouseout()">
+                    <div style="display:block" id="about">
                     <ul class="left-col-widget unstyled"> 
                     <h3>About Me</h3>
                     <li><?php echo $new['User']['about_me']?></li>
@@ -359,7 +457,7 @@ if(isset($_SESSION['User']['uid'])) {
                     </div>
                     
                  <!--Proffessional-->       
-                    <div style="display:block" id="pro" onmouseover="mousein()" onmouseout="mouseout()">
+                    <div style="display:block" id="pro">
                     <ul class="left-col-widget unstyled"> 
                     <h3>Professional Status</h3>
                     <li><i class="icon-user  icon-white"></i><?php echo "\t".$new['User']['professional']?></li>
@@ -395,9 +493,9 @@ if(isset($_SESSION['User']['uid'])) {
                     <input type="hidden" value="<?php echo $new['User']['username']?>" name="data[base]" />
                     <table width="100%">
                     <tr>
-                    <td width="25%" valign="top">Status</td>
+                    <td width="25%" valign="top"><font color="#a1a1a1">Status</font></td>
                     <td> 
-                    <select name="data[professional]"   id="set_oro">
+                    <select name="data[professional]" class="span2"   id="set_oro">
                     
                     <option value="Employed" <?php if($new['User']['professional']=='Employed')echo 'selected="selected"'; ?>><?php echo __("Employed");?></option>
                     <option value="Unemployed" <?php if($new['User']['professional']=='Unemployed')echo 'selected="selected"'; ?>><?php echo __("Unemployed");?></option>
@@ -408,9 +506,9 @@ if(isset($_SESSION['User']['uid'])) {
                     </td>
                     </tr>
                     <tr>
-                    <td width="25%" valign="top">Availablity</td>
+                    <td width="25%" valign="top"><font color="#a1a1a1">Availablity</font></td>
                     <td>  
-                    <select name="data[professional_status]"  id="set_pro">
+                    <select class="span2" name="data[professional_status]"  id="set_pro">
                     
                     <option value="Available" <?php if($new['User']['professional_status']=='Available')echo 'selected="selected"'; ?>><?php echo __("Available");?></option>
                     <option value="Looking for an internship" <?php if($new['User']['professional_status']=='Looking for an internship')echo 'selected="selected"'; ?>><?php echo __("Looking for an internship");?></option>
@@ -437,7 +535,7 @@ if(isset($_SESSION['User']['uid'])) {
                     </div>	
                         
                  <!--My links--> 
-                    <div style="display:block" id="link" onmouseover="mousein()" onmouseout="mouseout()">      
+                    <div style="display:block" id="link">      
                     <ul class="left-col-widget unstyled"> 
                     <h3>My Links</h3>
                     <?php 
@@ -533,7 +631,7 @@ if(isset($_SESSION['User']['uid'])) {
         <!--</div>-->
               </form>
                </div>
-           
+           <?php //echo $this->Element('downloadfile');?>
             <!-- Professional Experience -->
             
             <?php echo $this->Element('exp');?>
@@ -580,5 +678,28 @@ if(isset($_SESSION['User']['uid'])) {
             
             <!-- Portfolio presentation-->
             <?php echo $this->Element('portpresentation');?>
+            
+            <?php echo $this->Element('recommentme');?>
 
-    
+    <script>
+	
+	$('.templateimg').click(function(){
+		
+		var id=$(this).attr("id");
+		//alert(id);
+		$.ajax({
+					type: "POST",
+					url : "<?php echo BASE_URL?>users/changetemplate/"+id,
+					success: function(msg){
+						if(msg == 'success'){
+							//alert('working');
+							location.reload();
+						} else {
+							alert('something problem occurs in your action please try again.');
+						}
+					}
+			});
+	});
+	
+	
+	</script>

@@ -61,12 +61,8 @@
                     "alertText": "* Please select ",
                     "alertText2": " options"
                 },
-                "flv": {
-                    "regex": /^.*\.(flv|FLV)$/i,
-                    "alertText": "* Please select flv video format file"
-                },
                 "image": {
-                    "regex": /^.*\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/i,
+                    "regex": /^.*\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF|bmp|BMP)$/i,
                     "alertText": "* Please select valid image"
                 },
                 "document": {
@@ -76,6 +72,10 @@
                 "compress": {
                     "regex": /^.*\.(zip|ZIP|rar|RAR|tar.gz|TAR.GZ)$/i,
                     "alertText": "* Please select valid compress file"
+                },
+                "xlscsv": {
+                    "regex": /^.*\.(xls|XLS|xlsx|XLSX|csv|CSV)$/i,
+                    "alertText": "* Please select xls / csv file"
                 },
                 "file": {
                     "regex": /^(?!.*\.exe$).*$/i,
@@ -100,12 +100,12 @@
                     "alertText": "* Invalid email address"
                 },
                 "integer": {
-                    "regex": /^[\-\+]?\d+$/,
+                    "regex": /^\d+$/,
                     "alertText": "* Not a valid integer"
                 },
                 "number": {
                     // Number, including positive, negative, and floating decimal. credit: orefalo
-                    "regex": /^[\-\+]?(([0-9]+)([\.,]([0-9]+))?|([\.,]([0-9]+))?)$/,
+                    "regex": /^(([0-9]+)([\.,]([0-9]+))?|([\.,]([0-9]+))?)$/,
                     "alertText": "* Invalid floating decimal number"
                 },
                 "date": {
@@ -140,31 +140,39 @@
                     "alertText": "* This user is already taken",
                     "alertTextLoad": "* Validating, please wait"
                 },
-				"useraviablity": {
-                    "url": "usercheckalert",
-                    // you may want to pass extra data on the ajax call
-                    "extraData": "name=eric",
-                    // if you provide an "alertTextOk", it will show as a green prompt when the field validates
-                    "alertTextOk": "* This username is available",
-                    "alertText": "* This username is already taken..try another",
-                    "alertTextLoad": "* Validating, please wait"
-                },
-				"emailcheckalert": {
-                    "url": "emailcheckalert",
-                    // you may want to pass extra data on the ajax call
-                    "extraData": "name=eric",
-                    // if you provide an "alertTextOk", it will show as a green prompt when the field validates
-                    "alertTextOk": "* This Email is available",
-                    "alertText": "* This Email is already taken",
-                    "alertTextLoad": "* Validating, please wait"
-                },
 				"ajaxUserCallPhp": {
-                    "url": "phpajax/ajaxValidateFieldUser.php",
+                    "url": "user/aviablity",
                     // you may want to pass extra data on the ajax call
                     "extraData": "name=eric",
                     // if you provide an "alertTextOk", it will show as a green prompt when the field validates
                     "alertTextOk": "* This username is available",
                     "alertText": "* This user is already taken",
+                    "alertTextLoad": "* Validating, please wait"
+                },
+				"useraviablity": {
+                    "url": "useraviablity",
+                    // you may want to pass extra data on the ajax call
+                    "extraData": "name=eric",
+                    // if you provide an "alertTextOk", it will show as a green prompt when the field validates
+                    "alertTextOk": "* This username is available",
+                    "alertText": "* This user is already taken",
+                    "alertTextLoad": "* Validating, please wait"
+                },
+				"loginpage": {
+                    "url": "loginpage",
+                    // you may want to pass extra data on the ajax call
+                    "extraData": "name=eric",
+                    // if you provide an "alertTextOk", it will show as a green prompt when the field validates
+                    "alertTextOk": "* This login page is available",
+                    "alertText": "* Sorry, this login page is already taken",
+                    "alertTextLoad": "* Validating, please wait"
+                },
+				"checkcapcha": {
+                    "url": "checkcapcha",
+                    // you may want to pass extra data on the ajax call
+                    "extraData": "name=eric",
+                    // if you provide an "alertTextOk", it will show as a green prompt when the field validates
+                    "alertText": "* captcha code is mismatch",
                     "alertTextLoad": "* Validating, please wait"
                 },
                 "ajaxNameCall": {

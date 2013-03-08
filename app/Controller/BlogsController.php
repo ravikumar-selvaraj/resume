@@ -38,9 +38,13 @@ class BlogsController extends AppController {
 	}
 	
 	public function index() {
-		$this->checkadmin();
+		$this->layout = 'webpage';
 		$this->Blog->recursive = 0;
-		$this->set('blogs', $this->paginate());
+		if($this->request->is('post')){
+			$this->paginate = array('conditions' => array('title LIKE ' =>"%".$this->request->data('search')."%"),'limit' =>5);
+			$this->set('blogs', $this->paginate());
+		} else
+			$this->set('blogs', $this->paginate());
 	}
 
 /**
@@ -51,11 +55,8 @@ class BlogsController extends AppController {
  * @return void
  */
 	public function view($id = null) {
-		$this->checkadmin();
-		if (!$this->Blog->exists($id)) {
-			throw new NotFoundException(__('Invalid blog'));
-		}
-		$options = array('conditions' => array('Blog.' . $this->Blog->primaryKey => $id));
+		$this->layout = 'webpage';
+		$options = array('conditions' => array('key' => $id));
 		$this->set('blog', $this->Blog->find('first', $options));
 	}
 
@@ -165,6 +166,7 @@ class BlogsController extends AppController {
 				if($this->request->data['image']['name'] !=''){
 					$this->request->data['image'] = $this->Image->upload_image_and_thumbnail($this->request->data['image'],573,380,150,150, "blog-images");	
 				}
+				$this->request->data['key'] = $this->str_rand();
 				$this->Blog->save($this->request->data);
 				$this->Session->setFlash(__('The blog has been saved'));
 				$this->redirect(array('action' => 'index'));

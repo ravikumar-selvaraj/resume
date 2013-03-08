@@ -25,6 +25,13 @@
 						  <option value="Get a great resume"  <?php if($careers['Career']['category']=='Get a great resume')echo 'selected="selected"'; ?>>Get a great resume</option>
                           <option value="Manage your career"  <?php if($careers['Career']['category']=='Manage your career')echo 'selected="selected"'; ?>>Manage your career</option>
 					</select>
+					
+					<label>Tags</label>
+					<select name="data[tag][]" id="tag" multiple="multiple" class="validate[required] input-xlarge">
+					<?php foreach($tags as $tag){?>
+					<option value="<?php echo $tag['Tag']['tag_name'];?>" <?php if(in_array($tag['Tag']['tag_name'],explode(',',$careers['Career']['tag']))) echo 'selected="selected"';?>><?php echo $tag['Tag']['tag_name'];?></option>
+					<?php } ?>
+					</select>
 						<label>Old Image</label><?php echo $this->html->image('career-image/small/'.$careers['Career']['image'],array('border'=>0,'alt'=>h($careers['Career']['title']))); ?>
 						<label>Image</label>
 						<input type="file" name="data[image]" id="image" class="validate[optional,custom[image]] input-xlarge">

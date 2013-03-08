@@ -1,48 +1,89 @@
-<div class="blogs index">
-	<h2><?php echo __('Blogs'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('bid'); ?></th>
-			<th><?php echo $this->Paginator->sort('title'); ?></th>
-			<th><?php echo $this->Paginator->sort('content'); ?></th>
-			<th><?php echo $this->Paginator->sort('image'); ?></th>
-			<th><?php echo $this->Paginator->sort('created_date'); ?></th>
-			<th><?php echo $this->Paginator->sort('status'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($blogs as $blog): ?>
-	<tr>
-		<td><?php echo h($blog['Blog']['bid']); ?>&nbsp;</td>
-		<td><?php echo h($blog['Blog']['title']); ?>&nbsp;</td>
-		<td><?php echo h($blog['Blog']['content']); ?>&nbsp;</td>
-		<td><?php echo h($blog['Blog']['image']); ?>&nbsp;</td>
-		<td><?php echo h($blog['Blog']['created_date']); ?>&nbsp;</td>
-		<td><?php echo h($blog['Blog']['status']); ?>&nbsp;</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $blog['Blog']['bid'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $blog['Blog']['bid'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $blog['Blog']['bid']), null, __('Are you sure you want to delete # %s?', $blog['Blog']['bid'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Blog'), array('action' => 'add')); ?></li>
-	</ul>
-</div>
+<div class="row app-header">
+            <div class="container ">
+                <h1><?php echo __("Blogs");?></h1>
+            </div>
+        </div>
+
+        <div class="container main-body">
+            <div class="row dashboard">
+			
+                <section class="left-col pull-left span9">
+                    <!-- Blog Posts -->
+					<?php 
+					if(!empty($blogs)) {
+					foreach($blogs as $career) { ?>
+                    <article class="row article">
+                        <div class="span9">
+                            <div class="row">
+                                <div class="span9">
+                                    <h4><a href="<?php echo BASE_URL;?>blogs/view/<?php echo $career['Blog']['key'];?>"><?php echo $career['Blog']['title'];?></a></h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="span2">
+                                    <a href="<?php echo BASE_URL;?>blogs/view/<?php echo $career['Blog']['key'];?>" class="thumbnail">
+									<?php echo $this->Html->image('blog-images/small/'.$career['Blog']['image']);?>
+                                        <!--<img src="http://placehold.it/260x180" alt="">-->
+                                    </a>
+                                </div>
+                                <div class="span7">
+                                    <p><?php echo substr($career['Blog']['content'],0,500);?></p>
+                                    <p><a class="btn" href="<?php echo BASE_URL;?>blogs/view/<?php echo $career['Blog']['key'];?>">Read more</a></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="span8">
+                                    <p></p>
+                                    <p>
+                                         <i class="icon-calendar"></i> <?php echo date('M dS, Y',strtotime($career['Blog']['created_date']));?>
+                                        <!--| <i class="icon-comment"></i> <a href="<?php echo BASE_URL;?>blogs/view/<?php echo $career['Blog']['key'];?>">3 Comments</a>-->
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <hr><?php }?>
+						<div class="pagination pull-right">
+						<ul>
+							<li><?php echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));?></li>
+							<li><?php echo $this->Paginator->numbers(array('separator' => ''));?></li>
+							<li><?php echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));?></li>
+						</ul>
+						</div>
+						<?php } else { ?>
+						<article class="row article">
+							<div class="row">
+									<div class="span9">
+										<h4>No record found</h4>
+									</div>
+								</div>
+						</article>
+						<?php } ?>
+                </section>
+				
+				
+
+                <section class="right-col span3">
+                        <!--<div class="well tags">
+                              <h5>Tags</h5>
+                              <a href="<?php echo BASE_URL;?>careers"><span class="label label-info"><i class="icon-tag icon-white"></i> All</span></a>
+                              <a href="<?php echo BASE_URL;?>careers/index/find"><span class="label label-info"><i class="icon-tag icon-white"></i> Find a job</span></a>
+                              <a href="<?php echo BASE_URL;?>careers/index/resume"><span class="label label-info"><i class="icon-tag icon-white"></i> Get a great resume</span></a>
+                              <a href="<?php echo BASE_URL;?>careers/index/career"><span class="label label-info"><i class="icon-tag icon-white"></i> Manage your career</span></a>
+                        </div>-->
+
+                        <div class="well search">
+                            <h5>Search by title</h5>
+                            <form class="form-search" action="" method="post">
+                                <div class="input-append">
+                                    <input type="text" name="search" class="span2 search-query">
+                                    <button type="submit" class="btn"><i class="icon-search"></i></button>
+                                </div>
+                            </form>
+                        </div>
+                </section>
+            </div>
+			
+        </div>
+		
+		

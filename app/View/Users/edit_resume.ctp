@@ -9,31 +9,32 @@
 $catlist=ClassRegistry::init('Country')->find('all',array('conditions'=>array(''))); 	
 //pr($new);
 ?>
-<form class="form-inline" name="update" action="<?php echo BASE_URL;?>users/edit_resume/<?php echo $this->params['pass'][0]?>" method="post">
+<form class="form-inline" name="update" action="<?php echo BASE_URL;?>users/edit_resume/<?php echo $this->params['pass'][0]?>" method="post" enctype="multipart/form-data">
 <div class="modal-header" style="margin-bottom:10px;padding-bottom:0px;">
-
-<input type="hidden" name="data[responsibility]"  value="" />
+<input type="hidden" value="<?php echo $this->params['pass'][1];?>" name="data[key]" id="user_id" />
+<input type="hidden" name="data[eid]"  value="<?php echo $exp['Experience']['eid'];?>" />
 <h2 id="myModalLabel" style="font-size:15px; padding:0px; margin:0px;"><?php echo __("Professional Experience");?></h2>
 </div>
 
 <div class="modal-body" style="padding-top:0px;" >
-<div class="pull-right">
+<div class="pull-right" id="old-img">
 <?php 
 if(!empty($exp['Experience']['logo']))
 echo $this->Html->image('users/small/'.$exp['Experience']['logo'],array('border'=>0,'width'=>'50','height'=>'50','alt'=>'Logo','class'=>''));
+else
+echo $this->Html->image('avatar_cp.jpg',array('border'=>0,'width'=>'50','height'=>'50','alt'=>'Logo','class'=>''));
 ?>
 </div>
 <div class="control-group" id="job_title_div">
 <label class="control-label" for="inputInfo" id="prof" style="width:310px; font-size:14px;font-family:arial;font-weight: bold;"><?php echo __("Job Title");?></label>
-<div id="delme" style="display:none; float:left; width:50px;"><a id="delimg" onclick="return scat();" style="cursor:pointer; color:#foo"><img src="<?php echo Router::url('/'); ?>img/delete.png" /></a></div>
+<div id="delme" style=" float:left; width:50px;"><a id="delimg" onclick="return scat();" style="cursor:pointer; color:#foo"><img src="<?php echo Router::url('/'); ?>img/delete.png"  /></a></div>
 <div class="controls">
 <input type="text" placeholder="Job Title" id="job_title" name="data[job_title]" value="<?php echo $exp['Experience']['job_title'];?>" style="padding:2px; margin-right:25px;">
-<div class="cp-bl" style="width:150px; float:right;" id="mylogo2">
 
-
+<div class="cp-bl" style="width:150px; float:right; display:none" id="mylogo2">
 <input name="file" type="file" id="file" value="" class="box upload"  onchange="return ajaxFileUpload();"  >
 <input type="submit" id="submiti" name="upload" value="upload" class="cp-bl-bu" style="display:none;float:right;cursor:pointer;" >
-<input type="hidden" name="data[logo]" value="0" id="user_logo" />
+<input type="hidden" name="data[logo]" value="<?php echo $exp['Experience']['logo'];?>" id="user_logo" />
 </div>
 
 <div id="ploading" style="display:none;"><?php echo $this->html->image('loading.gif',array());?>Loading....</div>
@@ -131,9 +132,7 @@ foreach($sp as $sp1) {?>
 
 
 <button type="submit" id="exp_btn" class="btn btn-primary" name="exp"><?php echo __("Save");?></button>
-<a 	href="<?php echo BASE_URL.$new['User']['username']?>">
-<input class="btn btn-inverse" type="button" id="edit_cont_out" value="Cancel" />
-</a>
+<a 	href="<?php echo BASE_URL.$new['User']['username']?>" class="btn btn-inverse">Cancel</a>
 </div>
 
 <!--</div>-->
@@ -180,7 +179,7 @@ if($('#file').val().match(fileextension)){
 $.ajaxFileUpload
 (
 {
-url:'users/uploadimage',
+url:'<?php echo BASE_URL; ?>users/uploadimage',
 secureuri:false,
 fileElementId:'file',
 dataType: 'json',
@@ -219,16 +218,19 @@ return false;
 }
 
 function scat(){
-var logodel=$('#user_logo').val()
+var logodel=$('#user_logo').val();
+var id=$('#user_id').val();
 $.ajax({
 type: "POST",
-data: "imgval="+logodel,
-url: "users/delimage",
+data: "imgval="+logodel+"&id="+id,
+url: "<?php echo BASE_URL; ?>users/delimage",
 success: function(msg){
+	alert(msg);
 $('#mylogo').hide();
 $('#mylogo2').show();
 $("#hai").css({'width' : '140px', 'padding-top' : '0px'})
 $("#delme").hide();
+$("#old-img").hide();
 $('#display').show();
 
 }});
@@ -248,7 +250,7 @@ a.align='left';
 w.align='left';	
 a.innerHTML='<input type="text"  class="team'+ax+' validate[required] text" name="resp[]"  placeholder="Responsibilities" style="width:425px;padding:2px; margin-bottom:10px;" >';
 //w.innerHTML='<?php // echo $this->html->link('Delete',array('onclick'=>'deleteRow(this.parentNode.parentNode.rowIndex)','style'=>'cursor:pointer;','class'=>'btn btn-mini btn-primary')); ?>';
-w.innerHTML='<a onClick="deleteRow(this.parentNode.parentNode.rowIndex)" style="cursor:pointer;" class="btn btn-mini btn-primary"> <?php echo __("Delete");?></a>';
+w.innerHTML='<!--<a onClick="deleteRow(this.parentNode.parentNode.rowIndex)" style="cursor:pointer;" class="btn btn-mini btn-primary"> <?php //echo __("Delete");?></a>-->';
 var comvalue=parseInt(ax)+1;
 document.getElementById('name').value=comvalue;
 }else{
@@ -331,15 +333,12 @@ $(this).tab('show');
 				<?php $sp=explode(',',$edu['Education']['extra_curricular']) ;
 				$i=0;
 				foreach($sp as $sp1) {?>
-				<div class="control-group" id="detais_div_<?php echo $i;?>">
+				<div class="control-group" id="detais_div">
 				<label class="control-label" for="inputInfo"><?php echo __("Details");?></label>
 				<div class="controls">				
 				<input type="text" id="extra_curricular" name="data[extra_curricular][]" value=" <?php echo $sp1; ?>"  />
-				<a id="extra_delete_btn_<?php echo $i;?>" class="btn btn-mini btn-primary"><?php echo __("Delete");?></a>
-				<?php if($i==0) {?>
-				
-				<a id="extra_edit_btn" class="btn btn-mini btn-primary"><?php echo __("Add");?></a>
-				<?php  }   ?>
+				<?php //if($i!=0) {?> <!--<a id="extra_delete_btn" class="btn btn-mini btn-primary extra_delete_btn"><?php echo __("Delete");?></a>--><?php  //}   ?>
+				<?php if($i==0) {?><a id="extra_edit_btn" class="btn btn-mini btn-primary"><?php echo __("Add");?></a><?php  }   ?>
 														  
 				
 				<span class="help-inline" id="details_error"></span>
@@ -359,9 +358,15 @@ $(this).tab('show');
 </div>
 <script type="text/javascript">
 $("#extra_edit_btn").click(function(){			
-							$("#for_education_edit div:last").before('<div class="control-group" id="detais_div"><label class="control-label" for="inputInfo"><?php echo __("Details");?></label><div class="controls"><input type="text" id="extra_curricular" name="data[extra_curricular][]" /><span class="help-inline" id="details_error"></span><a id="extra_delete_btn" class="btn btn-mini btn-primary"><?php echo __("Delete");?></a></div></div>');
+							$("#for_education_edit div:last").before('<div class="control-group" id="detais_div"><label class="control-label" for="inputInfo"><?php echo __("Details");?></label><div class="controls"><input type="text" id="extra_curricular" name="data[extra_curricular][]" /><span class="help-inline" id="details_error"></span></div></div>');
 							return false;
 					});
+					
+$(".extra_delete_btn").click(function(){
+	$(this).find("#extra_curricular").attr('disabled','disabled');
+	$(this).parent().parent().hide();
+	
+});
 </script>
 <?php }
  else if($this->params['pass'][0]=='skills')

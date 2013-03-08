@@ -32,7 +32,7 @@ App::uses('Controller', 'Controller');
  * @link http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-	public $components = array('DebugKit.Toolbar','Session', 'RequestHandler');
+	public $components = array('Session', 'RequestHandler');
 	
 	public function emailoptions($campaign, $values)
 	{
@@ -118,6 +118,20 @@ class AppController extends Controller {
 			$result.=$char;
 		}
 		return $result;
+	}
+	
+	public function checkuser() {
+		$check=$this->Session->read('Userlogin');
+		if(empty($check) && $check !='True'){			
+			$this->redirect(array('controller'=>'pages','action'=>'index'));
+		}
+	 }
+	 
+	 public function checkadmin(){
+		$check=$this->Session->read('Adminlogin');
+		if(empty($check) && $check !='True'){			
+			$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
+		}
 	}
 	
 	

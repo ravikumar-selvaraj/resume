@@ -33,7 +33,7 @@ class LinkedinController extends AppController {
 	
 	public $helpers = array('Session');
 	public $components = array('Session');
-	public $uses = array('User','Setting');
+	public $uses = array('User','Setting','Education','Experience','Skill','Interest');
 		
 		public function oauth_session_exists() {
 			if((is_array($_SESSION)) && (array_key_exists('oauth', $_SESSION)))
@@ -105,14 +105,63 @@ class LinkedinController extends AppController {
 					$OBJ_linkedin = new LinkedIn($API_CONFIG);
 					$OBJ_linkedin->setTokenAccess($_SESSION['oauth']['linkedin']['access']);
 					$OBJ_linkedin->setResponseFormat(LINKEDIN::_RESPONSE_XML);
-					$response = $OBJ_linkedin->profile('~:(id,first-name,last-name,picture-url,headline,industry,location:(name,country:(code)),email-address,phone-numbers)');
+					$response = $OBJ_linkedin->profile('~:(id,first-name,last-name,picture-url,headline,industry,location:(name,country:(code)),email-address,phone-numbers,educations,positions,skills,mfeed-rss-url,interests,connections)');
 					if($response['success'] === TRUE) {
 						$response = new SimpleXMLElement($response['linkedin']);
 						//pr($response); die;
-						//echo $response['linkedin']->{'first-name'}; die;
+						
+						// skills
+						$this->request->data = '';
+						$skil = '';
+						foreach($response->skills->skill as $skill){
+							$skil.= $skill->skill->name.',';
+						}
+						$this->request->data['uid'] = $this->Session->read('User.uid'); 
+						$this->request->data['key'] = $this->str_rand();
+						$this->request->data['skills'] = $skil;
+						$this->request->data['skill_area'] = $response->industry;
+						$this->Skill->save($this->request->data);
+						
+						
+						// education
+						foreach($response->educations->education as $edu) {
+							$this->request->data['uid'] = $this->Session->read('User.uid'); 
+							$this->request->data['key'] = $this->str_rand();
+							$this->request->data['course'] = $edu->degree;
+							$this->request->data['organization'] = $edu->{'school-name'};
+							$this->request->data['start_date'] = $edu->{'start-date'}->year;
+							$this->request->data['end_date'] = $edu->{'end-date'}->year;
+							$this->request->data['desc'] = $edu->{'field-of-study'};
+							$this->Education->saveAll($this->request->data);
+						}
+						
+						// experience
+						$this->request->data = '';
+						foreach($response->positions->position as $pos){
+							if($pos->{'end-date'}->year == '')
+							$pos->{'end-date'}->year = date('m/d/Y');
+							$this->request->data['uid'] = $this->Session->read('User.uid'); 
+							$this->request->data['key'] = $this->str_rand();
+							$this->request->data['job_title'] = $pos->title;
+							$this->request->data['company'] = $pos->company;
+							$this->request->data['start_date'] = $pos->{'start-date'}->year;
+							$this->request->data['end_date'] = $pos->{'end-date'}->year;
+							$this->Experience->saveAll($this->request->data);
+						}
+						
+						// interests
+						$this->request->data = '';
+						$this->request->data['uid'] = $this->Session->read('User.uid'); 
+						$this->request->data['key'] = $this->str_rand();
+						$this->request->data['interest_type'] = "Travel";
+						$this->request->data['interest'] = $response->interests;
+						$this->Interest->save($this->request->data);
+						
+						
+						$this->request->data = '';
 						$image = $this->imagefromurl($response->{'picture-url'},'img/user-images/small/'.$this->Session->read('User.uid').'.jpg');
 						$this->request->data['uid'] = $this->Session->read('User.uid'); 
-						$this->request->data['firstname'] = $response->{'first-name'}; 
+						$this->request->data['firstname'] = $response->{'first-name'};
 						$this->request->data['lastname'] = $response->{'last-name'};
 						$this->request->data['resume_title'] = $response->headline;
 						$this->request->data['image'] = $this->Session->read('User.uid').'.jpg';
@@ -120,18 +169,12 @@ class LinkedinController extends AppController {
 						$city =  str_replace('Area', '', $city_array[0]);
 						$this->request->data['city'] = $city;
 						$this->request->data['country'] = strtoupper($response->location->country->code);	
-						pr($this->request->data); die;					
 						$this->User->save($this->request->data);
-						$this->redirect(array('controller'=>'linkedin','action'=>'experiance'));
+						$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 					}
 				}
 		}
 		
-		public function experiance(){
-			pr($_SESSION); die;
-			$this->checkuser();
-			$this->render(false);
-			
-		}
+		
 		
 }

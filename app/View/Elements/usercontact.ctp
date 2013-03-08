@@ -49,8 +49,8 @@
     <div class="modal-footer">
      
       <label class="checkbox" style="display:block;">
-        <input type="checkbox" name="data[newsletter]">
-        <span style="margin-left:5px; float:left; font-size:12px;"><?php echo __("Display on home page");?></span> </label>
+        <input type="hidden" name="data[newsletter]" value="1">
+       <!-- <span style="margin-left:5px; float:left; font-size:12px;"><?php echo __("Display on home page");?></span>--> </label>
       <button type="submit" id="user_contact_btn" class="btn btn-primary "><?php echo __("Submit resume");?></button>
     </div>
     

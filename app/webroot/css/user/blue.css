@@ -1,0 +1,336 @@
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+   body{
+   	background: url(../../img/blue/grunge_bg.png);
+   }
+
+   .body-bg{
+    background: url(../../img/blue/wave-bg.png) no-repeat ;
+    width: 1909px;
+    height: 677px;
+    position: absolute;
+    z-index: -1;
+    right: 0;
+   }
+
+   a.brand{
+   	color: #fff;
+   	font-size: 35px;
+      font-weight: bold;
+      margin-top: 15px;
+   }
+
+   a.brand:hover{
+    	text-decoration: none;
+   }
+
+   .brand-bar{
+      margin: 75px 0 10px; 
+   }
+
+   .navbar .nav > li {
+      margin-right: 2px;
+   }
+
+   .navbar .nav > li > a {
+      text-shadow:none;
+      color: #CFCFCF;
+   }
+
+   .navbar .nav > .active > a, .navbar .nav > .active > a:hover, .navbar .nav > .active > a:focus{
+      color: #fff;
+      background: #032130;
+      border-radius: 4px;
+   }
+
+   .navbar .nav > li > a:focus, .navbar .nav > li > a:hover{
+           color: #fff;
+      background: #032130;
+      border-radius: 4px;
+   }
+
+   .resume-body{
+      font-size: 13px;
+   }
+
+  .resume-body a{
+     color: #3D3D3D;
+  }
+
+  .left-col-widget{
+      background: #D9D9D9;
+      padding: 10px;
+      margin-bottom: 5px;
+   }
+
+   .left-col-widget li{
+      color: #a1a1a1;
+   }
+
+   .resume-contact  li{
+      line-height: 30px;
+   }
+
+  .left-col-widget li a{
+      margin-left: 5px;
+   }
+
+   .left-col-widget h3{
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 6px;
+      color: #2B2727;
+   }
+
+   .profile-photo{
+      float: left;
+      margin-right: 10px;
+   }
+
+   .resume-profile-details{
+    color: #000;
+   }
+
+   .resume-profile-details h1, .middle-col h2, .right-col h2{
+      background:#032130;
+      font-size: 18px;
+      border-radius: 4px 4px 0 0;
+      padding: 0 10px;
+      margin-bottom: 5px;
+      margin-top: 0;
+      color: #fff;
+      border: #5C70A0 1px solid;
+   }
+
+  .info{
+     font-size: 12px;
+   }
+
+   .exp-box{
+      color: #545454;
+      border-bottom: #B3B3B3 1px solid;
+      padding-bottom: 10px;
+   }
+
+   .exp-box a{
+      color: rgb(119, 119, 119);
+   }
+
+   .middle-col h2, .right-col h2{
+      font-size: 15px;
+      background: #032130;
+      padding: 11px;
+      margin-top: 0;
+      line-height: 20px;
+   }
+
+   .middle-col h3 a, .right-col h3 a{
+      font-size: 17px;
+      color: #032130;
+   }
+
+   .middle-col h3 {
+      line-height: 30px;
+   }
+
+   .middle-col .well, .right-col .well{
+      background: #fff;
+      padding-top: 0;
+   }
+
+
+  /* ==========================================================================
+    Resume Configuration 
+   ========================================================================== */
+   .resume-navigations .brand{
+    margin-top: 0;
+   }
+    .resume-navigations{
+        padding: 10px;
+    }
+
+    .acc_settings_menu{
+        margin-right: 10px;
+    }
+
+    .acc_settings_menu .dropdown{
+        margin-top: 6px;
+    }
+
+    .acc_settings_menu a.dropdown-toggle{
+        color: #BBBBBB;
+        margin: 10px 0 0 10px;
+    }
+
+    .acc_settings_menu .dropdown .caret{
+        border-top: 4px solid #fff;
+    }
+
+    .acc_settings_menu .dropdown .dropdown-menu{
+        left: -90px;
+        top: 30px;
+    }
+
+    .resume-config{
+        padding: 11px;
+        background: #F6F6F6;
+        margin: 0;
+    }
+
+   .resume-config a{
+    outline: none;
+   }
+
+   #resume-config-tabs{
+        background: #F6F6F6;
+        margin-bottom: 0;
+        border-radius: 4px 4px 0 0;
+   }
+
+   .resume-config .tab-content{
+        background: #fff;
+        padding: 15px;
+   }
+
+   .resume-cont .tab-content{
+        background: #F1F1F1;
+        height: 153px;
+   }
+
+   .resume-config .tab-content .nav-tabs > li, .nav-pills > li{
+        float: none;
+   }
+
+    .resume-config .tab-content .nav-tabs {
+        min-width: 240px;
+        float: left;
+    }
+
+    .resume-config .resume-cont{
+        border: 1px solid #ddd;
+        border-top: 1px solid transparent;
+        padding: 10px;
+    }
+
+    .sub-config{
+        margin-bottom: 0;
+    }
+
+    .sub-config .active a, .sub-config .active a:hover{
+        background: #F1F1F1;
+        margin: 0;
+        border: 1px solid #ddd;
+        border-right: 1px solid transparent;
+        border-radius: 4px 0 0 4px;
+    }
+
+     .sub-config li{
+        margin-bottom: 5px;
+     }
+
+    .sub-config li a:hover{
+        border-radius: 4px 0 0 4px;
+    }
+
+    .sub-config{
+        border-bottom: none;
+    }
+
+    .config-menus li {
+      position: relative;
+      margin: 0 15px 10px 0;
+    }
+
+    .config-menus li a{
+        background: #1C62C4 url(../../img/blue/sprite-icons.png)  no-repeat;
+        border-radius: 50px;
+        color: #fff;
+        padding: 45px;
+        display: block;
+    }
+
+    .config-menus li span{
+      position: absolute;
+      text-align: center;
+      bottom: -37px;
+      color: #595959;
+      left: 0;
+      font-weight: bold;
+      bottom: -43px; 
+      width: 100px;
+      top: 110px;
+    }
+
+    /*MEDIA QUERIES FOR SMALLER SIZE SCREENS*/
+
+    @media (max-width: 1396px){
+        .config-menus li{
+             margin: 0 15px 75px 0;
+        }
+    }
+
+    .return-dash{
+        margin: 5px 0 0 20px;
+        display: inline-block;
+        border-left: #565252 1px solid;
+        border-right: #565252 1px solid;
+        padding: 0 10px;
+    }
+
+    li.proff-exp-nav a{
+      background-position: center 8px;
+    }
+
+    li.skills-nav a{
+      background-position: center -60px;
+    }
+
+    li.educ-nav a{
+      background-position: center -120px;
+    }
+
+    li.interest-nav a{
+      background-position: center -200px;
+    }
+
+    li.info-nav a{
+      background-position: center -268px;
+    }
+
+     li.about-nav a{
+      background-position: center -340px;
+    }
+
+    li.contact-nav a{
+      background-position: center -478px;
+    }
+
+    li.my-links-nav a{
+      background-position: center -549px;
+    }
+
+    li.blog-nav a{
+      background-position: center -410px;
+    }
+
+    li.photo-nav a{
+      background-position: center -625px;
+    }
+  
+    li.video-nav a{
+      background-position: center -693px;
+    }
+
+    li.audio-nav a{
+      background-position: center -758px;
+    }
+
+    li.word-nav a{
+      background-position: center -835px;
+    }
+
+    li.presentation-nav a{
+      background-position: center -913px;
+    }
