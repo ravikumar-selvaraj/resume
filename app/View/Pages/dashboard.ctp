@@ -76,7 +76,7 @@
         { 
 			 ?>
         <li class="media">
-        <a class="pull-left" href="#">
+        <a class="pull-left thumbnail" href="#">
         <?php if(empty($new['User']['image'])) { ?>
         <img src="<?php echo Router::url('/'); ?>img/page/profile_pic_mini.jpg" alt="CVomg - The best way to show yourself" height="30" width="30"> <?php } else { ?>
         <img src="<?php echo Router::url('/'); ?>img/user-images/small/<?php echo $new['User']['image']; ?>" height="30" width="30">

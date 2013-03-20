@@ -22,11 +22,11 @@
 			<div name="widget_experience" class="widget widget_view widget_experience ">
 														<div id="experience_<?php echo $exp['Experience']['eid'];?>" class="view widget-middle">
 					<div class="exp-box <?php echo $template;?> clearfix" id="profile_experiance_<?php echo $r;?>" onmouseover="exp_div_show('p_exp_edit_<?php echo $r;?>','p_exp_del_<?php echo $r;?>')" onmouseout="exp_div_hide('p_exp_edit_<?php echo $r;?>','p_exp_del_<?php echo $r;?>')" <?php echo $style;?>>
-					<div class="options">
+					<div class="options" style="overflow:hidden">
 					<h3><a class="move" href="<?php echo BASE_URL;?>pages/update_overall"><?php echo $exp['Experience']['job_title'];?></a>
 					
-					<div class="pull-right">
-					<?php if(!empty($exp['Experience']['logo']))echo $this->Html->image('users/small/'.$exp['Experience']['logo'],array('border'=>0,'width'=>'50','height'=>'50','alt'=>'Logo','class'=>'')); ?>
+					<div class="pull-right" style="width:38px; height:none; position:relative; bottom:45px;"> <a  href=""  class="pull-right thumbnail">
+					<?php if(!empty($exp['Experience']['logo']))echo $this->Html->image('users/small/'.$exp['Experience']['logo'],array('border'=>0,'width'=>'50','height'=>'50','alt'=>'Logo','class'=>'','style'=>'height:33px;width:45px;')); ?></a>
 					</div>
 					</h3>
 					</div>

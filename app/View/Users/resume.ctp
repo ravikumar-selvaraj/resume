@@ -44,14 +44,14 @@
 												<div name="widget_<?php echo $dashboard['Userdashboard']['widget'];?>" class="widget widget_view widget_<?php echo $dashboard['Userdashboard']['widget'];?> ">
 														<div id="<?php echo $dashboard['Userdashboard']['widget'];?>_<?php echo $exp['Experience']['eid'];?>" class="view widget-middle">
 																<div class="exp-box <?php echo $template;?> clearfix dragexp" id="<?php echo $exp['Experience']['eid'];?>"  onmouseover="exp_div_show('p_exp_edit_<?php echo $r;?>','p_exp_del_<?php echo $r;?>')" onmouseout="exp_div_hide('p_exp_edit_<?php echo $r;?>','p_exp_del_<?php echo $r;?>')" <?php echo $style;?>>
-													<div class="options">			
+													<div class="options" style="overflow:hidden">			
 									  <h3><a class="move" href="<?php echo BASE_URL;?>pages/update_overall"><?php echo $exp['Experience']['job_title'];?></a>
-										<div class="pull-right pimg" style="width:38px; height:none">
-										  <?php if(!empty($exp['Experience']['logo']))
+										<div class="pull-right pimg" style="width:38px; height:none; position:relative; bottom:45px;">
+										  <?php if(!empty($exp['Experience']['logo'])) { ?>
+														 <a  href=""  class="pull-right thumbnail">
+														<?php 	echo $this->Html->image('users/small/'.$exp['Experience']['logo'],array('border'=>0,'width'=>'50','height'=>'50','alt'=>'Logo','class'=>'','style'=>'height:33px;width:45px;')); ?></a>
 															
-															echo $this->Html->image('users/small/'.$exp['Experience']['logo'],array('border'=>0,'width'=>'50','height'=>'50','alt'=>'Logo','class'=>''));
-															
-															?>
+														<?php }	?>
 										</div>
 									  </h3> </div>
                                       <div class="blog_date">
@@ -286,8 +286,8 @@
 										  <h3><a class="move" href="<?php echo BASE_URL;?>pages/update_overall"><?php echo $portfolios['Portfolio']['title']?></a></h3> </div>
 										  <?php if($portfolios['Portfolio']['image'] != '') { ?>
 										  	<ul class="thumbnails" >
-														  <li class="span3"> <a href="#" class="thumbnail">
-															<?php  echo  $this->html->image('portfolio-images/big/'.$portfolios['Portfolio']['image'],array('border'=>0,'alt'=>'pic'),array('class'=>'thumbnail')); ?>
+														  <li class="span"> <a href="#" class="thumbnail">
+															<?php  echo  $this->html->image('portfolio-images/small/'.$portfolios['Portfolio']['image'],array('border'=>0,'alt'=>'pic'),array('class'=>'thumbnail')); ?>
 															</a> </li>
 														</ul>
 														<ul class="edith unstyled" >

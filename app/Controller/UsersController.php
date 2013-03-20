@@ -468,7 +468,7 @@ class UsersController extends AppController {
 		
 		$recskill =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
 		$this->set('recskill', $recskill);
-		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Waiting')));
+		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>"Waiting")));
 		$this->set('recomment', $recomment);
 		$this->set('recount', count($recomment));
 		$recommentmy1=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>"Approved")));
@@ -1559,10 +1559,10 @@ class UsersController extends AppController {
 		
 		$recskill =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
 		$this->set('recskill', $recskill);
-		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Waiting')));
+		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>"'Waiting'")));
 		$this->set('recomment', $recomment);
 		$this->set('recount', count($recomment));
-		$recomment1=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Approved')));
+		$recomment1=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>"'Approved'")));
 		$this->set('recomment1', $recomment1);
 		$this->set('recount1', count($recomment1));
 	 
@@ -1616,7 +1616,7 @@ class UsersController extends AppController {
 		if($this->Session->read('User.uid')==$edu['Recommentation']['uid'])
 		
 		echo '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="padding-right:5px;" onclick="closepopup()">×</button><div class="norecm same_rec" style="color:#f00;">'. __('To recommend on self is not possible,sorry!').' <br /> <br />
-     <a href="'.BASE_URL.'" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline">'.__('Back to resume').'</a></div>';
+     <a href="" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline">'.__('Back to resume').'</a></div>';
 		
 		else if(empty($rec))
 		echo
@@ -1632,7 +1632,7 @@ class UsersController extends AppController {
 		
 		else
 		echo '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="padding-right:5px;" onclick="closepopup()">×</button><div class="norecm same_rec" style="color:#f00;">'. __('One recommendation by Tag possible!').' <br /> <br />
-     <a href="'.BASE_URL.'" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline">'.__('Back to resume').'</a></div>';
+     <a href="" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline">'.__('Back to resume').'</a></div>';
 		}
 		else
 		{
@@ -1691,13 +1691,7 @@ class UsersController extends AppController {
 		
 		
                                            $htm.=' <div class="resume-cont recommend-list clearfix pull-left span6">
-                                                <span>';
-												if($this->Session->read('User.username')==Configure::read('userpage')) {
-													 
-												$htm.='<a href=""><i class="icon-remove pull-right"></i></a>';
-												} 
-												$htm.='</span>
-                                                <div class=" resume_head">
+                                                <div class="resume_head">
                                                     <h5><a href="">'.$user_send_rec1['User']['username'].'</a></h5>
                                                     <small class="muted">'.$user_send_rec1['User']['resume_title'].'</small>
                                                     <span class="label label-info">Php</span>

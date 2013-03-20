@@ -34,8 +34,8 @@
 										  <h3><a class="move" href="<?php echo BASE_URL;?>pages/update_overall"><?php echo $portfolios['Portfolio']['title']?></a></h3> </div>
 										  <?php if($portfolios['Portfolio']['image'] != '') { ?>
 										  	<ul class="thumbnails" >
-														  <li class="span3"> <a href="#" class="thumbnail">
-															<?php  echo  $this->html->image('portfolio-images/big/'.$portfolios['Portfolio']['image'],array('border'=>0,'alt'=>'pic'),array('class'=>'thumbnail')); ?>
+														  <li class="span"> <a href="#" class="thumbnail">
+															<?php  echo  $this->html->image('portfolio-images/small/'.$portfolios['Portfolio']['image'],array('border'=>0,'alt'=>'pic'),array('class'=>'thumbnail')); ?>
 															</a> </li>
 														</ul>
 														<ul class="edith unstyled" >

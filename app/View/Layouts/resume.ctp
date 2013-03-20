@@ -1325,7 +1325,7 @@ $("#general_settings_edit").click(function(){
 									<?php } ?> 
                                            
                                             <div class="resume-cont recommend-list clearfix pull-left span6">
-                                               <?php  echo  $user_send_rec1;
+                                               <?php  //echo  $user_send_rec1;
 											   /*?> <span><?php if($_SESSION['User']['username']==Configure::read('userpage')) { ?><a href=""><i class="icon-remove pull-right"></i></a><?php } ?></span><?php */?>
                                                 <div class=" resume_head">
                                                
