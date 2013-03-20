@@ -15,77 +15,69 @@
  * @since         CakePHP(tm) v 1.2.0.5234
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+App::import('Model', $modelClass);
+$model = new $modelClass();
+$types = $model->getColumnTypes();
+//print_r($types);
 ?>
-<div class="<?php echo $pluralVar; ?> index">
-	<h2><?php echo "<?php echo __('{$pluralHumanName}'); ?>"; ?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-	<?php foreach ($fields as $field): ?>
-		<th><?php echo "<?php echo \$this->Paginator->sort('{$field}'); ?>"; ?></th>
-	<?php endforeach; ?>
-		<th class="actions"><?php echo "<?php echo __('Actions'); ?>"; ?></th>
-	</tr>
-	<?php
-	echo "<?php foreach (\${$pluralVar} as \${$singularVar}): ?>\n";
-	echo "\t<tr>\n";
-		foreach ($fields as $field) {
-			$isKey = false;
-			if (!empty($associations['belongsTo'])) {
-				foreach ($associations['belongsTo'] as $alias => $details) {
-					if ($field === $details['foreignKey']) {
-						$isKey = true;
-						echo "\t\t<td>\n\t\t\t<?php echo \$this->Html->link(\${$singularVar}['{$alias}']['{$details['displayField']}'], array('controller' => '{$details['controller']}', 'action' => 'view', \${$singularVar}['{$alias}']['{$details['primaryKey']}'])); ?>\n\t\t</td>\n";
-						break;
+<div class="content">
+    <div class="cont-container">
+    	<div class="addnew"><?php echo "<?php echo \$this->Html->link(__('New " . Inflector::humanize(Inflector::underscore($singularVar)) . "'), array('controller' => '{$pluralVar}', 'action' => 'add')); ?>"; ?></div>
+        <h2><?php echo "<?php echo __('{$pluralHumanName}'); ?>"; ?></h2>
+        <?php echo "<?php echo \$this->Form->create('{$modelClass}', array('action' => 'actions','id'=>'myForm')); ?>\n"; ?>
+        <table cellpadding="0" cellspacing="0" id="example" class="table gtable">
+        <thead>
+        <tr>
+            <th width="30" class="notsort"><?php echo "<?php echo __('<input type=\"checkbox\" id=\"checkAllAuto\" name=\"action[]\" value=\"0\" class=\"validate[minCheckbox[1]] checkbox\" />'); ?>"; ?></th>
+            <th width="30" class="notsort"><?php echo "<?php echo __('#'); ?>"; ?></th>
+        <?php  foreach ($fields as $field): if($types[$field]!='integer') { ?>
+            <th><div id="sort"><?php echo $field; ?><div id="sorticon"></div></div></th>
+        <?php } endforeach; ?>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        echo "<?php
+		\$i = 1;
+        foreach (\${$pluralVar} as \${$singularVar}): ?>\n";
+        echo "\t<tr>\n";		
+            echo "\t\t<td><input type=\"checkbox\" name=\"action[]\" value=\"<?php echo h(\${$singularVar}['{$modelClass}']['{$fields[0]}']); ?>\" rel=\"action\" /></td>\n";
+            echo "\t\t<td><?php echo h(\$i); ?></td>\n";
+			$f = 0;
+            foreach ($fields as $field) {
+                $isKey = false;
+                if (!empty($associations['belongsTo'])) {
+                    foreach ($associations['belongsTo'] as $alias => $details) {
+                        if ($field === $details['foreignKey']) {
+                            $isKey = true;
+                            echo "\t\t<td>\n\t\t\t<?php echo \$this->Html->link(\${$singularVar}['{$alias}']['{$details['displayField']}'], array('controller' => '{$details['controller']}', 'action' => 'view', \${$singularVar}['{$alias}']['{$details['primaryKey']}'])); ?>\n\t\t</td>\n";
+                            break;
+                        }
+                    }
+                }
+                if ($isKey !== true) {
+					if($types[$field]!='integer'){
+						if($f==0){
+                    		echo "\t\t<td width=\"130\"><?php echo h(\${$singularVar}['{$modelClass}']['{$field}']); ?><br>";
+                    		echo "<ul class=\"actions\">\n";
+                    		echo "<li><?php echo \$this->Html->link(__('View'), array('action' => 'view', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?>&nbsp;|&nbsp;</li>\n";
+                    		echo "<li><?php echo \$this->Html->link(__('Edit'), array('action' => 'edit', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?>&nbsp;|&nbsp;</li>\n";
+                    		echo "<li><?php echo \$this->Html->link(__('Delete'), array('action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}']),array('class'=>'confirdel')); ?></li>\n";
+                    		echo "</ul>\n";
+                    		echo "</td>\n";
+						}
+						else
+                    		echo "\t\t<td><?php echo h(\${$singularVar}['{$modelClass}']['{$field}']); ?></td>\n";
+						$f++;
 					}
-				}
-			}
-			if ($isKey !== true) {
-				echo "\t\t<td><?php echo h(\${$singularVar}['{$modelClass}']['{$field}']); ?>&nbsp;</td>\n";
-			}
-		}
-
-		echo "\t\t<td class=\"actions\">\n";
-		echo "\t\t\t<?php echo \$this->Html->link(__('View'), array('action' => 'view', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?>\n";
-		echo "\t\t\t<?php echo \$this->Html->link(__('Edit'), array('action' => 'edit', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?>\n";
-		echo "\t\t\t<?php echo \$this->Form->postLink(__('Delete'), array('action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}']), null, __('Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?>\n";
-		echo "\t\t</td>\n";
-	echo "\t</tr>\n";
-
-	echo "<?php endforeach; ?>\n";
-	?>
-	</table>
-	<p>
-	<?php echo "<?php
-	echo \$this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>"; ?>
-	</p>
-	<div class="paging">
-	<?php
-		echo "<?php\n";
-		echo "\t\techo \$this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));\n";
-		echo "\t\techo \$this->Paginator->numbers(array('separator' => ''));\n";
-		echo "\t\techo \$this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));\n";
-		echo "\t?>\n";
-	?>
+                }
+            }
+        echo "\t</tr>\n";
+		echo "";
+        echo "<?php \$i++; endforeach; ?>\n";
+        ?>
+        </tbody>
+        </table>
+        <?php echo "<?php echo \$this->Form->end(); ?>\n"; ?>
 	</div>
-</div>
-<div class="actions">
-	<h3><?php echo "<?php echo __('Actions'); ?>"; ?></h3>
-	<ul>
-		<li><?php echo "<?php echo \$this->Html->link(__('New " . $singularHumanName . "'), array('action' => 'add')); ?>"; ?></li>
-<?php
-	$done = array();
-	foreach ($associations as $type => $data) {
-		foreach ($data as $alias => $details) {
-			if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
-				echo "\t\t<li><?php echo \$this->Html->link(__('List " . Inflector::humanize($details['controller']) . "'), array('controller' => '{$details['controller']}', 'action' => 'index')); ?> </li>\n";
-				echo "\t\t<li><?php echo \$this->Html->link(__('New " . Inflector::humanize(Inflector::underscore($alias)) . "'), array('controller' => '{$details['controller']}', 'action' => 'add')); ?> </li>\n";
-				$done[] = $details['controller'];
-			}
-		}
-	}
-?>
-	</ul>
 </div>

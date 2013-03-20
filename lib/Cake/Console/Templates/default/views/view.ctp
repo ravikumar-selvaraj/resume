@@ -16,51 +16,37 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 ?>
-<div class="<?php echo $pluralVar; ?> view">
-<h2><?php echo "<?php  echo __('{$singularHumanName}'); ?>"; ?></h2>
-	<dl>
-<?php
-foreach ($fields as $field) {
-	$isKey = false;
-	if (!empty($associations['belongsTo'])) {
-		foreach ($associations['belongsTo'] as $alias => $details) {
-			if ($field === $details['foreignKey']) {
-				$isKey = true;
-				echo "\t\t<dt><?php echo __('" . Inflector::humanize(Inflector::underscore($alias)) . "'); ?></dt>\n";
-				echo "\t\t<dd>\n\t\t\t<?php echo \$this->Html->link(\${$singularVar}['{$alias}']['{$details['displayField']}'], array('controller' => '{$details['controller']}', 'action' => 'view', \${$singularVar}['{$alias}']['{$details['primaryKey']}'])); ?>\n\t\t\t&nbsp;\n\t\t</dd>\n";
-				break;
-			}
-		}
-	}
-	if ($isKey !== true) {
-		echo "\t\t<dt><?php echo __('" . Inflector::humanize($field) . "'); ?></dt>\n";
-		echo "\t\t<dd>\n\t\t\t<?php echo h(\${$singularVar}['{$modelClass}']['{$field}']); ?>\n\t\t\t&nbsp;\n\t\t</dd>\n";
-	}
-}
-?>
-	</dl>
-</div>
-<div class="actions">
-	<h3><?php echo "<?php echo __('Actions'); ?>"; ?></h3>
-	<ul>
-<?php
-	echo "\t\t<li><?php echo \$this->Html->link(__('Edit " . $singularHumanName ."'), array('action' => 'edit', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?> </li>\n";
-	echo "\t\t<li><?php echo \$this->Form->postLink(__('Delete " . $singularHumanName . "'), array('action' => 'delete', \${$singularVar}['{$modelClass}']['{$primaryKey}']), null, __('Are you sure you want to delete # %s?', \${$singularVar}['{$modelClass}']['{$primaryKey}'])); ?> </li>\n";
-	echo "\t\t<li><?php echo \$this->Html->link(__('List " . $pluralHumanName . "'), array('action' => 'index')); ?> </li>\n";
-	echo "\t\t<li><?php echo \$this->Html->link(__('New " . $singularHumanName . "'), array('action' => 'add')); ?> </li>\n";
-
-	$done = array();
-	foreach ($associations as $type => $data) {
-		foreach ($data as $alias => $details) {
-			if ($details['controller'] != $this->name && !in_array($details['controller'], $done)) {
-				echo "\t\t<li><?php echo \$this->Html->link(__('List " . Inflector::humanize($details['controller']) . "'), array('controller' => '{$details['controller']}', 'action' => 'index')); ?> </li>\n";
-				echo "\t\t<li><?php echo \$this->Html->link(__('New " . Inflector::humanize(Inflector::underscore($alias)) . "'), array('controller' => '{$details['controller']}', 'action' => 'add')); ?> </li>\n";
-				$done[] = $details['controller'];
-			}
-		}
-	}
-?>
-	</ul>
+<div class="content">
+    <div class="cont-container">
+    	<div class="backmgnt"><?php echo "<?php echo \$this->Html->link(__('List " . $pluralHumanName . "'), array('action' => 'index')); ?>"; ?></div>
+		<h2>&nbsp;</h2>
+		<?php echo "<?php echo \$this->Form->create('{$modelClass}',array('id'=>'myForm')); ?>\n"; ?>
+        <fieldset>
+            <legend><?php printf("<?php echo __('%s %s'); ?>", Inflector::humanize($action), $singularHumanName); ?></legend>
+        <dl class="viewtext">
+        <?php
+        foreach ($fields as $field) {
+            $isKey = false;
+            if (!empty($associations['belongsTo'])) {
+                foreach ($associations['belongsTo'] as $alias => $details) {
+                    if ($field === $details['foreignKey']) {
+                        $isKey = true;
+                        echo "\t\t<dt><?php echo __('" . Inflector::humanize(Inflector::underscore($alias)) . "'); ?></dt>\n";
+                        echo "\t\t<dd><?php echo \$this->Html->link(\${$singularVar}['{$alias}']['{$details['displayField']}'], array('controller' => '{$details['controller']}', 'action' => 'view', \${$singularVar}['{$alias}']['{$details['primaryKey']}'])); ?></dd>\n";
+                        break;
+                    }
+                }
+            }
+            if ($isKey !== true) {
+                echo "\t\t<dt><?php echo __('" . Inflector::humanize($field) . "'); ?></dt>\n";
+                echo "\t\t<dd><?php echo h(\${$singularVar}['{$modelClass}']['{$field}']); ?></dd>\n";
+            }
+        }
+        ?>
+        </dl>
+        </fieldset>
+        <?php echo "<?php echo \$this->Form->end(); ?>\n"; ?>
+	</div>
 </div>
 <?php
 if (!empty($associations['hasOne'])) :

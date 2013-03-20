@@ -20,22 +20,22 @@
     <option value="Miss."><?php echo __("Miss.");?></option>
     <option value="Mrs."><?php echo __("Mrs.");?></option>
     </select>
-    <input type="text" placeholder="First Name" id="user_first_name" name="data[firstname]">
-    <input type="text" placeholder="Last Name" id="user_last_name" name="data[lastname]">
+    <input type="text" placeholder="<?php echo __("First Name");?>" id="user_first_name" name="data[firstname]">
+    <input type="text" placeholder="<?php echo __("Last Name");?>" id="user_last_name" name="data[lastname]">
     <span class="help-inline" id="whoru_error"></span>
     </div>
     </div>
     <div class="control-group" id="cvomg_url">
     <label class="control-label" for="inputInfo"><?php echo __("Select your CVOMG url");?></label>
     <div class="controls">
-    <?php echo BASE_URL;?> <input type="text" placeholder="Username" id="user_username" name="data[username]">
+    <?php echo BASE_URL;?> <input type="text" placeholder="<?php echo __("Username");?>" id="user_username" name="data[username]">
     <span class="help-inline" id="cvomg_url_error"></span>
     </div>
     </div>
     <div class="control-group" id="resume_title">
     <label class="control-label" for="inputPassword"><?php echo __("Resume Title (or current position)");?></label>
     <div class="controls">
-    <input type="text" placeholder="Ex: Sales Director" id="user_resume_title" name="data[resume_title]">
+    <input type="text" placeholder="<?php echo __("Ex: Sales Director");?>" id="user_resume_title" name="data[resume_title]">
     
     </div><span class="help-inline" id="resume_title_error"></span>
     </div>
@@ -74,7 +74,7 @@
     
     <div class="modal-footer" >   
     <label class="checkbox" style="display:block;padding-bottom:5px;">
-    <input type="checkbox" id="terms"> I have read and I accept the <a href="">Terms of Service</a> and the <a href="">Privacy Policy</a>
+    <input type="checkbox" id="terms"> <?php echo __("I have read and I accept the");?> <a href=""><?php echo __("Terms of Service");?></a> <?php echo __("and the");?> <a href=""><?php echo __("Privacy Policy");?></a>
     <span class="help-inline" id="terms_error"></span>
     </label>
     

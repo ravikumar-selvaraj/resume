@@ -28,7 +28,7 @@
 							.appendTo('body')
 							.on({
 								click: $.proxy(this.click, this)//,
-								//mousedown: $.proxy(this.mousedown, this)
+								//mousedown: $.proxy(this.mousedown, this),
 							});
 		this.isInput = this.element.is('input');
 		this.component = this.element.is('.date') ? this.element.find('.add-on') : false;
@@ -255,7 +255,7 @@
 				switch(target[0].nodeName.toLowerCase()) {
 					case 'th':
 						switch(target[0].className) {
-							case 'switch':
+							case 'switched':
 								this.showMode(1);
 								break;
 							case 'prev':
@@ -304,10 +304,12 @@
 							this.viewDate = new Date(year, month, Math.min(28, day),0,0,0,0);
 							this.fill();
 							this.set();
+							$('.dropdown-menu').css('display','none');
 							this.element.trigger({
 								type: 'changeDate',
 								date: this.date,
-								viewMode: DPGlobal.modes[this.viewMode].clsName
+								viewMode: DPGlobal.modes[this.viewMode].clsName,
+								
 							});
 						}
 						break;
@@ -436,11 +438,11 @@
 				date.push(val[format.parts[i]]);
 			}
 			return date.join(format.separator);
-		},
-		headTemplate: '<thead>'+
+		}, 
+		headTemplate:   '<thead>'+
 							'<tr>'+
 								'<th class="prev">&lsaquo;</th>'+
-								'<th colspan="5" class="switch"></th>'+
+								'<th colspan="5" class="switched"></th>'+
 								'<th class="next">&rsaquo;</th>'+
 							'</tr>'+
 						'</thead>',

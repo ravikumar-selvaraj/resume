@@ -16,6 +16,7 @@
 					  <div class="tab-pane active in" id="home">
 					<form action="" name="career" id="mycareer" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="data[created_date]" value="" id="test" />
+					<input type="hidden" name="data[lan]" value="eng" />
                     <label>Tag name</label>
 						<input type="text" name="data[tag_name]" id="title" value="" class="validate[required] input-xlarge">
                     

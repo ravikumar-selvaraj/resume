@@ -11,7 +11,9 @@
                     <!-- Blog Posts -->
 					<?php 
 					if(!empty($careers)) {
-					foreach($careers as $career) { ?>
+					foreach($careers as $career) {
+						if($career['Career']['title'] !='') {
+						 ?>
                     <article class="row article">
                         <div class="span9">
                             <div class="row">
@@ -27,8 +29,9 @@
                                     </a>
                                 </div>
                                 <div class="span7">
-                                    <p><?php echo substr($career['Career']['content'],0,500);?></p>
-                                    <p><a class="btn" href="<?php echo BASE_URL;?>careers/view/<?php echo $career['Career']['key'];?>">Read more</a></p>
+                                    <p><?php echo substr(strip_tags($career['Career']['content']),0,500);?></p>
+                                    
+									<p><a class="btn" href="<?php echo BASE_URL;?>careers/view/<?php echo $career['Career']['key'];?>"><?php echo __("Read more");?></a></p>
                                 </div>
                             </div>
                             <div class="row">
@@ -42,7 +45,7 @@
                             </div>
                         </div>
                     </article>
-                    <hr><?php }?>
+                    <hr><?php } }?>
 						<div class="pagination pull-right">
 						<ul>
 							<li><?php echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));?></li>
@@ -54,7 +57,7 @@
 						<article class="row article">
 							<div class="row">
 									<div class="span9">
-										<h4>No record found</h4>
+										<h4><?php echo __("No record found");?></h4>
 									</div>
 								</div>
 						</article>
@@ -65,11 +68,11 @@
 
                 <section class="right-col span3">
                         <div class="well tags">
-                              <h5>Tags</h5>
-                              <a href="<?php echo BASE_URL;?>careers"><span class="label label-info"><i class="icon-tag icon-white"></i> All</span></a>
-                              <a href="<?php echo BASE_URL;?>careers/index/find"><span class="label label-info"><i class="icon-tag icon-white"></i> Find a job</span></a>
-                              <a href="<?php echo BASE_URL;?>careers/index/resume"><span class="label label-info"><i class="icon-tag icon-white"></i> Get a great resume</span></a>
-                              <a href="<?php echo BASE_URL;?>careers/index/career"><span class="label label-info"><i class="icon-tag icon-white"></i> Manage your career</span></a>
+                              <h5><?php echo __("Tags");?></h5>
+                              <a href="<?php echo BASE_URL;?>careers"><span class="label label-info"><i class="icon-tag icon-white"></i> <?php echo __("All");?></span></a>
+                              <a href="<?php echo BASE_URL;?>careers/index/find"><span class="label label-info"><i class="icon-tag icon-white"></i> <?php echo __("Find a job");?></span></a>
+                              <a href="<?php echo BASE_URL;?>careers/index/resume"><span class="label label-info"><i class="icon-tag icon-white"></i> <?php echo __("Get a great resume");?></span></a>
+                              <a href="<?php echo BASE_URL;?>careers/index/career"><span class="label label-info"><i class="icon-tag icon-white"></i> <?php echo __("Manage your career");?></span></a>
                         </div>
 
                         <div class="well search">
@@ -84,18 +87,20 @@
 						
 						<div class="well">
                             <h5><?php echo __("Most popular posts");?></h5>
-							<?php foreach($populars as $popular) { ?>
+							<?php foreach($populars as $popular) {
+								if($popular['Career']['title'] !='') {
+								 ?>
                             <div class="popular-post clearfix">
                                 <h6><?php echo $popular['Career']['title'];?></h6>
                                 <?php echo $this->Html->image('career-image/small/'.$popular['Career']['image'],array('class'=>'pull-left','alt'=>'df','width'=>50,'height'=>50));?>
                                 <p> <?php echo substr($popular['Career']['content'],0,200);?> </p>
 								<a href="<?php echo BASE_URL;?>careers/view/<?php echo $popular['Career']['key'];?>">Read more</a>
                             </div>
-                             <?php } ?>
+                             <?php } }?>
                         </div>
 
                           <div id="tags" class="well">
-                            <h5>Tag Clouds</h5>
+                            <h5><?php echo __("Tag Clouds");?></h5>
                             <ul class="unstyled">
 							<?php foreach($tags as $tag){ 
 								$count = ClassRegistry::init('Career')->find('count',array('conditions'=>array('tag LIKE'=>"%".$tag['Tag']['tag_name']."%")));

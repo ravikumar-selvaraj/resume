@@ -16,11 +16,12 @@
 			
 	 		
 		<?php 
-			if(!empty($_SESSION['Message']['flash'])) { ?>
+		$msg = $this->Session->flash();
+		if(!empty($msg)) { ?>
 	 		
 		<div class="alert alert-info">
 			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong><?php echo $_SESSION['Message']['flash']['message'];?> </strong>
+			<strong><?php echo $msg;?> </strong>
 		</div>
      <?php } ?>
      
@@ -34,12 +35,12 @@
     <table class="table display" id="example" style="border:1px solid #aaa; padding:10px; margin-bottom:20px;">
       <thead>
         <tr>
-          	<th>No</th>
-			<th>Adminname</th>
-			<th>Username</th>
-			<th>Email</th>
-			<th>Createddate</th>
-			<th>Status</th>
+          	<th class="notsort">No</th>
+			<th><div id="sort">Admin name<div id="sorticon"></div></div></th>
+			<th><div id="sort">Username<div id="sorticon"></div></div></th>
+			<th><div id="sort">Email<div id="sorticon"></div></div></th>
+			<th><div id="sort">Created date<div id="sorticon"></div></div></th>
+			<th><div id="sort">Status<div id="sorticon"></div></div></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
         </tr>
       </thead>
@@ -53,9 +54,9 @@
 			<td><?php echo h($adminuser['Adminuser']['createddate']); ?>&nbsp;</td>
 			<td><?php echo h($adminuser['Adminuser']['status']); ?>&nbsp;</td>
 			<td class="actions">
-				<a href="<?php echo BASE_URL?>/admin/adminusers/view/<?php echo $adminuser['Adminuser']['aid'];?>"><i class="icon-zoom-in"></i></a>
-				<a href="<?php echo BASE_URL?>/admin/adminusers/edit/<?php echo $adminuser['Adminuser']['aid'];?>"><i class="icon-pencil"></i></a>
-              	<a rel="<?php echo BASE_URL?>/admin/adminusers/delete/<?php echo $adminuser['Adminuser']['aid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+				<a href="<?php echo BASE_URL?>/admin/adminusers/view/<?php echo $adminuser['Adminuser']['aid'];?>" title="view"><i class="icon-zoom-in"></i></a>
+				<a href="<?php echo BASE_URL?>/admin/adminusers/edit/<?php echo $adminuser['Adminuser']['aid'];?>" title="edit"><i class="icon-pencil"></i></a>
+              	<a rel="<?php echo BASE_URL?>/admin/adminusers/delete/<?php echo $adminuser['Adminuser']['aid'];?>" title="delete" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 			</td>
         </tr>
 		<?php endforeach; ?>

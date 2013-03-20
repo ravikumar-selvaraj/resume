@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap Admin</title>
+    <title>Cvomg Admin</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -81,6 +81,9 @@ echo $this->html->script(array('jquery-1.7.2.min','js/bootstrap','jquery.validat
         $(function() {
             $('.demo-cancel-click').click(function(){return false;});
         });
+		$(".close").click(function(){
+			<?php $this->Session->destroy('Message'); ?>
+			});
     </script>
 	
 	

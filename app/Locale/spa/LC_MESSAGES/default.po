@@ -1,0 +1,771 @@
+msgid "Features"
+msgstr "Características"
+
+msgid "Career advice"
+msgstr "asesoramiento profesional"
+
+msgid "Blog"
+msgstr "Blog"
+
+msgid "Contact"
+msgstr "contacto"
+
+msgid "My Resume"
+msgstr "Mi curriculum vitae"
+
+msgid "Language"
+msgstr "idioma"
+
+msgid "Welcome"
+msgstr "bienvenido"
+
+msgid "Sign up"
+msgstr "Regístrese"
+
+msgid "Sign in"
+msgstr "ingresar"
+
+msgid "Sign in"
+msgstr "ingresar"
+
+msgid "Sign up for a free account"
+msgstr "Regístrate para obtener una cuenta gratuita"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Password"
+msgstr "contraseña"
+
+msgid "Sign in to your account"
+msgstr "Acceda a su cuenta"
+
+msgid "Forgot password"
+msgstr "Olvidó su contraseña"
+
+msgid "Submit"
+msgstr "presentar"
+
+msgid "Dashboard"
+msgstr "salpicadero"
+
+msgid "Settings"
+msgstr "Configuración"
+
+msgid "Logout"
+msgstr "Cerrar sesión"
+
+msgid "Home"
+msgstr "casa"
+
+msgid "About us"
+msgstr "¿Quiénes somos?"
+
+msgid "F.A.Q"
+msgstr "F.A.Q"
+
+msgid "Partners"
+msgstr "Partners"
+
+msgid "Terms of service"
+msgstr "Términos del servicio"
+
+msgid "Privacy policy"
+msgstr "Política de privacidad"
+
+msgid "Last updated"
+msgstr "Última actualización"
+
+msgid "Resume Completion"
+msgstr "Reanudar Finalización"
+
+msgid "Resume Completed"
+msgstr "Currículum Completo"
+
+msgid "Update"
+msgstr "actualizar"
+
+msgid "Review my resume"
+msgstr "Revisar mi hoja de vida"
+
+msgid "To improve your resume, you can"
+msgstr "Para mejorar su curriculum vitae, usted puede"
+
+msgid "Add a picture"
+msgstr "Añadir una imagen"
+
+msgid "Add at least three experiences"
+msgstr "Agregue por lo menos tres experiencias"
+
+msgid "Add at least three skills"
+msgstr "Agregue por lo menos tres habilidades"
+
+msgid "Add Interest"
+msgstr "Añadir interés"
+
+msgid "Add Education"
+msgstr "Añadir Educación"
+
+msgid "Add Portfolio"
+msgstr "Añadir Portfolio"
+
+msgid "Traffic status"
+msgstr "Tráfico estado"
+
+msgid "New users"
+msgstr "Los nuevos usuarios"
+
+msgid "Stay informed"
+msgstr "Manténgase informado"
+
+msgid "I want to receive the"
+msgstr "Deseo recibir el"
+
+msgid "Career Guide newsletter"
+msgstr "Career Guide boletín"
+
+msgid "CVOMG newsletter"
+msgstr "CVOMG boletín"
+
+msgid "Save"
+msgstr "ahorrar"
+
+msgid "Tips & Advice"
+msgstr "Consejos y Asesoramiento"
+
+msgid "next"
+msgstr "próximo"
+
+msgid "View complete list"
+msgstr "Ver la lista completa"
+
+msgid "First, the basics."
+msgstr "En primer lugar, los conceptos básicos."
+
+msgid "Who are you?"
+msgstr "¿Quién es usted?"
+
+msgid "Mr."
+msgstr "Sr."
+
+msgid "Miss."
+msgstr "Miss"
+
+msgid "Mrs."
+msgstr "Sra."
+
+msgid "First Name"
+msgstr "Nombre"
+
+msgid "Last Name"
+msgstr "apellido"
+
+msgid "Select your CVOMG url"
+msgstr "Seleccione su url CVOMG"
+
+msgid "Username"
+msgstr "Nombre de usuario"
+
+msgid "Resume Title (or current position)"
+msgstr "Reanudar Título (o la posición actual)"
+
+msgid "Ex: Sales Director"
+msgstr "Ex Director de Ventas:"
+
+msgid "Proffessional status"
+msgstr "situación profesional"
+
+msgid "Employed"
+msgstr "Empleado"
+
+msgid "Unemployed"
+msgstr "desempleados"
+
+msgid "Student"
+msgstr "estudiante"
+
+msgid "Availablity"
+msgstr "Disponibilidades"
+
+msgid "Available"
+msgstr "disponible"
+
+msgid "Looking for an internship"
+msgstr "¿Buscas una oferta de prácticas"
+
+msgid "Just looking around"
+msgstr "Con sólo mirar alrededor"
+
+msgid "Open to opportunities"
+msgstr "Disponible a las oportunidades"
+
+msgid "Unavailable"
+msgstr "indisponible"
+
+msgid "I have read and I accept the"
+msgstr "He leído y acepto la"
+
+msgid "and the"
+msgstr "y la"
+
+msgid "I'd like to subscribe to CVomg newsletter"
+msgstr "Me gustaría suscribirme al boletín CVomg"
+
+msgid "Go to my resume"
+msgstr "Ir a mi hoja de vida"
+
+msgid "Profile"
+msgstr "perfil"
+
+msgid "Change Password"
+msgstr "Cambiar contraseña"
+
+msgid "Email Alerts"
+msgstr "novedades por correo electrónico"
+
+msgid "Gender"
+msgstr "género"
+
+msgid "Delete my account"
+msgstr "Eliminar mi cuenta"
+
+msgid "If you delete your account, all your information will be erased and your resume will no longer be accessible!"
+msgstr "Si eliminas tu cuenta, toda su información será borrada y su hoja de vida ya no será accesible!"
+
+msgid "Current Password"
+msgstr "Contraseña actual"
+
+msgid "New Password"
+msgstr "Nueva contraseña"
+
+msgid "Confirm New Password"
+msgstr "Confirmar nueva contraseña"
+
+msgid "I'd like to receive updates from Cvomg by email"
+msgstr "Me gustaría recibir actualizaciones por correo electrónico de Cvomg"
+
+msgid "(We promise not to share your email address. 1 email per week max.)"
+msgstr "(Prometemos no compartir su dirección de correo electrónico. 1 email por semana max.)"
+
+msgid "Are you sure you want to cancel your account?"
+msgstr "¿Está seguro que desea cancelar su cuenta?"
+
+msgid "Latest CV"
+msgstr "últimas CV"
+
+msgid "Create an elegant and effective resume for free"
+msgstr "Crear una currículum elegante gratis"
+
+msgid "Create a cv now"
+msgstr "Crear un cv"
+
+msgid "Take a look at these sample resumes"
+msgstr "Echa un vistazo a estos curriculums vitae de la muestra"
+
+msgid "Your email ("
+msgstr "Tu email ("
+
+msgid ") is already Activated, you can log in"
+msgstr ") Ya está activado, puede iniciar sesión en"
+
+msgid "Here"
+msgstr "aquí"
+
+msgid "Account"
+msgstr "cuenta"
+
+msgid "Add Content"
+msgstr "Añadir contenido"
+
+msgid "Design"
+msgstr "diseño"
+
+msgid "Share"
+msgstr "participación"
+
+msgid "Recommendations"
+msgstr "Recomendaciones"
+
+msgid "Essential"
+msgstr "esencial"
+
+msgid "Portfolio"
+msgstr "cartera"
+
+msgid "Import"
+msgstr "importar"
+
+msgid "Professional Experience"
+msgstr "Experiencia Profesional"
+
+msgid "Skills"
+msgstr "Habilidades"
+
+msgid "Education"
+msgstr "educación"
+
+msgid "Interests"
+msgstr "intereses"
+
+msgid "Photo + Basic info"
+msgstr "Foto + Información básica"
+
+msgid "About me"
+msgstr "Acerca de mí"
+
+msgid "My Links"
+msgstr "Mis Enlaces"
+
+msgid "Photo"
+msgstr "foto"
+
+msgid "Video"
+msgstr "vídeo"
+
+msgid "Audio"
+msgstr "audio"
+
+msgid "Word/PDF"
+msgstr "Word/PDF"
+
+msgid "Presentation"
+msgstr "presentación"
+
+msgid "Share my resume on"
+msgstr "Compartir mi curriculum vitae en"
+
+msgid "General"
+msgstr "general"
+
+msgid "Privacy"
+msgstr "intimidad"
+
+msgid "Resume Title"
+msgstr "Reanudar Título"
+
+msgid "Description"
+msgstr "descripción"
+
+msgid "Publish my resume on the web"
+msgstr "Dar mi curriculum vitae en la web"
+
+msgid "Protect my resume with a password"
+msgstr "Proteger mi curriculum vitae con una contraseña"
+
+msgid "Broadcast your resume on search engines"
+msgstr "Transmita su hoja de vida en los motores de búsqueda"
+
+msgid "Experience"
+msgstr "experiencia"
+
+msgid "Interest"
+msgstr "interés"
+
+msgid "Skill"
+msgstr "habilidad"
+
+msgid "Edit"
+msgstr "editar"
+
+msgid "Edit photo"
+msgstr "Editar foto"
+
+msgid "Country"
+msgstr "país"
+
+msgid "Select"
+msgstr "seleccionar"
+
+msgid "City"
+msgstr "ciudad"
+
+msgid "Zipcode"
+msgstr "código postal"
+
+msgid "Cancel"
+msgstr "cancelar"
+
+msgid "Contact Form"
+msgstr "Formulario de contacto"
+
+msgid "Phone"
+msgstr "teléfono"
+
+msgid "About Me"
+msgstr "Acerca de mí"
+
+msgid "Professional Status"
+msgstr "Estado de profesional"
+
+msgid "Professional"
+msgstr "profesional"
+
+msgid "Status"
+msgstr "estado"
+
+msgid "Photo Update"
+msgstr "Foto Update"
+
+msgid "Upload Photo"
+msgstr "Subir Fotos"
+
+msgid "Display on Homepage"
+msgstr "Visualización en la página principal"
+
+msgid "Submit photo"
+msgstr "Enviar foto"
+
+msgid "something problem occurs in your action please try again."
+msgstr "problema ocurre algo en su acción por favor inténtelo de nuevo."
+
+msgid "Job Title"
+msgstr "Título del trabajo"
+
+msgid "Company"
+msgstr "empresa"
+
+msgid "Contract Type(Optional)"
+msgstr "Tipo de contrato (Opcional)"
+
+msgid "Full-time"
+msgstr "Jornada completa"
+
+msgid "Part-time"
+msgstr "A media jornada"
+
+msgid "Internship"
+msgstr "internado"
+
+msgid "Temporary Work"
+msgstr "Trabajo Temporal"
+
+msgid "Apprenticeship"
+msgstr "aprendizaje"
+
+msgid "Cooperative Education Work"
+msgstr "Trabajo Educación Cooperativa"
+
+
+msgid "Consultant"
+msgstr "consultor"
+
+msgid "Student Project"
+msgstr "Estudiante del Proyecto"
+
+msgid "Volunteer Work"
+msgstr "Voluntariado"
+
+msgid "Temporary Replacement"
+msgstr "sustitución temporal"
+
+msgid "Other"
+msgstr "otro"
+
+msgid "Start Date"
+msgstr "Fecha de inicio"
+
+msgid "End Date"
+msgstr "Fecha de finalización"
+
+msgid "Responsibilities"
+msgstr "Responsabilidades"
+
+msgid "Add"
+msgstr "añadir"
+
+msgid "Add Skill"
+msgstr "Añadir Skill"
+
+msgid "Degree Program"
+msgstr "y carreras"
+
+msgid "School"
+msgstr "escuela"
+
+msgid "Short Description"
+msgstr "Breve Descripción"
+
+msgid "Details"
+msgstr "Detalles"
+
+msgid "Type of interest"
+msgstr "Tipo de interés"
+
+msgid "Travel"
+msgstr "viajar"
+
+msgid "Music"
+msgstr "música"
+
+msgid "Sports"
+msgstr "deportes"
+
+msgid "Literature"
+msgstr "literatura"
+
+msgid "Film"
+msgstr "película"
+
+msgid "Art"
+msgstr "Arte"
+
+msgid "Around Town"
+msgstr "Around Town"
+
+msgid "Add Basic Information Section"
+msgstr "Agregar sección Información Básica"
+
+msgid "Add about me section"
+msgstr "Añadir acerca de mi sección"
+
+msgid "Content"
+msgstr "contenido"
+
+msgid "Links"
+msgstr "Enlaces"
+
+msgid "Add Links"
+msgstr "Agregar vínculos"
+
+msgid "Rss feed link"
+msgstr "Rss feed enlace"
+
+msgid "Portfolio Photo"
+msgstr "Photo Portfolio"
+
+msgid "Image Title"
+msgstr "Imagen Título"
+
+msgid "Portfolio Add Video"
+msgstr "Portfolio Añadir vídeo"
+
+msgid "Video Title"
+msgstr "Título del video"
+
+msgid "Insert Embed Code"
+msgstr "Insertar Insertar Código"
+
+msgid "To insert a video, copy the embed code from one of the following services and paste it above."
+msgstr "Para insertar un vídeo, copiar el código de inserción de uno de los siguientes servicios y pégala anteriormente."
+
+msgid "Choose the aspect ratio for your player"
+msgstr "Seleccione la relación de aspecto de su reproductor"
+
+msgid "Portfolio Add Audio"
+msgstr "Cartera Añadir Audio"
+
+msgid "Audio Title"
+msgstr "Título de audio"
+
+msgid "Upload Audio File"
+msgstr "Sube archivos de audio"
+
+msgid "Portfolio Add Document"
+msgstr "Portafolio Agregar documento"
+
+msgid "Document Title"
+msgstr "Título del documento"
+
+msgid "Add a document"
+msgstr "Añadir un documento"
+
+msgid "Portfolio Add Slideshow"
+msgstr "Portafolio Agregar presentacion"
+
+msgid "Presentation Title"
+msgstr "Presentación Título"
+
+msgid "To insert a presentation, copy the embed code from one of the following services and paste it above."
+msgstr "Para insertar una presentación, copiar el código de inserción de uno de los siguientes servicios y pégala anteriormente."
+
+msgid "Update the keyworks on which you wish to be recommended"
+msgstr "Actualice los KeyWorks en la que desea que se recomienda"
+
+msgid "Delete"
+msgstr "borrar"
+
+msgid "Blogs"
+msgstr "Blogs"
+
+msgid "Search by title"
+msgstr "Búsqueda por título"
+
+msgid "previous"
+msgstr "anterior"
+
+msgid "Read more"
+msgstr "Leer más"
+
+msgid "View"
+msgstr "ver"
+
+msgid "Career Advice"
+msgstr "Asesoramiento profesional"
+
+msgid "No record found"
+msgstr "No se encontró registro"
+
+msgid "Most popular posts"
+msgstr "Posts más populares"
+
+msgid "Tags"
+msgstr "Etiquetas"
+
+msgid "All"
+msgstr "todos"
+
+msgid "Find a job"
+msgstr "Encontrar un empleo"
+
+msgid "Get a great resume"
+msgstr "Obtener una currículum"
+
+msgid "Manage your career"
+msgstr "Administra tu carrera"
+
+msgid "Responsibility"
+msgstr "responsabilidad"
+
+msgid "Company Description"
+msgstr "Descripción de la empresa"
+
+msgid "Website"
+msgstr "sitio web"
+
+msgid "Partners"
+msgstr "Partners"
+
+msgid "To complete your registration, please check your e-mail to validate your Cvomg Account"
+msgstr "Para completar su inscripción, por favor revise su e-mail para validar la cuenta Cvomg"
+
+msgid "Professional Details Added Successfully"
+msgstr "Datos Profesionales añadido con éxito"
+
+msgid "Skills Added Successfully"
+msgstr "Habilidades añadido con éxito"
+
+msgid "Education Added Successfully"
+msgstr "Educación ha añadido correctamente"
+
+msgid "The basic information has been saved"
+msgstr "La información básica que se ha guardado"
+
+msgid "About me Added Successfully"
+msgstr "En cuanto a mí se agregó con éxito"
+
+msgid "Links Added Successfully"
+msgstr "Enlaces agregado con éxito"
+
+msgid "Rss feed added successfully"
+msgstr "Rss feed añadido con éxito"
+
+msgid "Profile imported successfully"
+msgstr "Perfil importado con éxito"
+
+msgid "The password has been changed"
+msgstr "La contraseña se ha cambiado"
+
+msgid "Email is already taken"
+msgstr "Correo electrónico ya está en uso"
+
+msgid "Invalid email"
+msgstr "email inválido"
+
+msgid "Your account has been deleted!"
+msgstr "Su cuenta ha sido eliminado!"
+
+msgid "To recommend on self is not possible,sorry!"
+msgstr "Recomendar a sí mismo, no es posible, lo siento!"
+
+msgid "Your recommendation sent successfully waiting for approval "
+msgstr "Su recomendación enviada en espera de aprobación"
+
+msgid "Skills Updated Successfully"
+msgstr "Habilidades actualizado correctamente"
+
+msgid "Professional Updated Added Successfully"
+msgstr "Profesional Actualizado añadido correctamente"
+
+msgid "Links Updated Successfully"
+msgstr "Enlaces actualizado correctamente"
+
+msgid "Education Updated Successfully"
+msgstr "Educación Actualizado correctamente"
+
+msgid "About me Updated Successfully"
+msgstr "En cuanto a mí Actualizado correctamente"
+
+msgid "Rss feed Updated successfully"
+msgstr "Rss feed actualizado con éxito"
+
+msgid "Confirm Delete"
+msgstr "Confirmar eliminación"
+
+msgid "Your About to delete the Portfolio details. 
+Are you sure want to delete the details?"
+msgstr "Su punto de suprimir los detalles de cartera.
+¿Seguro que quieres eliminar los detalles?"
+
+msgid "Your About to delete the Experience details. 
+Are you sure want to delete the details?"
+msgstr "Partners"
+
+msgid "Your About to delete the Interest details. 
+Are you sure want to delete the details?"
+msgstr "Su punto de suprimir los detalles de interés.
+¿Seguro que quieres eliminar los detalles?"
+
+msgid "Your About to delete the Skill details. 
+Are you sure want to delete the details?"
+msgstr "Su punto de suprimir los detalles de habilidad.
+¿Seguro que quieres eliminar los detalles?"
+
+msgid "Your About to delete the Education details. 
+Are you sure want to delete the details?"
+msgstr "Su punto de suprimir los detalles de Educación.
+¿Seguro que quieres eliminar los detalles?"
+
+msgid "Portfolio  added successfully"
+msgstr "Cartera añadido con éxito"
+
+msgid "Portfolio  updated successfully"
+msgstr "Portafolio actualizado correctamente"
+
+msgid "Name"
+msgstr "nombre"
+
+msgid "Subject"
+msgstr "sujeto"
+
+msgid "Message"
+msgstr "mensaje"
+
+msgid "Captcha"
+msgstr "Captcha"
+
+msgid "Confirm Delete"
+msgstr "Confirmar eliminación"
+
+msgid "Your About to delete the"
+msgstr "Su punto de suprimir la"
+
+msgid "details"
+msgstr "detalles"
+
+msgid "Are you sure want to delete the details?"
+msgstr "¿Seguro que quieres eliminar los detalles?"
+
+msgid "Your message sent successfully, admin will contact you soon"
+msgstr "Su mensaje fue enviado con éxito, el administrador se comunicará con usted pronto"
+
+msgid "The Captcha code mismatch."
+msgstr "El desajuste código Captcha."
+
+msgid "Captcha"
+msgstr "Captcha"
+
+msgid "Captcha"
+msgstr "Captcha"
+
+msgid "Captcha"
+msgstr "Captcha"

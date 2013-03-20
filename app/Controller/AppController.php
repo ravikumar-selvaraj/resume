@@ -59,8 +59,21 @@ class AppController extends Controller {
 		$email->config('smtp');	
 		$email->emailFormat('html');
 		//pr($email->replyTo(str_replace($values, $values, $values[0])));exit;
-		$email->replyTo(str_replace($values, $values, $values[0]));
+		$email->replyTo(str_replace($values, $values, $values[3]));
 		$email->to(str_replace($values, $values, $values[0]));
+		$email->subject('Message');
+		$email->send($values[2]);
+	}
+	
+	function forgetpass($values){
+		App::uses('CakeEmail', 'Network/Email');
+		$email = new CakeEmail();
+		$email->config('smtp');	
+		$email->emailFormat('html');
+		//pr($email->replyTo(str_replace($values, $values, $values[0])));exit;
+		//$email->replyTo(str_replace($values, $values, $values[3]));
+		$email->to(str_replace($values, $values, $values[0]));
+		$email->subject('Reset Password');
 		$email->send($values[2]);
 	}
 	
@@ -133,6 +146,8 @@ class AppController extends Controller {
 			$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
 		}
 	}
+	
+	
 	
 	
 	

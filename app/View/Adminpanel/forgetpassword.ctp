@@ -1,7 +1,7 @@
 <div class="row-fluid">
     <div class="dialog">
         <div class="block">
-            <p class="block-heading">Reset your password</p>
+            <p class="block-heading">Forgot password</p>
             <div class="block-body">
                 <form name="forget" id="forgetpassword" method="post" action="">
                     <label>Email Address</label>

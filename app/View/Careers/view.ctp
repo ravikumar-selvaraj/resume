@@ -49,29 +49,7 @@
                                         <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></p>
                                         </div>
 								
-                                <!--<div class="span9">
-                                    <h4>Craft a compelling headline</h4>
-
-                                    <p>A headline draws readers into a website. Your resume title is the equivalent of an article title. Its purpose is to draw readers into your content. A compelling headline should convey your profile and uniqueness. Here are a few examples of resume headlines that pique interest:</p>
-                                    
-                                    <ul>
-                                        <li>Up-and-Coming Media Manager</li>
-                                        <li>Technology Project Manger with Event Planning Experience</li>
-                                    </ul>
-
-                                    <h4>Craft a compelling headline</h4>
-
-                                    <p>A headline draws readers into a website. Your resume title is the equivalent of an article title. Its purpose is to draw readers into your content. A compelling headline should convey your profile and uniqueness. Here are a few examples of resume headlines that pique interest:</p>
-
-                                    <p>
-                                        On the web, proof is only a click away. If you make an assertion, take time to demonstrate it. The best part of an online resume is that it negates the need to squeeze yourself on to one page.
-                                    </p>
-
-                                    <p>
-                                        What this means to you is that you have room to provide additional information such as describing a short case study or creating a presentation that proves your excellent communication abilities.
-                                    </p>
-                                </div>-->
-								
+                               							
                             </div>
                         </article>
                     </div>
@@ -79,12 +57,13 @@
                 </section>
 
                 <section class="right-col span3">
-                        <div class="well tags">
-                              <h5>Tags</h5>
-                              <a href="<?php echo BASE_URL;?>careers"><span class="label label-info"><i class="icon-tag icon-white"></i> All</span></a>
-                              <a href="<?php echo BASE_URL;?>careers/index/find"><span class="label label-info"><i class="icon-tag icon-white"></i> Find a job</span></a>
-                              <a href="<?php echo BASE_URL;?>careers/index/resume"><span class="label label-info"><i class="icon-tag icon-white"></i> Get a great resume</span></a>
-                              <a href="<?php echo BASE_URL;?>careers/index/career"><span class="label label-info"><i class="icon-tag icon-white"></i> Manage your career</span></a>
+                        						
+						<div class="well tags">
+                              <h5><?php echo __("Tags");?></h5>
+                              <a href="<?php echo BASE_URL;?>careers"><span class="label label-info"><i class="icon-tag icon-white"></i> <?php echo __("All");?></span></a>
+                              <a href="<?php echo BASE_URL;?>careers/index/find"><span class="label label-info"><i class="icon-tag icon-white"></i> <?php echo __("Find a job");?></span></a>
+                              <a href="<?php echo BASE_URL;?>careers/index/resume"><span class="label label-info"><i class="icon-tag icon-white"></i> <?php __("Get a great resume");?></span></a>
+                              <a href="<?php echo BASE_URL;?>careers/index/career"><span class="label label-info"><i class="icon-tag icon-white"></i> <?php __("Manage your career");?></span></a>
                         </div>
 
                         <div class="well search">

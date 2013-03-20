@@ -11,11 +11,12 @@
             <div class="row-fluid">
 			
 			<?php 
-			if(!empty($_SESSION['Message']['flash'])) { ?>
+		$msg = $this->Session->flash();
+		if(!empty($msg)) { ?>
 	 		
 		<div class="alert alert-info">
 			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong><?php echo $_SESSION['Message']['flash']['message'];?> </strong>
+			<strong><?php echo $msg;?> </strong>
 		</div>
      <?php } ?>
                     
@@ -30,12 +31,12 @@
     <thead>
           <tr>
           <?php /*?>  <th><?php echo $this->Paginator->sort('sid'); ?></th><?php */?>
-            <th>No</th> 
-            <th>Name</th>
-            <th>E-mail</th>
-            <th>Subject</th>
-            <th>Date</th>
-          
+            <th class="notsort">No</th> 
+            <th><div id="sort">Name<div id="sorticon"></div></div></th>
+            <th><div id="sort">E-mail<div id="sorticon"></div></div></th>
+            <th><div id="sort">Subject<div id="sorticon"></div></div></th>
+            <th><div id="sort">Post date<div id="sorticon"></div></div></th>
+           <!-- <th>View</th>-->
             <th class="actions"><?php echo __('Actions'); ?></th>
           </tr>
           </thead>
@@ -43,18 +44,19 @@
           <?php 
 		  $i=1;
 		  foreach ($contact as $contact): ?>
-          <tr>
+          <tr <?php if($contact['Sitecontact']['view']==0) echo 'class="bold"' ?> >
           <?php /*?>  <td><?php echo h($staticpage['Staticpage']['sid']); ?>&nbsp;</td><?php */?>
-           <td><?php echo h($i); ?>&nbsp;</td>
+           <td><?php echo $i; ?>&nbsp;</td>
             <td><?php echo h($contact['Sitecontact']['name']); ?>&nbsp;</td>
              <td><?php echo h($contact['Sitecontact']['email']); ?>&nbsp;</td>
             <td><?php echo h($contact['Sitecontact']['subject']); ?>&nbsp;</td>
              <td><?php echo h($contact['Sitecontact']['date']); ?>&nbsp;</td>
+          <!--   <td><?php //echo h($contact['Sitecontact']['view']); ?>&nbsp;</td>-->
              <td class="actions">
-			<?php echo $this->Html->link(__(''), array('action' => 'view', $contact['Sitecontact']['cid'],'admin'=>'true'),array('class' => 'icon-eye-open')); ?>
+			<?php echo $this->Html->link(__(''), array('action' => 'view', $contact['Sitecontact']['cid'],'admin'=>'true'),array('class' => 'icon-zoom-in','title'=>'view')); ?>
 			<?php //echo $this->Html->link(__(''), array('action' => 'edit', $contact['Sitecontact']['uid']),array('class' => 'icon-pencil')); ?>
 			<?php //echo $this->Form->postLink(__(''), array('action' => 'delete', $staticpage['Staticpage']['sta_id']),array('class' => 'icon-trash test'), null, __('Are you sure you want to delete # %s?', $staticpage['Staticpage']['sta_id'])); ?>
-            	<a rel="<?php echo BASE_URL?>admin/sitecontacts/delete/<?php echo $contact['Sitecontact']['cid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+            	<a rel="<?php echo BASE_URL?>admin/sitecontacts/delete/<?php echo $contact['Sitecontact']['cid'];?>" title="delete" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 		</td>
              
              

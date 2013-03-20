@@ -1,7 +1,7 @@
 <div id="blogs" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h2 id="myModalLabel"><?php echo __("Add Links");?></h2>
+                                <h2 id="myModalLabel" class="forh2"><?php echo __("Add Links");?></h2>
                             </div>
 
                             <div class="modal-body">

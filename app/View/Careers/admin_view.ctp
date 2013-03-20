@@ -35,7 +35,7 @@
 										</div>
 										<div class="control-group">
 											<label class="control-label">Content :</label>
-											<div class="controls"> <?php echo html_entity_decode(h($careers['Career']['content'])); ?>	</div>
+											<div class="controls"> <?php echo html_entity_decode(h(strip_tags($careers['Career']['content']))); ?>	</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">Image :</label>

@@ -83,80 +83,78 @@ class LinkedinController extends AppController {
 					$this->redirect($loc);
 				} 
 			} else {
+				if(!isset($_GET['oauth_verifier'])) {
+						$this->Session->setFlash(__('Profile importing cancelled successfully'));
+						$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+				}
 				$response = $OBJ_linkedin->retrieveTokenAccess($_SESSION['oauth']['linkedin']['request']['oauth_token'], $_SESSION['oauth']['linkedin']['request']['oauth_token_secret'], $_GET['oauth_verifier']);
 					if($response['success'] === TRUE) {
 						$_SESSION['oauth']['linkedin']['access'] = $response['linkedin'];
 						$_SESSION['oauth']['linkedin']['authorized'] = TRUE;
-						$this->redirect(array('controller'=>'linkedin','action'=>'profile'));
-					} 
-				}
-				
-				$this->render(false);
-		}
-		
-		public function profile(){
-			$this->checkuser();
-			$this->render(false);
-			App::import('Vendor','linkedin');
-			$API_CONFIG = array('appKey'=>'0f3hwj8z40c9','appSecret'=>'KjLZX97sRsjRgFCP','callbackUrl'=> NULL);
-				$_SESSION['oauth']['linkedin']['authorized'] = (isset($_SESSION['oauth']['linkedin']['authorized'])) ? $_SESSION['oauth']['linkedin']['authorized'] : FALSE;
-				
-          		if($_SESSION['oauth']['linkedin']['authorized'] === TRUE) { 
-					$OBJ_linkedin = new LinkedIn($API_CONFIG);
-					$OBJ_linkedin->setTokenAccess($_SESSION['oauth']['linkedin']['access']);
-					$OBJ_linkedin->setResponseFormat(LINKEDIN::_RESPONSE_XML);
-					$response = $OBJ_linkedin->profile('~:(id,first-name,last-name,picture-url,headline,industry,location:(name,country:(code)),email-address,phone-numbers,educations,positions,skills,mfeed-rss-url,interests,connections)');
+						if($_SESSION['oauth']['linkedin']['authorized'] === TRUE) {
+							$OBJ_linkedin->setTokenAccess($_SESSION['oauth']['linkedin']['access']);
+							$OBJ_linkedin->setResponseFormat(LINKEDIN::_RESPONSE_XML);
+							$response = $OBJ_linkedin->profile('~:(id,first-name,last-name,picture-url,headline,industry,location:(name,country:(code)),email-address,phone-numbers,educations,positions,skills,mfeed-rss-url,interests,connections)');
 					if($response['success'] === TRUE) {
 						$response = new SimpleXMLElement($response['linkedin']);
-						//pr($response); die;
 						
-						// skills
-						$this->request->data = '';
-						$skil = '';
-						foreach($response->skills->skill as $skill){
-							$skil.= $skill->skill->name.',';
-						}
-						$this->request->data['uid'] = $this->Session->read('User.uid'); 
-						$this->request->data['key'] = $this->str_rand();
-						$this->request->data['skills'] = $skil;
-						$this->request->data['skill_area'] = $response->industry;
-						$this->Skill->save($this->request->data);
-						
-						
-						// education
-						foreach($response->educations->education as $edu) {
+						if(!empty($response->skills->skill)) {
+							// skills
+							$this->request->data = '';
+							$skil = '';
+							foreach($response->skills->skill as $skill){
+								$skil.= $skill->skill->name.',';
+							}
 							$this->request->data['uid'] = $this->Session->read('User.uid'); 
 							$this->request->data['key'] = $this->str_rand();
-							$this->request->data['course'] = $edu->degree;
-							$this->request->data['organization'] = $edu->{'school-name'};
-							$this->request->data['start_date'] = $edu->{'start-date'}->year;
-							$this->request->data['end_date'] = $edu->{'end-date'}->year;
-							$this->request->data['desc'] = $edu->{'field-of-study'};
-							$this->Education->saveAll($this->request->data);
+							$this->request->data['skills'] = $skil;
+							$this->request->data['skill_area'] = $response->industry;
+							$this->Skill->save($this->request->data);
 						}
 						
-						// experience
-						$this->request->data = '';
-						foreach($response->positions->position as $pos){
-							if($pos->{'end-date'}->year == '')
-							$pos->{'end-date'}->year = date('m/d/Y');
+						if(!empty($response->educations->education)) {
+							// education
+							$this->request->data = '';
+							foreach($response->educations->education as $edu) {
+								$this->request->data['uid'] = $this->Session->read('User.uid'); 
+								$this->request->data['key'] = $this->str_rand();
+								$this->request->data['course'] = $edu->degree;
+								$this->request->data['organization'] = $edu->{'school-name'};
+								if($edu->{'start-date'}->year !='')
+								$this->request->data['start_date'] = $edu->{'start-date'}->year;
+								if($edu->{'end-date'}->year !='')
+								$this->request->data['end_date'] = $edu->{'end-date'}->year;
+								$this->request->data['desc'] = $edu->{'field-of-study'};
+								$this->Education->saveAll($this->request->data);
+							}
+						}
+						
+						if(!empty($response->positions->position)) {
+							// experience
+							$this->request->data = '';
+							foreach($response->positions->position as $pos){
+								$this->request->data['uid'] = $this->Session->read('User.uid'); 
+								$this->request->data['key'] = $this->str_rand();
+								$this->request->data['job_title'] = $pos->title;
+								$this->request->data['company'] = $pos->company;
+								$this->request->data['country'] = strtoupper($response->location->country->code);
+								if($pos->{'start-date'}->year != '')
+								$this->request->data['start_date'] = $pos->{'start-date'}->year;
+								if($pos->{'end-date'}->year != '')
+								$this->request->data['end_date'] = $pos->{'end-date'}->year;
+								$this->Experience->saveAll($this->request->data);
+							}
+						}
+						
+						if(!empty($response->interests)) {
+							// interests
+							$this->request->data = '';
 							$this->request->data['uid'] = $this->Session->read('User.uid'); 
 							$this->request->data['key'] = $this->str_rand();
-							$this->request->data['job_title'] = $pos->title;
-							$this->request->data['company'] = $pos->company;
-							$this->request->data['start_date'] = $pos->{'start-date'}->year;
-							$this->request->data['end_date'] = $pos->{'end-date'}->year;
-							$this->Experience->saveAll($this->request->data);
+							$this->request->data['interest_type'] = "Travel";
+							$this->request->data['interest'] = $response->interests;
+							$this->Interest->save($this->request->data);
 						}
-						
-						// interests
-						$this->request->data = '';
-						$this->request->data['uid'] = $this->Session->read('User.uid'); 
-						$this->request->data['key'] = $this->str_rand();
-						$this->request->data['interest_type'] = "Travel";
-						$this->request->data['interest'] = $response->interests;
-						$this->Interest->save($this->request->data);
-						
 						
 						$this->request->data = '';
 						$image = $this->imagefromurl($response->{'picture-url'},'img/user-images/small/'.$this->Session->read('User.uid').'.jpg');
@@ -170,11 +168,17 @@ class LinkedinController extends AppController {
 						$this->request->data['city'] = $city;
 						$this->request->data['country'] = strtoupper($response->location->country->code);	
 						$this->User->save($this->request->data);
+						
+						$response = $OBJ_linkedin->revoke();
+						$this->Session->setFlash(__('Profile imported successfully'));
 						$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 					}
 				}
+						//$this->redirect(array('controller'=>'linkedin','action'=>'profile'));
+					} 
+				}
+				
+				$this->render(false);
 		}
-		
-		
 		
 }

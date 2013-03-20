@@ -1,17 +1,20 @@
+
 <?php
 $exp=ClassRegistry::init('Experience')->find(array('eid'=>$edid));
 $catlist=ClassRegistry::init('Country')->find('all',array('conditions'=>array('')));
 ?>
 <div id="editexp<?php echo $edid; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <form class="form-inline" name="update" action="<?php echo Router::url('/'); ?>users/exp" method="post" style="margin-bottom:0px;" enctype="multipart/form-data">
-    <div class="modal-header" style="margin-bottom:10px;padding-bottom:0px;">
-      <input type="hidden" value="<?php echo $exp['Experience']['key'];?>" name="data[key]" id="user_id" />
+   <input type="hidden" value="<?php echo $exp['Experience']['key'];?>" name="data[key]" id="user_id" />
       <input type="hidden" name="data[eid]"  value="<?php echo $exp['Experience']['eid'];?>" />
-      <button type="button" rel="<?php echo $exp['Experience']['eid'];?>" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <input type="hidden" name="data[responsibility]"  value="" />
-      <h2 id="myModalLabel" style="font-size:15px; padding:0px; margin:0px; background:none"><?php echo __("Professional Experience");?></h2>
-    </div>
     
+      <input type="hidden" name="data[responsibility]"  value="" />
+      
+    <div class="modal-header" style="margin-bottom:10px;padding-bottom:0px;"> 
+     <button type="button" rel="<?php echo $exp['Experience']['eid'];?>" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h2 id="myModalLabel" style="background:none; color:#000; font-size:24px;"><?php echo __("Professional Experience");?></h2>
+    </div>
+   
     <div class="modal-body" style="padding-top:0px;" ><!--<div class="pull-right" id="old-img" style="padding-right:35px;">
 				<?php 
 					/*if(!empty($exp['Experience']['logo']))
@@ -86,19 +89,29 @@ $catlist=ClassRegistry::init('Country')->find('all',array('conditions'=>array(''
       <div class="control-group">
         <label class="control-label" for="inputInfo" id="prof"><?php echo __("Responsibilities");?></label>
         <div class="controls">
+        
           <table border="0" align="left" cellpadding="0" cellspacing="0" id="myTable" width="100%" class="miletab" >
-            <tr>
+        <?php /*?> <?php 	$i=0;
+			foreach($exp1 as $exp1) {?>
+            <?php $sp=explode(',',$exp1['Experience']['responsibility']) ; ?>  
+         <tr class="myne"><td><input type="text" value="<?php echo $sp; ?>"  class="team validate[required] text" name="resp[]"  placeholder="Responsibilities" style="width:425px;padding:2px; margin-bottom:10px;" ></td><td><span class="exptd">Delete</span></td></tr>
+         <?php $i++;}?> <?php */?>
+         <?php $sp=explode(',',$exp['Experience']['responsibility']) ; ?>
+           <?php 	$i=0;
+			foreach($sp as $sp1) {?>  
+            <tr class="myne">
               <input value="1" name="com" id="com" type="hidden">
-              <td align="left" valign="middle" width="1%"><?php $sp=explode(',',$exp['Experience']['responsibility']) ;
-			$i=0;
-			foreach($sp as $sp1) {?>
-                <?php //echo $sp1; ?>
-                <input type="text" id="resp" name="resp[]" class="team" placeholder="Responsibilities" style="width:425px;padding:2px; margin-bottom:10px;" value=" <?php echo $sp1; ?>" >
-                <?php $i++;}?>
-                
-                <!--<input name="team1[]" maxlength="30" type="hidden" id="" value="fds" class="team" />--></td>
-              <td align="left" valign="top" width="1%"><a onclick="insRow()" style="cursor:pointer;" class="btn btn-mini btn-primary exptab"> <?php echo __("Add");?></a><br /></td>
+              <td align="left" valign="middle" width="1%">
+		  
+               <input type="text" id="resp<?php echo $i;  ?>" name="resp[]" class="team" placeholder="Responsibilities" style="width:425px;padding:2px; margin-bottom:10px;" value=" <?php echo $sp1; ?>" ></td><td><?php if($i==0) { ?><a onclick="insRow()" style="cursor:pointer;" id="delmy" class="btn btn-mini btn-primary exptab"> <?php echo __("Add");?></a> <?php } else { ?>
+                <span class="exptd btn btn-mini btn-primary" id="delmy">Delete</span> <?php } ?></td>
+              
+               <?php ?>
+             
+              
+              
             </tr>
+           <?php $i++;}?> 
             <tr id="add_rows" class="fell">
             <!--  <td align="left"></td>
               <td align="left" valign="top"></td>-->
@@ -113,7 +126,7 @@ $catlist=ClassRegistry::init('Country')->find('all',array('conditions'=>array(''
       <label class="checkbox" style="display:block;">
         <input type="hidden" name="data[display_home]" value="1">
         <!--<span style="margin-left:5px; float:left; font-size:12px;"><?php echo __("Display on home page");?></span>--> </label>
-      <button type="submit" id="exp_btn" class="btn btn-primary "><?php echo __("Submit resume");?></button>
+        <button type="submit" id="exp_btn" class="btn btn-primary "><?php echo __("Submit");?></button>
     </div>
     
     <!--</div>-->
@@ -132,5 +145,5 @@ $catlist=ClassRegistry::init('Country')->find('all',array('conditions'=>array(''
 	   font-family:Verdana, Geneva, sans-serif;
 	   color:#F00;
    }
+  
    </style>
-   

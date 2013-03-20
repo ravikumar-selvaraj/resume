@@ -43,7 +43,7 @@
 										</div>
                                         <div class="control-group">
 											<label class="control-label">Message :</label>
-											<div class="controls"><?php echo h($emailcampaign['Emailcampaign']['message']); ?></div>
+											<div class="controls"><?php echo html_entity_decode($emailcampaign['Emailcampaign']['message']); ?></div>
 										</div>
                                         <div class="control-group">
 											<label class="control-label">Options :</label>

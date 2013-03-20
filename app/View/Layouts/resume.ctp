@@ -11,11 +11,37 @@
         <meta name="viewport" content="width=device-width">
 
       <?php	
-		echo $this->html->css(array('user/normalize.min','user/bootstrap','user/datepicker','user/bootstrapSwitch')); 
+		echo $this->html->css(array('user/normalize.min','user/bootstrap','user/datepicker','user/bootstrapSwitch','user/compassCV','user/compassCVEdit')); 
 		echo $this->html->script(array('jquery','user/vendor/modernizr-2.6.2-respond-1.1.0.min','user/uploadimg'));
 		 
 ?>
-	<?php $template=ClassRegistry::init('User')->find(array('username'=>Configure::read('userpage'))); 
+<style>
+    .body-bg1
+		{
+			position:relative;
+			top:4px;
+			background: url(img/red/bg.png) repeat-x ;
+			height: 200px;
+			z-index:
+		}
+		.imgalert
+		{
+			font-size:11px;
+			padding-left:50px;
+		}
+		.imgalert1 {
+			bottom: 50px;
+			float: left;
+			font-size: 11px;
+			padding-left: 170px;
+			position: relative;
+		}
+    
+    </style>
+
+	<?php 
+	
+	$template=ClassRegistry::init('User')->find(array('username'=>Configure::read('userpage'))); 
 	
 	
 	switch ($template['User']['template']) {
@@ -37,31 +63,82 @@
     
     
     </head>
-    <body >
-		
-		
+   <!--<body class="imgalert1">-->
+    <body>
+    
+     <div class="helpfade"></div>
+    <div class="helptips" style="display:none"><div class="loader_block"><div class="loader_block_inner"></div><div class="loader_text">Please wait...</div></div></div>
+<?php if($this->Session->read('User.uid')) {
+ $recload=ClassRegistry::init('Recomment')->find('first',array('conditions'=>array('skill_user'=>$this->Session->read('User.uid'),'status'=>"Waiting")));
+ if(!empty($recload)) { ?>  
+      <script type="text/javascript">
+    $(window).load(function(){
+        $('#myModal').modal('show');
+    });
+</script>
+	<?php } } ?>
  	
 <?php echo $this->fetch('content'); ?>
     
+<div id="#ver_content23"><div></div></div>
 
-
- <?php	echo $this->html->script(array('page/vendor/jquery-1.9.1.min','user/bootstrap','user/plugins','user/main','user/bootstrap-datepicker','bootbox','user/bootstrapSwitch'));?>
+ <?php	echo $this->html->script(array('page/vendor/jquery-1.8.1.min','user/bootstrap','user/plugins','user/main','user/bootstrap-datepicker','bootbox','user/bootstrapSwitch'));?>
 <?php echo $this->html->script(array('jquery.filestyle','ajaxfileupload'));?> 
 <!--[if IE 9]>
  <?php  echo $this->html->script(array('ajaxfileupload1'));?> 
 <![endif]--> 
 <script>
+
+
 <?php
 $msg = $this->Session->flash();
-if(!empty($msg)){ ?>
-	bootbox.alert(<?php echo $msg;?>);	
-<?php }?>
+if(!empty($msg)){?>
+	
+	<?php 
+	if(isset($_REQUEST['successrec'])) { ?>
+	$(document).ready(function(){
+		    $('#addcon').css('display','block');
+			$("#add-content").css('display','none');
+			$("#design").css('display','none');
+			$("#settings").css('display','none');
+			$("#share").css('display','none');
+			$("#recommend").css('display','block');
+			$("#menu_recom").addClass('active');
+			$('.helpfade').hide();
+			$('.helptips').hide();
+			
+bootbox.alert('<?php echo $msg;?>');	
+});	
+	<?php
+	} else {
+	?>
+
+$(document).ready(function(){
+	
+			/*$('#addcon').css('display','block');
+			$("#menu_share_out").css('display','block');
+			$("#menu_share").css('display','none');
+			$("#menu_design_out").css('display','none');
+			$("#menu_design").css('display','block');
+			$("#addin").css('display','block');
+			$("#addout").css('display','none');
+			$("#menu_recom").css('display','block');
+		    $("#menu_recom_out").css('display','none');
+			$("#menu_setting").css('display','block');
+			$("#menu_setting_out").css('display','none');
+			$("#addin").addClass('active');*/
+			
+//bootbox.alert('<?php echo $msg;?>');	
+           
+});	
+<?php } } ?>
 </script>
 
 
      <script type="text/javascript">
 $(document).ready(function(){
 	
+
 	// edit--hover
 	/*$("#ex2").popover({
 					title: "Hello",
@@ -74,6 +151,7 @@ $(document).ready(function(){
 	$("#info").mouseout(function(){
 		$("#edit_in").hide();
 	});
+	
 	
 	$("#edit_cont1").mouseover(function(){
 		$("#edit_cont_in").show();
@@ -108,8 +186,17 @@ $(document).ready(function(){
 			
 			$("#addin").css('display','none');
 			$("#addout").css('display','block');
-		//$("#addout").addClass('active');	
 			$('#addcon').css('display','block');
+			
+			$("#menu_design_out").css('display','none');
+			$("#menu_design").css('display','block');
+			$("#menu_share").css('display','block');
+		    $("#menu_share_out").css('display','none');
+			$("#menu_recom").css('display','block');
+		    $("#menu_recom_out").css('display','none');
+			$("#menu_setting").css('display','block');
+			$("#menu_setting_out").css('display','none');
+			$("#addout").addClass('active');
 		});
 		
 		$("#addout").click(function(){
@@ -117,11 +204,124 @@ $(document).ready(function(){
 			$("#addout").css('display','none');
 			$("#addin").css('display','block');
 			$('#addcon').css('display','none');
-			//$("#addin").removeclass('active');	
-			//$('.tab-content').css('display','none');
+			$("#addin").removeClass('active');
+		});
+		/*$(".open_menu").live('click',function(){
+			$('#addcon').css('display','block');
+			//$(".open_menu").removeClass('open_menu').addClass('close_menu');
+			
+		});
+	    $(".close_menu").live('click',function(){
+			$('#addcon').css('display','none');
+			$(".close_menu").removeClass('active');
+			$(".close_menu").removeClass('close_menu').addClass('open_menu');
+		});*/
+		
+		$("#menu_design").click(function(){
+		$('#addcon').css('display','block');
+		$("#menu_design_out").css('display','block');
+		$("#menu_design").css('display','none');
+		
+		$("#addin").css('display','block');
+		$("#addout").css('display','none');
+		$("#menu_share").css('display','block');
+		$("#menu_share_out").css('display','none');
+		$("#menu_recom").css('display','block');
+		$("#menu_recom_out").css('display','none');
+		$("#menu_setting").css('display','block');
+		$("#menu_setting_out").css('display','none');
+		
+		$("#menu_design_out").addClass('active');
+		$("#addout").removeClass('active');
 		});
 		
-	
+		$("#menu_design_out").click(function(){
+		$('#addcon').css('display','none');
+		$("#menu_design_out").css('display','none');
+		$("#menu_design").css('display','block');
+		
+		$("#menu_design").removeClass('active');
+		});
+		
+		
+		$("#menu_share").click(function(){
+			
+			$('#addcon').css('display','block');
+			$("#menu_share_out").css('display','block');
+			$("#menu_share").css('display','none');
+			
+			$("#menu_design_out").css('display','none');
+			$("#menu_design").css('display','block');
+			$("#addin").css('display','block');
+			$("#addout").css('display','none');
+			$("#menu_recom").css('display','block');
+		    $("#menu_recom_out").css('display','none');
+			$("#menu_setting").css('display','block');
+			$("#menu_setting_out").css('display','none');
+			
+			$("#menu_share_out").addClass('active');
+		});
+		
+		
+		$("#menu_share_out").click(function(){
+		$('#addcon').css('display','none');
+		$("#menu_share_out").css('display','none');
+		$("#menu_share").css('display','block');
+		
+		$("#menu_share").removeClass('active');
+		});
+		
+		
+		$("#menu_recom").click(function(){
+			
+			$('#addcon').css('display','block');
+			$("#menu_recom").css('display','none');
+		    $("#menu_recom_out").css('display','block');
+			
+			$("#menu_share_out").css('display','none');
+			$("#menu_share").css('display','block');
+			$("#menu_design_out").css('display','none');
+			$("#menu_design").css('display','block');
+			$("#addin").css('display','block');
+			$("#addout").css('display','none');
+			$("#menu_setting").css('display','block');
+			$("#menu_setting_out").css('display','none');
+			
+			$("#menu_recom_out").addClass('active');
+		});
+		
+		$("#menu_recom_out").click(function(){
+		$('#addcon').css('display','none');
+		$("#menu_recom_out").css('display','none');
+		$("#menu_recom").css('display','block');
+		
+		$("#menu_recom").removeClass('active');
+		});
+		
+		
+		$("#menu_setting").click(function(){
+			
+			
+			$('#addcon').css('display','block');
+			$("#menu_setting").css('display','none');
+		    $("#menu_setting_out").css('display','block');
+			$("#menu_share_out").css('display','none');
+			$("#menu_share").css('display','block');
+			$("#menu_design_out").css('display','none');
+			$("#menu_design").css('display','block');
+			$("#addin").css('display','block');
+			$("#addout").css('display','none');
+			$("#menu_recom").css('display','block');
+		    $("#menu_recom_out").css('display','none');
+			$("#menu_setting_out").addClass('active');
+		});
+		$("#menu_setting_out").click(function(){
+		$('#addcon').css('display','none');
+		$("#menu_setting_out").css('display','none');
+		$("#menu_setting").css('display','block');
+		
+		$("#menu_setting").removeClass('active');
+		});
 		
 		/*$("#addin").click(function(){
 			$("#addin").addClass('active');
@@ -142,7 +342,7 @@ $(document).ready(function(){
  });
 </script> 
 
-<script>
+     <script>
         //Photo and country 
 		$("#edit_in").click(function(){
 		$('#edit_info').css('display','block');
@@ -206,27 +406,40 @@ $(document).ready(function(){
 		
 		
 </script>
-	<!--for Exp-->
 
+<script>
+$('.exptab').click(function(){
+		//var news = $(this).parents('table').attr('class');
+		$('.miletab').append('<tr class="myne"><td><input type="text"  class="team validate[required] text" name="resp[]"  placeholder="Responsibilities" style="width:425px;padding:2px; margin-bottom:10px;" ></td><td><span class="exptd btn btn-mini btn-primary" id="delmy">Delete</span></td></tr>');
+	});
+	
+	$('span.exptd').live('click',function(){
+	$(this).parents('tr.myne').remove();
+});
+</script>
+
+
+	<!--for Exp-->
+    
 <script type="text/javascript">
 $("#start_date").datepicker();
 $("#end_date").datepicker();
 		$("#exp_btn").click(function(){
-			var job_title = $("#job_title").val();
+			var job_title = $("#job_title_new").val();
 			var company_val = $("#company_val").val();
 			var city = $("#city").val();
-			var state = $("#state").val();
+			//var state = $("#state").val();
 			var country = $("#country").val();
 			var start_date = $("#start_date").val();
 			var end_date = $("#end_date").val();
 			
 			if(job_title == ''){
-				$("#job_title_div").addClass("error");
-				$("#job_title_div_error").html("<?php echo __("Job Title required");?>");
+				$("#job_title_new_div").addClass("error");
+				$("#job_title_new_div_error").html("<?php echo __("Job Title required");?>");
 				return false;
 			} else {
-				$("#job_title_div").removeClass("error");
-				$("#job_title_div_error").html("");
+				$("#job_title_new_div").removeClass("error");
+				$("#job_title_new_div_error").html("");
 			}
 			if(company_val == ''){
 				$("#company_val_div").addClass("error");
@@ -236,9 +449,9 @@ $("#end_date").datepicker();
 				$("#company_val_div").removeClass("error");
 				$("#company_val_div_error").html("");
 			}
-			if(city == '' || state == '' || country == ''){
+			if(city == '' || country == ''){
 				$("#city_div").addClass("error");
-				$("#city_div_error").html("<?php echo __("City/State/Country required");?>");
+				$("#city_div_error").html("<?php echo __("City/Country required");?>");
 				return false;
 			} else {
 				$("#city_div").removeClass("error");
@@ -257,34 +470,62 @@ $("#end_date").datepicker();
 			
 </script>
 
-
 	<!--for skills-->					
 <script type="text/javascript">
-		$("#skill_btn").click(function(){
-			var skill_area = $("#skill_area").val();
-			var skill = $("#skill_val").val();
+		$(".skill_btn").click(function(){
+			var skill_area = $(".skill_area").val();
+			var skill = $(".skill_val").val();
+			
 			if(skill_area == ''){
-				$("#skill_area_div").addClass("error");
-				$("#skill_area_error").html("<?php echo __("Skill area required");?>");
+				$(".skill_area_div").addClass("error");
+				$(".skill_area_error").html("<?php echo __("Skill area required");?>");
 				return false;
 			} else {
-				$("#skill_area_div").removeClass("error");
-				$("#skill_area_error").html("");
+				$("skill_area_div").removeClass("error");
+				$(".skill_area_error").html("");
 			}
 			if(skill ==''){
-				$("#skill_val_div").addClass("error");
-				$("#skill_val_error").html("<?php echo __("Atleast one skill required");?>");
+				$(".skill_val_div").addClass("error");
+				$(".skill_val_error").html("<?php echo __("Atleast one skill required");?>");
 				return false;
 			} else {
-				$("#skill_val_div").removeClass("error");
-				$("#skill_val_error").html("");
+				$(".skill_val_div").removeClass("error");
+				$(".skill_val_error").html("");
 			}
 		});
-			$("#skill_add_btn").click(function(){			
+			$(".skill_add_btn").click(function(){			
 							$("#for_count div:last").parent().before('<div class="control-group"><label class="control-label" for="inputInfo"><?php echo __("Skill");?></label><div class="controls"><input type="text" id="signup_email" name="data[skill][]"><span class="help-inline" id="skills_error"></span></div></div>');
 							return false;
 					});
 </script>
+
+<!--edit_skill-->
+
+<script type="text/javascript">
+		$(".edit_skill_btn").click(function(){
+			var skill_area = $(".edit_skill_area").val();
+			var editskill = $(".edit_skill_val1").val();
+			
+			if(skill_area == ''){
+				$(".edit_skill_area_div").addClass("error");
+				$(".edit_skill_area_error").html("<?php echo __("Skill area required");?>");
+				return false;
+			} else {
+				$(".edit_skill_area_div").removeClass("error");
+				$(".edit_skill_area_error").html("");
+			}
+			if(editskill == ''){
+				$(".edit_skill_val_div1").addClass("error");
+				$(".edit_skill_val_error1").html("<?php echo __("Atleast one skill required");?>");
+				return false;
+			} else {
+				$(".edit_skill_val_div1").removeClass("error");
+				$(".edit_skill_val_error1").html("");
+			}
+		});
+			
+</script>
+
 
 <!--for- education-->
 
@@ -319,6 +560,40 @@ $("#edu_end_date").datepicker();
 					});
 </script>
 
+<!--For Edit Education-->
+
+<script type="text/javascript">
+$("#edit_edu_start_date").datepicker();
+$("#edit_edu_end_date").datepicker();
+
+	$("#edit_education_btn").click(function(){
+		var course = $("#edit_course").val();
+		var organization = $("#edit_organization").val();
+		if(course == ''){
+			$("#edit_degree_program_div").addClass("error");
+			$("#edit_degree_program_error").html("<?php echo __("Degree program required");?>");
+			return false;
+		} else {
+			$("#edit_degree_program_div").removeClass("error");
+			$("#edit_degree_program_error").html("");
+		}
+		if(organization == ''){
+			$("#edit_school_div").addClass("error");
+			$("#edit_school_error").html("<?php echo __("School required");?>");
+			return false;
+		} else {
+			$("#edit_school_div").removeClass("error");
+			$("#edit_school_error").html("");
+		}
+	});
+	
+	$("#edit_extra_add_btn").click(function(){			
+							$("#edit_for_education div:last").parent().before('<div class="control-group" id="edit_detais_div"><label class="control-label" for="inputInfo"><?php echo __("Details");?></label><div class="controls"><input type="text" id="edit_extra_curricular" name="data[extra_curricular][]"><span class="help-inline" id="edit_details_error"></span></div></div>');
+							return false;
+					});
+</script>
+
+
 <!--for interests-->					
 <script type="text/javascript">
 		$("#interest_btn").click(function(){
@@ -346,6 +621,31 @@ $("#edu_end_date").datepicker();
 							return false;
 					});
 </script>
+
+<script type="text/javascript">
+		$("#edit_interest_btn").click(function(){
+			var edit_interest_type = $("#edit_interest_type").val();
+			var interest = $("#edit_interest1").val();
+			if(edit_interest_type == ''){
+				$("#edit_int_type_div").addClass("error");
+				$("#edit_int_type_error").html("<?php echo __("Type of interest required");?>");
+				return false;
+			} else {
+				$("#edit_int_type_div").removeClass("error");
+				$("#edit_int_type_error").html("");
+			}
+			if(interest == ''){
+				$("#edit_interest_div1").addClass("error");
+				$("#edit_interest_error1").html("<?php echo __("Atleast one interest required");?>");
+				return false;
+			} else {
+				$("#edit_interest_div1").removeClass("error");
+				$("#edit_interest_error1").html("");
+			}
+		});
+			
+</script>
+
 
 <!--for photo & basic info-->
 <script type="text/javascript">
@@ -383,6 +683,7 @@ $("#edu_end_date").datepicker();
 
 <script type="text/javascript">
 		$("#user_contact_btn").click(function(){
+			var validEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
 			var user_phone = $("#user_phone").val();
 			var user_email = $("#user_email").val();
 			var user_im = $("#user_im").val();
@@ -402,7 +703,11 @@ $("#edu_end_date").datepicker();
 				$("#user_email_div").addClass("error");
 				$("#user_email_div_error").html("<?php echo __("Contact Address required");?>");
 				return false;
-			} else {
+			}else if(!validEmail.test(user_email)){
+			$("#user_email_div").addClass("error");
+			$("#user_email_div_error").html("<?php echo __("Invalid email");?>");
+			return false;
+		} else {
 				$("#user_email_div").removeClass("error");
 				$("#user_email_div_error").html("");
 			}
@@ -415,6 +720,61 @@ $("#edu_end_date").datepicker();
 				$("#user_im_div_error").html("");
 			}*/
 		});
+		
+		$("#mail_contact_btn").click(function(){
+			var validEmail = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+			var mail_from = $("#mail_from").val();
+			var mail_to = $("#mail_to").val();
+			var mail_sub = $("#mail_sub").val();
+			var mail_msg = $("#mail_msg").val();
+			
+			if(mail_from ==''){
+				$("#mail_from_div").addClass("error");
+				$("#mail_from_div_error").html("<?php echo __("From mail required");?>");
+				return false;
+			} 
+			else if(!validEmail.test(mail_from)){
+			$("#mail_from_div").addClass("error");
+			$("#mail_from_div_error").html("<?php echo __("Invalid email");?>");
+			return false;
+		}else {
+				$("#mail_from_div").removeClass("error");
+				$("#mail_from_div_error").html("");
+			}
+				if(mail_to ==''){
+				$("#mail_to_div").addClass("error");
+				$("#mail_to_div_error").html("<?php echo __("To mail required");?>");
+				return false;
+			} else {
+				$("#mail_to_div").removeClass("error");
+				$("#mail_to_div_error").html("");
+			}
+			if(mail_sub ==''){
+				$("#mail_sub_div").addClass("error");
+				$("#mail_sub_div_error").html("<?php echo __("Subject required");?>");
+				return false;
+			} else {
+				$("#mail_sub_div").removeClass("error");
+				$("#mail_sub_div_error").html("");
+			}
+			if(mail_msg ==''){
+				$("#mail_msg_div").addClass("error");
+				$("#mail_msg_div_error").html("<?php echo __("Message required");?>");
+				return false;
+			} else {
+				$("#mail_msg_div").removeClass("error");
+				$("#mail_msg_div_error").html("");
+			}
+			/*if(user_im ==''){
+				$("#user_im_div").addClass("error");
+				$("#user_im_div_error").html("<?php echo __("Instant messanger required");?>");
+				return false;
+			} else {
+				$("#user_im_div").removeClass("error");
+				$("#user_im_div_error").html("");
+			}*/
+		});
+		
 			
 </script>
 
@@ -479,7 +839,9 @@ $("#rss_feed_btn").click(function(){
 $("#port_photo_btn23").click(function(){
 	
 	var image_title = $("#image_title").val();
-	var port_image = $("#port_image").val();
+	var port_image = $("#portfolio_image").val();
+	
+	//alert(port_image);
 	
 	if(image_title == ''){
 		$("#image_title_div").addClass("error");
@@ -504,6 +866,40 @@ $("#port_photo_btn23").click(function(){
 });
 </script>
 
+<!--Edit port image-->
+
+<script type="text/javascript">
+$("#edit_port_photo_btn23").click(function(){
+	
+	var image_title = $("#edit_image_title").val();
+	var port_image = $("#edit_portfolio_image").val();
+	
+	//alert(port_image);
+	
+	if(image_title == ''){
+		$("#edit_image_title_div").addClass("error");
+		$("#edit_image_title_div_error").html("<?php echo __("Portfolio title required");?>");
+		return false;
+	}  else {
+		$("#edit_image_title_div").removeClass("error");
+		$("#edit_image_title_div_error").html("");
+	}
+	if(port_image == ''){
+		$("#edit_port_image_div").addClass("error");
+		$("#edit_port_image_div_error").html("<?php echo __("Portfolio image required");?>");
+		return false;
+	} else if(!port_image.match(/(?:gif|jpg|png|bmp)$/)) {
+		$("#edit_port_image_div").addClass("error");
+		$("#edit_port_image_div_error").html("<?php echo __("Please select valid image (Format : gif | jpg | png | bmp )");?>");
+		return false;
+	} else {
+		$("#edit_port_image_div").removeClass("error");
+		$("#edit_port_image_div_error").html("");
+	}
+});
+</script>
+
+
 <script type="text/javascript">
 $("#port_video_btn").click(function(){
 	var video_title = $("#video_title").val();
@@ -525,6 +921,31 @@ $("#port_video_btn").click(function(){
 	}  else {
 		$("#video_code_div").removeClass("error");
 		$("#video_code_div_error").html("");
+	}
+});
+</script>
+<!--Edit video-->
+<script type="text/javascript">
+$("#edit_video_btn").click(function(){
+	var edit_video_title = $("#edit_video_title").val();
+	var edit_video_code = $("#edit_video_code").val();
+	
+	if(edit_video_title == ''){
+		$("#edit_video_title_div").addClass("error");
+		$("#edit_video_title_div_error").html("<?php echo __("Video title required");?>");
+		return false;
+	}  else {
+		$("#edit_video_title_div").removeClass("error");
+		$("#edit_video_title_div_error").html("");
+	}
+	
+	if(edit_video_code == ''){
+		$("#edit_video_code_div").addClass("error");
+		$("#edit_video_code_div_error").html("<?php echo __("Video embed code required");?>");
+		return false;
+	}  else {
+		$("#edit_video_code_div").removeClass("error");
+		$("#edit_video_code_div_error").html("");
 	}
 });
 </script>
@@ -558,6 +979,38 @@ $("#port_audio_btn").click(function(){
 });
 </script>
 
+<!--Edit Audio-->
+
+<script type="text/javascript">
+$("#edit_port_audio_btn").click(function(){
+	var edit_audio_title = $("#edit_audio_title").val();
+	//var edit_audio_file = $("#edit_audio_file").val();
+	
+	if(edit_audio_title == ''){
+		$("#edit_audio_title_div").addClass("error");
+		$("#edit_audio_title_div_error").html("<?php echo __("Audio title required");?>");
+		return false;
+	}  else {
+		$("#edit_audio_title_div").removeClass("error");
+		$("#edit_audio_title_div_error").html("");
+	}
+	
+	if(edit_audio_file == ''){
+		$("#edit_audio_file_div").addClass("error");
+		$("#edit_audio_file_div_error").html("<?php echo __("Portfolio audio required");?>");
+		return false;
+	} else if(!audio_file.match(/(?:mp3)$/)) {
+		$("#edit_audio_file_div").addClass("error");
+		$("#edit_audio_file_div_error").html("<?php echo __("Please select valid mp3 file");?>");
+		return false;
+	} else {
+		$("#edit_audio_file_div").removeClass("error");
+		$("#edit_audio_file_div_error").html("");
+	}
+});
+</script>
+
+
 <script type="text/javascript">
 $("#port_document_btn").click(function(){
 	var document_title = $("#document_title").val();
@@ -587,6 +1040,27 @@ $("#port_document_btn").click(function(){
 });
 </script>
 
+<!--Edit port Document-->
+
+<script type="text/javascript">
+$("#edit_port_document_btn").click(function(){
+	var document_title = $("#edit_document_title").val();
+	//var document_file = $("#document_file").val();
+	
+	if(document_title == ''){
+		$("#edit_document_title_div").addClass("error");
+		$("#edit_document_title_div_error").html("<?php echo __("Document title required");?>");
+		return false;
+	}  else {
+		$("#edit_document_title_div").removeClass("error");
+		$("#edit_document_title_div_error").html("");
+	}
+	
+	
+});
+</script>
+
+
 <script type="text/javascript">
 $("#port_present_btn").click(function(){
 	var present_title = $("#present_title").val();
@@ -611,6 +1085,33 @@ $("#port_present_btn").click(function(){
 	}
 });
 </script>
+
+<script type="text/javascript">
+$("#edit_port_present_btn").click(function(){
+	var edit_present_title = $("#edit_present_title").val();
+	var edit_present_code = $("#edit_present_code").val();
+	
+	if(edit_present_title == ''){
+		$("#edit_present_title_div").addClass("error");
+		$("#edit_present_title_div_error").html("<?php echo __("Presentation title required");?>");
+		return false;
+	}  else {
+		$("#edit_present_title_div").removeClass("error");
+		$("#edit_present_title_div_error").html("");
+	}
+	
+	if(edit_present_code == ''){
+		$("#edit_present_code_div").addClass("error");
+		$("#edit_present_code_div_error").html("<?php echo __("Presentation embed code required");?>");
+		return false;
+	}  else {
+		$("#edit_present_code_div").removeClass("error");
+		$("#edit_present_code_div_error").html("");
+	}
+});
+</script>
+
+
 <script>
 $('.edit_proffessional').click(function(){
 	var exp_id = $(this).attr('rel');
@@ -731,41 +1232,248 @@ $("#general_settings_edit").click(function(){
 					});	
   });
   </script>
+ 
+ <!-- Recommend --> 
   
+  <div  class="modal hide fade recommendtr" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" id="recommend">
+                                    <div class="resume-cont clearfix">
+                                      <?php   	$recuser=ClassRegistry::init('User')->find('first',array('conditions'=>array('username'=>Configure::read('userpage'))));
+									if(empty($recuser['User']['image']) && $recuser['User']['username']==Configure::read('userpage')) { ?>
+									<img src="<?php echo Router::url('/'); ?>img/profile_pic_default.jpg" alt="CVomg - The best way to show yourself" height="" width="" class="pull-left img-polaroid" style="height:120px; width:120px">
+                                     <?php } else { ?>
+									 <img src="<?php echo Router::url('/'); ?>img/user-images/big/<?php echo $recuser['User']['image']; ?>" height="" width="" class="pull-left img-polaroid" style="height:120px; width:120px">
+									<?php } ?> 
+                                        <div class="span5 resume_head">
+                                            <h3><a href=""><?php echo Configure::read('userpage'); ?></a></h3>
+                                            <small class="muted"><?php echo $recuser['User']['resume_title']; ?></small>  
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="recommend-skills">
+                                        <p><?php echo __('Recommand '.Configure::read('userpage').'on one of his key-skills'); ?></p>
+                                         <?php  $i=1; foreach($recskill as $recskill) { 
+										 if(!empty($recskill['Recommentation']['skills'])) {
+										  $rec1_for_first=count(ClassRegistry::init('Recomment')->find('all',array('conditions'=>array('rid'=>$recskill['Recommentation']['rid'],'status'=>'Approved'))));?>
+                                         <a href="#" class="ex2" rel="<?php echo $recskill['Recommentation']['rid'];?>" data-placement="top">
+                                         <button class="btn btn-info"><?php echo $recskill['Recommentation']['skills']; ?>
+                                         <span class="badge badge-success" style="padding:2px; margin-left:5px;"><?php if($rec1_for_first!=0) echo $rec1_for_first; ?></span>
+                                         </button></a>
+                                        <?php $i++; } } ?>
+                                    </div>
 
+                                    <ul class="nav nav-tabs" id="recommend-tab">
+                                        <li class="active"><a href="#approval" class="waiting"><?php echo __('Waiting for approval ('.$recount.')'); ?></a></li>
+                                        <li><a href="#my-recommend" class="allcount"><?php echo __('All my recommendations ('.$recount1.')'); ?></a></li>
+                                    </ul>
+ 
+                                    <div class="tab-content" style=" max-height:300px">
+                                     
+                                        <div class="tab-pane active" id="approval">
+						              <?php 
+									  if(empty($recomment))
+									  echo "<div class='nowaiting'>There is no recommendation on queue</div>";
+									  else {
+									   $j=1;
+									   foreach($recomment as $recomment) { 
+									   
+									        $user_send_rec=ClassRegistry::init('User')->find('first',array('conditions'=>array('uid'=>$recomment['Recomment']['uid'])));?>
+                                           <div style="float:left; width:535px; padding-left:10px; padding-bottom:5px;" id="approve<?php echo $recomment['Recomment']['recid']; ?>"> 
+                                           <?php   
+												if(empty($user_send_rec['User']['image'])) { ?>
+                                           <img src="<?php echo BASE_URL; ?>img/profile_pic_mini.jpg" alt="" class="pull-left img-polaroid">
+                                           <?php } else { ?>
+									       <img src="<?php echo Router::url('/'); ?>img/user-images/small/<?php echo $user_send_rec['User']['image']; ?>" height="20" width="20" class="pull-left img-polaroid">
+									<?php } ?> 
+                                            <div class="resume-cont recommend-list clearfix pull-left span6">
+                                               <?php /*?> <span><?php if($_SESSION['User']['username']==Configure::read('userpage')) { ?><a href=""><i class="icon-remove pull-right"></i></a><?php } ?></span><?php */?>
+                                                <div class=" resume_head">
+                                                    <h5><a href=""><?php echo $user_send_rec['User']['username']; ?></a>
+                                                   <?php if($this->Session->read('User.username')==Configure::read('userpage')) { ?>
+                                                   
+                                                    <div class="" id="broadcast_resume" style="float:right">
+                                                    <a onClick="acknowledge(this.id,this.rel)" id="ok" rel="<?php echo $recomment['Recomment']['recid']; ?>" style="cursor:pointer"><span class="label label-success"><?php echo __('Ok') ?></span></a>
+                                                    <a onClick="acknowledge(this.id,this.rel)" id="refuse" rel="<?php echo $recomment['Recomment']['recid']; ?>" style="cursor:pointer"><span class="label label-important"><?php echo __('Refuse')?></span></a>
+                                                    </div>
+                                                    <?php } ?>
+                                                    </h5>
+                                                    <small class="muted"><?php echo $user_send_rec['User']['resume_title']; ?></small>
+                                                    <!--<span class="label label-info">Php</span>-->
+                                                </div>
 
-<?php /*?><div class="resume_footer" style="display:none" id="refoot">
-<div class="resume_footer_rec"><span style="padding-left:10px;"><img src="../img/add.png" ></span><span>Recommentation</span></div> 
-<div class="resume_footer_skill">
-<?php foreach($recmd as $recmd1) { ?>
-<a><span class="re_skill"><?php echo $recmd1['Skill']['skill_area']; ?></span><span class="re_skill2">2</span></a>
-<?php } ?>
-<a href="#" id="ex2" data-placement="top">Please, let me speak!</a>
-<div id="popover_content" style="display:none">
-  <div class="container">
-                <div class="row">  
-                    <section class="span8 pull-left footer-links">
-                        <ul class="unstyled inline">
-                            <li><a href="<?php echo Router::url('/'); ?>"><?php echo __("Home");?></a></li>
-                            <li><a href="<?php echo Router::url('/'); ?>staticpages/about"><?php echo __("About us");?></a></li>
-                            <li><a href="<?php echo Router::url('/'); ?>staticpages/contact"><?php echo __("Contact us");?></a></li>
-                           
-                        </ul> 
-                        <p>© 2013 CVomg.com</p>
-                    </section>
-                </div>
+                                                <input type="text" placeholder="<?php echo $recomment['Recomment']['recommend']; ?>" class="span6" disabled="">
+                                                <small class="muted"><?php echo date("j / n / Y",strtotime($recomment['Recomment']['createdate'])); ?></small>
+                                            </div></div>
+											<?php $j++;}  } ?>
+                                        </div>
+                                         
+                                        <div class="tab-pane savings" id="my-recommend"style="max-height:300px">
+                                        <?php  
+										 if(empty($recommentmy1))
+									  echo "<div class='nowaiting'>There is no recommendation on queue</div>";
+									  else {
+										$k=1;
+									   foreach($recommentmy1 as $recomment1) {
+										  
+									        $user_send_rec1=ClassRegistry::init('User')->find('first',array('conditions'=>array('uid'=>$recomment1['Recomment']['uid'],'status'=>'Active')));
+											?>
+                                           <div style="float:left; width:510px; padding-left:10px; padding-bottom:5px;">
+                                           <?php   
+												if(empty($user_send_rec1['User']['image'])) { ?>
+                                           <img src="<?php echo BASE_URL; ?>img/profile_pic_mini.jpg" alt="" class="pull-left img-polaroid">
+                                           <?php } else { ?>
+									       <img src="<?php echo Router::url('/'); ?>img/user-images/small/<?php echo $user_send_rec1['User']['image']; ?>" height="20" width="20" class="pull-left img-polaroid">
+									<?php } ?> 
+                                           
+                                            <div class="resume-cont recommend-list clearfix pull-left span6">
+                                               <?php  echo  $user_send_rec1;
+											   /*?> <span><?php if($_SESSION['User']['username']==Configure::read('userpage')) { ?><a href=""><i class="icon-remove pull-right"></i></a><?php } ?></span><?php */?>
+                                                <div class=" resume_head">
+                                               
+                                                    <h5><a href=""><?php echo $user_send_rec1['User']['username']; ?></a></h5>
+                                                    <small class="muted"><?php echo $user_send_rec1['User']['resume_title']; ?></small>
+                                                    <span class="label label-info"></span>
+                                                </div>
+
+                                                <input type="text" placeholder="<?php echo $recomment1['Recomment']['recommend']; ?>" class="span6" disabled="">
+                                                <small class="muted"><?php echo date("j / n / Y",strtotime($recomment1['Recomment']['createdate'])); ?></small>
+                                            </div></div>
+											<?php $k++;} } ?>
+                                        
+                                        </div>
+
+                                      <a href="" class="btn" type="button" style="padding-left:196px; padding-right:170px;"><?php echo __('Go back to '.Configure::read('userpage').' resume'); ?></a>
+                                    </div>
+                                
+                                </div>
+  
+<!--Footer recommend-->
+ <span style="display:none" class="myrecval">edit</span>
+<div class="recommend-fix" style="display:none" id="refoot">
+            <a href="" class="add-recommend pull-left" data-toggle="modal" data-target=".recommendtr" onmouseover="rec_div_show('rec_edu_edit')" onmouseout="rec_div_hide('rec_edu_edit')" ><img src="<?php echo BASE_URL; ?>img/hand_pro_icon.png" alt="" ><?php echo __('Recommendation'); ?></a>
+            <div class="recommend-skillsfix span5 offset7" style="margin-left:500px; width:480px;">
+            <?php  $i=1; $j=1;
+			if(empty($recedu))
+			{
+			}
+			else{
+			foreach($recedu as $recedu)
+			 {  
+			 if(!empty($recedu['Recommentation']['skills'])) 
+			 { $recbtn1_for_first=count(ClassRegistry::init('Recomment')->find('all',array('conditions'=>array('rid'=>$recedu['Recommentation']['rid'],'status'=>'Approved')))); ?>
+                <a href="#" class="ex2" rel="<?php echo $recedu['Recommentation']['rid'];?>" data-placement="top"><button class="btn">
+				<?php $strlen=strlen($recedu['Recommentation']['skills']); 
+				if($strlen >= 6) echo substr($recedu['Recommentation']['skills'],0,5)."..." ; else echo substr($recedu['Recommentation']['skills'],0,5); ?>
+                <?php if($recbtn1_for_first==0) echo ''; 
+				else{
+				  ?>
+				<span class="badge badge-success" style="padding:2px; margin-left:5px;"><?php echo $recbtn1_for_first; ?>
+				</span><?php } ?></button></a>
+                
+                <?php $j++; }
+				 $i++; } 
+				 }
+				 if($j!=6) { ?>
+                  <a href="" class="" data-toggle="modal" data-target=".recommendtr" style="color:#fff; cursor:pointer"><?php echo __('More'); ?></a>
+                   <a  class="onloadpop1"  href="#myModal" data-placement="top" style="color:#fff; cursor:pointer"></a>
+                  
+                  <?php } ?>
             </div>
+            <a href="#" class="pull-right span1" onClick="changefoot1()" style="cursor:pointer;"><img src="<?php echo BASE_URL; ?>img/rnd_br_down_icon.png" alt=""></a>
+        </div>
+        
+        <div class="modal hide fade" id="myModal" style="width:15%;margin-left:-100px;">
+ <div class="modal-header" style="border:none; padding:1px 8px;">
+    <a class="close" data-dismiss="modal">×</a>
+  </div>
+  <div class="modal-body">
+    <p style="font-size:16px; line-height:26px;">Your Having New Recommendation</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn btn-primary" data-toggle="modal" data-target=".recommendtr" style="color:#fff; cursor:pointer" onClick="recclose()">View</a>
+  </div>
 </div>
- </div> 
-<div class="resume_back"><a onClick="changefoot1();">old</a> </div>
+     <script>
+     $("#mycl").mouseover(function(){
+		$(".myrecval").show();
+	});
+	$("#mycl").mouseout(function(){
+		$(".myrecval").hide();
+	});
+     </script>   
+        
+        
+  <?php 
+   $user_send=ClassRegistry::init('User')->find('first',array('conditions'=>array('username'=>Configure::read('userpage'))));
+   $user_sendid=ClassRegistry::init('Recommentation')->find('all',array('conditions'=>array('uid'=>$user_send['User']['uid'],'skills !='=>''))); 
+   if(!empty($user_sendid)) { ?>      
+<div class="resume_footer1" id="refoot1">
+<a onClick="changefoot()" style="padding-left:15px;cursor:pointer;"><img src="<?php echo BASE_URL; ?>img/hand_pro_icon.png" alt="" style="padding-top:7px"></a>
 </div>
-<div class="resume_footer1" id="refoot1"><a onClick="changefoot();">new</a></div><?php */?>
+<?php } ?>
+
+<div id="ver_content" style="display:none; background:#fff">
+  
+  <!--if you can recomment-->
+  
+  <div class="showing">
+  dfhs hg f
+   </div>
+   
+   
+</div>
+ 
+ <!--Footer recommend end-->
+      
+<style>
+.myrecval
+{
+	position:relative;
+	bottom:20px;
+}
+#delmy
+{
+	margin-left:5px;
+	color:#fff;
+}
+</style>
+
+<!--Add text box for menus-->
 
 	<script type="text/javascript">
 
 $(".edutab").click(function(){	
-	$(".news").append('<div class="control-group" id="detais_div2"><label class="control-label" for="inputInfo"><?php echo __("Details");?></label><div class="controls"><input type="text" id="extra_curricular1" name="data[extra_curricular][]" /><span class="help-inline" id="details_error"></span></div></div>');
+	$(this).parents('div.modal-body').find("div.edunews").append('<div class="control-group" id="detais_div2"><label class="control-label" for="inputInfo"><?php echo __("Details");?></label><div class="controls"><input type="text" id="extra_curricular1" name="data[extra_curricular][]" /><a class="btn btn-mini btn-primary edutd" id="delmy">Delete</a><span class="help-inline" id="details_error"></span></div></div>');
 	return false;
+});
+
+$('a.edutd').live('click',function(){
+	$(this).parents('div.control-group').remove();
+});
+
+$(".skitab").click(function(){	
+$(this).parents('div.modal-body').find("div.news_skill").append('<div class="control-group" id="skill_val_div"><label class="control-label" for="inputInfo" ><?php echo __("Skill");?></label><div class="controls"><input type="text" id="signup_email" name="data[skill][]"><a class="skilltd btn btn-mini btn-primary" id="delmy">Delete</a><span class="" id="skills_error"></span></div></div>');return false;
+});
+
+$('a.skilltd').live('click',function(){
+	$(this).parents('div.control-group').remove();
+});
+
+$(".instab").click(function(){
+$(this).parents('div.modal-body').find("div.news_ins").append('<div id="interest_div" class="control-group"><label class="control-label" for="inputInfo"><?php echo __("Interest");?></label><div class="controls"><input type="text" id="interest1" name="data[interest][]"><a class="instd btn btn-mini btn-primary" id="delmy">Delete</a><span class="help-inline" id="interest_error"></span></div></div>');		
+	return true;
+					});
+					
+$('a.instd').live('click',function(){
+	$(this).parents('div.control-group').remove();
+});
+
+
+$(".mylinkbt").click(function(){	
+$(this).parents('div.modal-body').find("div.news_link").append('<div class="control-group" id="skill_val_div"><label class="control-label" for="inputInfo" ><?php echo __("Links");?></label><div class="controls"><select  id="im_type" name="data[im_type][]"><option value="">Select</option><option value="Facebook">Facebook</option><option value="Twitter">Twitter</option><option value="Linkedin">Linkedin</option></select><input type="text" id="signup_email" name="data[im_link][]"><a class="linktd btn btn-mini btn-primary" id="delmy">Delete</a><span class="" id="link_error"></span></div></div>');return false;
+});
+
+$('a.linktd').live('click',function(){
+	$(this).parents('div.control-group').remove();
 });
 
 					
@@ -779,7 +1487,7 @@ $(".extra_delete_btn").click(function(){
 	
 });*/
 </script>
-<?php  if(isset($_SESSION['User']['uid']) && $_SESSION['User']['username']==Configure::read('userpage')) { ?>
+<?php  if($this->Session->read('User.uid') && $this->Session->read('User.username')==Configure::read('userpage')) { ?>
  <script type="text/javascript">
 	$('.exp').click(function(){
 		var expid=$(this).attr('rel');
@@ -810,251 +1518,203 @@ $(".extra_delete_btn").click(function(){
 			}
 		});
 	});
+	$('.delexp').live('click',function(){
+		var delid=$(this).attr('rel');
+		$.ajax({
+			type: "POST",
+			data: "id="+delid,
+			url: "<?php echo BASE_URL;?>users/delimage",
+			success: function(msg){
+				$.ajax({
+					type: "POST",
+					data: "eid="+delid,
+					url: "<?php echo BASE_URL;?>users/cimage",
+					success: function(msg){
+						$('#editexp'+delid).children().find('.exp_image').html(msg);
+					}
+				});
+			}
+		});
+	});
 </script>
 <?php 
-
-echo $this->html->script(array('user/jquery-ui'));
+echo $this->html->script(array('user/common','user/home_widget','user/home_portlet'));
+//echo $this->html->script(array('user/jquery-ui'));
 
 ?> 
 
+
+<?php  } ?>
+
+
+<!--Footer recommend script-->
+
 <script>
-//var J = jQuery.noConflict();
-
-
-//var $ = jQuery.noConflict();
-   $('.column').sortable({
-	connectWith: '.column',
-	handle: 'h2',
-	cursor: 'move',
-	placeholder: 'placeholder',
-	forcePlaceholderSize: true,
-	opacity: 0.4,
-        stop: function(event, ui){
-            saveState();
-        }
-})
-.disableSelection();
-$('.column').bind('click.sortable mousedown.sortable',function(ev){
-	ev.target.focus();
+$(document).ready(function(){
+	
+	
+	
+	$('.ex2').click(function(){
+		$('.popover').hide();
+		})
+$('.ex2').popover({
+	html:true,
+	//title: "Hello",
+	//content: $('.showing').html()
+	content: function() {
+		var rel = $(this).attr('rel');
+		$.ajax({
+		type: "POST",
+		data: "recid="+<?php if($this->Session->read('User.uid')) echo $this->Session->read('User.uid'); else echo "'nologin'" ?>+"&skill="+rel,
+		url: "<?php echo BASE_URL; ?>users/recommentme",
+		success: function(msg){
+		$('.popover').css({'top':'-240px'});
+		$('.showing').html(msg);
+		}});
+		
+      return $('#ver_content').html();
+    }
+	
 });
 
 
-function saveState(){
-    var items = [];
-    // traverse all column div and fetch its id and its item detail. 
-    $(".column").each(function(){
-        var columnId = $(this).attr("id");
-         $(".dragbox", this).each(function(i){ // here i is the order, it start from 0 to...
-           var item = {
-               id: $(this).attr("id"),
-               column_no: columnId,
-               order: i +1
-           }
-           items.push(item);
-        });
-        
-    });
-     $("#results").html("loading..");
-    var shortorder = {items : items};
-        $.ajax({
-          url: "<?php echo BASE_URL;?>pages/update_dashboard/<?php echo $this->Session->read('User.uid')?>",
-          async: false, 
-          data: shortorder,
-          dataType: "html",
-          type: "POST",
-          success: function(html){
-             $("#results").html(html);
-          }
-        });    
+
+
+
+
+
+
+
+
+});
+
+function sentrecomment(){
+	var recval=$('#recm_code23').val();
+	var recskil=$('#fetchid').val();
+		$.ajax({
+		type: "POST",
+		data: "content="+recval+"&user_id="+<?php  if($this->Session->read('User.uid')) echo $this->Session->read('User.uid'); else echo "nologin"  ?>+"&skill_id="+recskil,
+		url: "<?php echo BASE_URL; ?>users/sentrecomment",
+		success: function(msg){
+			$('.showing').html(msg);
+		}});
+	}
+
+
+function poprec() {	 
+	$('#refoot').show();
+	$('#refoot1').hide();
+ }
+ $('.ex2').click(function(){
+		$('.popover').hide();
+		})
+ function recclose() {	 
+	$('#myModal').modal('hide');
+ }
+function changefoot(id) {
+	$('#refoot').show();
+	$('#refoot1').hide();
+ }
+ function changefoot1(id) {
+	$('#refoot').hide();
+	$('#refoot1').show();
+ }
+  function recommentme(id) {
+	var rel = $(this).attr('rel');
+	$('.recme').hide();
+	$('.recmme').hide();
+	$('.recm_code').show();
+	$('#recmbtn').show()
+	$('.popover').css({'top':'-240px'});
+ }
+ function closepopup() {	 
+	$('.popover').hide();
+ }
+ 
+ function acknowledge(ids,rel){
+	$.ajax({
+		type: "POST",
+		data: "msgk="+ids+"&rid="+rel,
+		url: "<?php echo BASE_URL; ?>users/acknowledge",
+		success: function(msg){
+			if(msg=='cancel')
+			{
+				$('#approve'+rel).html('<div class="nowaiting">Recommendation canceled successfully</div>');
+			}
+			else{
+			var client=msg.split('::');
+	        $('#approve'+rel).hide();
+			$('.savings').append(client[0]);
+			$('.allcount').html(client[1]);
+			$('.waiting').html(client[2]);
+			$('.nowaiting').hide();
+			}
+		}});
+		
+	}
+	
+	function scatgf(){
+	var logodel=$('#user_logo').val()
+		$.ajax({
+		type: "POST",
+		data: "imgval="+logodel+"&new="+fygf,
+		url: "<?php echo BASE_URL; ?>users/delimage",
+		success: function(msg){
+			$('#mylogo').hide();
+			$('#mylogo2').show();
+			$(".hai").css({'width' : '140px', 'padding-top' : '0px','top' :'15px'})
+			$("#delme").hide();
+			$('.display').show();
+			$(".display").css({'width' : '150px', 'padding-top' : '0px','top' :'15px'})
+				
+		}});
+	}
+
+  $('#recommend-tab a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+   })
+ 
+ 
+    </script>
+	
+	
+	
+<!--Footer recommend script end-->
+ <style>
+.norecm
+{
+	width:255px;
+	background:#FFF;
+	float:left;
+	padding:20px;
+	padding-top:1px;
+	margin:2px;
+	font-family:Verdana, Geneva, sans-serif;
+	font-size:17px;
+	/*color:#333;*/
+	color:#f00;
+	line-height:25px;
 }
-
-</script>
-
-<script>
-  $('.experience').sortable({
-	connectWith: '.experience',
-	handle: 'h3',
-	cursor: 'move',
-	placeholder: 'placeholder',
-	forcePlaceholderSize: true,
-	opacity: 0.4,
-        stop: function(event, ui){
-            saveexp();
-        }
-})
-.disableSelection();
-
-function saveexp(){
-    var items = [];
-    // traverse all column div and fetch its id and its item detail. 
-    $(".experience").each(function(){
-        var columnId = $(this).attr("id");
-        $(".dragexp", this).each(function(i){ // here i is the order, it start from 0 to...
-           var item = {
-               id: $(this).attr("id"),
-               column_no: columnId,
-               order: i +1
-           }
-           items.push(item);
-        });
-        
-    });
-    $("#results").html("loading..");
-    var shortorder = {items : items};
-        $.ajax({
-          url: "<?php echo BASE_URL;?>pages/update_experience/<?php echo $this->Session->read('User.uid')?>",
-          async: false, 
-          data: shortorder,
-          dataType: "html",
-          type: "POST",
-          success: function(html){
-            $("#results").html(html);
-          }
-        });    
+.resumebtn
+{
+	width:254px;
+	background:#eaeaea;
+	float:left;
+	padding:23px;
+	font-size:12px;
+	color:#39F;
+	text-align:center;
 }
-
-
-</script>
-
-<script>
-  $('.education').sortable({
-	connectWith: '.education',
-	handle: 'h3',
-	cursor: 'move',
-	placeholder: 'placeholder',
-	forcePlaceholderSize: true,
-	opacity: 0.4,
-        stop: function(event, ui){
-            saveedu();
-        }
-})
-.disableSelection();
-
-function saveedu(){
-    var items = [];
-    // traverse all column div and fetch its id and its item detail. 
-    $(".education").each(function(){
-        var columnId = $(this).attr("id");
-        $(".dragedu", this).each(function(i){ // here i is the order, it start from 0 to...
-           var item = {
-               id: $(this).attr("id"),
-               column_no: columnId,
-               order: i +1
-           }
-           items.push(item);
-        });
-        
-    });
-    $("#results").html("loading..");
-    var shortorder = {items : items};
-        $.ajax({
-          url: "<?php echo BASE_URL;?>pages/update_education/<?php echo $this->Session->read('User.uid')?>",
-          async: false, 
-          data: shortorder,
-          dataType: "html",
-          type: "POST",
-          success: function(html){
-            $("#results").html(html);
-          }
-        });    
+.resa
+{
+	padding:10px;
+	font-size:12px;
+	color:#39F;
 }
+</style>
+  
 
-
-</script>
-
-<script>
-  $('.interest').sortable({
-	connectWith: '.interest',
-	handle: 'h3',
-	cursor: 'move',
-	placeholder: 'placeholder',
-	forcePlaceholderSize: true,
-	opacity: 0.4,
-        stop: function(event, ui){
-            saveint();
-        }
-})
-.disableSelection();
-
-function saveint(){
-    var items = [];
-    // traverse all column div and fetch its id and its item detail. 
-    $(".interest").each(function(){
-        var columnId = $(this).attr("id");
-        $(".dragint", this).each(function(i){ // here i is the order, it start from 0 to...
-           var item = {
-               id: $(this).attr("id"),
-               column_no: columnId,
-               order: i +1
-           }
-           items.push(item);
-        });
-        
-    });
-    $("#results").html("loading..");
-    var shortorder = {items : items};
-        $.ajax({
-          url: "<?php echo BASE_URL;?>pages/update_interest/<?php echo $this->Session->read('User.uid')?>",
-          async: false, 
-          data: shortorder,
-          dataType: "html",
-          type: "POST",
-          success: function(html){
-            $("#results").html(html);
-          }
-        });    
-}
-
-
-</script>
-
-<script>
-  $('.skills').sortable({
-	connectWith: '.skills',
-	handle: 'h3',
-	cursor: 'move',
-	placeholder: 'placeholder',
-	forcePlaceholderSize: true,
-	opacity: 0.4,
-        stop: function(event, ui){
-            saveskil();
-        }
-})
-.disableSelection();
-
-function saveskil(){
-    var items = [];
-    // traverse all column div and fetch its id and its item detail. 
-    $(".skills").each(function(){
-        var columnId = $(this).attr("id");
-        $(".dragskil", this).each(function(i){ // here i is the order, it start from 0 to...
-           var item = {
-               id: $(this).attr("id"),
-               column_no: columnId,
-               order: i +1
-           }
-           items.push(item);
-        });
-        
-    });
-    $("#results").html("loading..");
-    var shortorder = {items : items};
-        $.ajax({
-          url: "<?php echo BASE_URL;?>pages/update_skills/<?php echo $this->Session->read('User.uid')?>",
-          async: false, 
-          data: shortorder,
-          dataType: "html",
-          type: "POST",
-          success: function(html){
-            $("#results").html(html);
-          }
-        });    
-}
-
-
-</script>
-
-<?php  } ?>
 	
 	 </body>
 </html>

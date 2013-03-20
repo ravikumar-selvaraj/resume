@@ -43,6 +43,19 @@ class SessionHelper extends AppHelper {
 	public function read($name = null) {
 		return CakeSession::read($name);
 	}
+	
+/**
+ * Wrapper for SessionComponent::del();
+ *
+ * In your controller: $this->Session->delete('Controller.sessKey');
+ *
+ * @param string $name the name of the session key you want to delete
+ * @return boolean true is session variable is set and can be deleted, false is variable was not set.
+ * @link http://book.cakephp.org/2.0/en/core-libraries/components/sessions.html#SessionComponent::delete
+ */
+	public function delete($name) {
+		return CakeSession::delete($name);
+	}
 
 /**
  * Used to check is a session key has been set
@@ -75,7 +88,7 @@ class SessionHelper extends AppHelper {
  * In your view: $this->Session->flash('somekey');
  * Will default to flash if no param is passed
  *
- * You can pass additional information into the flash message generation. This allows you
+ * You can pass additional information into the flash message generation.  This allows you
  * to consolidate all the parameters for a given type of flash message into the view.
  *
  * {{{
@@ -134,7 +147,7 @@ class SessionHelper extends AppHelper {
 					$class = $flash['params']['class'];
 				}
 				$out = '<div id="' . $key . 'Message" class="' . $class . '">' . $message . '</div>';
-			} elseif (!$flash['element']) {
+			} elseif ($flash['element'] == '' || $flash['element'] == null) {
 				$out = $message;
 			} else {
 				$options = array();

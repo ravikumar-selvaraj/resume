@@ -15,22 +15,8 @@
                                     <h4><a href="#"><?php echo $blog['Blog']['title'];?></a></h4>
                                     <div class="row">
                                         <div class="span8">
-                                        <!-- <script type="text/javascript">
-												/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-												var disqus_shortname = 'cvomg'; // required: replace example with your forum shortname
-											
-												/* * * DON'T EDIT BELOW THIS LINE * * */
-												(function () {
-													var s = document.createElement('script'); s.async = true;
-													s.type = 'text/javascript';
-													s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-													(document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-												}());
-										</script>-->
-                                            <p>
+                                           <p>
                                                  <i class="icon-calendar"></i> <?php echo date('M dS, Y',strtotime($blog['Blog']['created_date']));?>
-                                               <!--  | <i class="icon-comment"></i> <a href="<?php //echo BASE_URL;?>blogs/view/<?php //echo $blog['Blog']['key'];?>">3 Comments</a>
-                                               <a href="http://foo.com/bar.html#disqus_thread">Link</a>-->
                                             </p>
                                         </div>
                                     </div>
@@ -82,7 +68,7 @@
                         </div>-->
 
                         <div class="well search">
-                            <h5>Search by title</h5>
+                           <h5><?php echo __("Search by title");?></h5>
                             <form class="form-search" action="<?php echo BASE_URL;?>blogs" method="post">
                                 <div class="input-append">
                                     <input type="text" name="search" class="span2 search-query">

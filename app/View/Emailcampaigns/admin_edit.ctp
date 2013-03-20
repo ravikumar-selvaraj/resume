@@ -5,7 +5,7 @@
         </div>        
                 <ul class="breadcrumb">
 					<li><a href="#">Home</a> <span class="divider">/</span></li>
-					<li><a href=".">Email Campaign List</a> <span class="divider">/</span></li>
+					<li><a href="<?php echo BASE_URL;?>admin/emailcampaigns">Email Campaign List</a> <span class="divider">/</span></li>
 					<li class="active">Edit Email Campaign</li>
 				</ul>
 
@@ -28,7 +28,7 @@
 						<label>To</label>
                         <input type="text" name="data[to]" id="to" value="<?php echo h($emailcampaign['Emailcampaign']['to']);?>" class="validate[required] input-xlarge">
                         <label>Message</label>
-                        <textarea name="data[message]" id="message" rows="5" class="validate[required] input-xlarge ckeditor"><?php echo h($emailcampaign['Emailcampaign']['message']);?></textarea>
+                        <textarea name="data[message]" id="message" rows="5" class="validate[required] input-xlarge "><?php echo h($emailcampaign['Emailcampaign']['message']);?></textarea>
                      
                         <label>Option</label>
                         <textarea name="data[option]" id="option" rows="5" class="validate[required] input-xlarge"><?php echo h($emailcampaign['Emailcampaign']['option']);?></textarea>

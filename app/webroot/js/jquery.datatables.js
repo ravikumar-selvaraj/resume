@@ -966,7 +966,7 @@
 			 */
 			this.oLanguage = {
 				"sProcessing": "Processing...",
-				"sLengthMenu": "Show _MENU_ entries",
+				"sLengthMenu": "Show : _MENU_ ",
 				"sZeroRecords": "No matching records found",
 				"sEmptyTable": "No data available in table",
 				"sLoadingRecords": "Loading...",
@@ -974,11 +974,11 @@
 				"sInfoEmpty": "Showing 0 to 0 of 0 entries",
 				"sInfoFiltered": "(filtered from _MAX_ total entries)",
 				"sInfoPostFix": "",
-				"sSearch": "Search:",
+				"sSearch": "Search :",
 				"sUrl": "",
 				"oPaginate": {
 					"sFirst":    "First",
-					"sPrevious": "Previous",
+					"sPrevious": "Prev",
 					"sNext":     "Next",
 					"sLast":     "Last"
 				},
@@ -1385,7 +1385,7 @@
 			 *   from the first array, and the displayed value to the end user comes from the second
 			 *   array. 2D example: [ [ 10, 25, 50, 100, -1 ], [ 10, 25, 50, 100, 'All' ] ];
 			 */
-			this.aLengthMenu = [ 10, 25, 50, 100 ];
+			this.aLengthMenu = [5, 10, 25, 50, 100 ];
 			
 			/*
 			 * Variable: iDraw
@@ -4208,8 +4208,8 @@
 		{
 			var sSearchStr = oSettings.oLanguage.sSearch;
 			sSearchStr = (sSearchStr.indexOf('_INPUT_') !== -1) ?
-			  sSearchStr.replace('_INPUT_', '<input type="text" />') :
-			  sSearchStr==="" ? '<input type="text" />' : sSearchStr+' <input type="text" />';
+			  sSearchStr.replace('_INPUT_', '<input name="search" size="30" class="text" id="search" type="text" />') :
+			  sSearchStr==="" ? '<input name="search" class="text" size="30" id="search" type="text" />' : sSearchStr+' <input name="search" id="search" size="30" class="text" type="text" />';
 			
 			var nFilter = document.createElement( 'div' );
 			nFilter.className = oSettings.oClasses.sFilter;
@@ -5168,6 +5168,7 @@
 			for ( var i=0, iLen=n.length ; i<iLen ; i++ )
 			{
 				$(n[i]).html( sOut );
+				//$(n[i]).html( '<div class="selector" id="uniform-actionmsg"><span style="-moz-user-select: none;">Active</span><select id="actionmsg" name="status" style="opacity: 0;"><option value="Active">Active</option><option value="Inactive">Inactive</option><option value="Trash">Trash</option><option value="Delete">Delete</option></select></div><input type="submit" value="submit" id="action_btn" />' );
 			}
 		}
 		
@@ -5191,7 +5192,7 @@
 			
 			/* This can be overruled by not using the _MENU_ var/macro in the language variable */
 			var sName = (oSettings.sTableId === "") ? "" : 'name="'+oSettings.sTableId+'_length"';
-			var sStdMenu = '<select size="1" '+sName+'>';
+			var sStdMenu = '<select id="pageselect" size="1" '+sName+'>';
 			var i, iLen;
 			
 			if ( oSettings.aLengthMenu.length == 2 && typeof oSettings.aLengthMenu[0] == 'object' && 

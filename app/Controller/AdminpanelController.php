@@ -55,6 +55,7 @@ class AdminpanelController extends AppController {
  * @return void
  */
 	public function index() {
+		//pr($this->Session->read());
 		$this->checkadmin();
 		if($this->request->is('post')){
 			$check_username = $this->Adminuser->find('first',array('conditions'=>array('username'=>$this->request->data('username'))));
@@ -63,7 +64,7 @@ class AdminpanelController extends AppController {
 					if($check_username['Adminuser']['status'] == 'Active'){
 						$this->Session->write($check_username);
 						$this->Session->write(array("Adminlogin"=>'True'));
-						$this->redirect(array('controller'=>'admin','action'=>'blogs'));
+						$this->redirect(array('controller'=>'adminpanel','action'=>'dashboard'));
 					} else {
 						$this->Session->setFlash('Invalid user');
 					}
@@ -78,13 +79,30 @@ class AdminpanelController extends AppController {
 	
 	public function forgetpassword() {
 		if($this->request->is('post')){
-			$check_email = $this->Adminuser->read(array('email'=>$this->request->data('email')));
+			
+			//$check_email = $this->Adminuser->read(array('email'=>$this->request->data('email')));
+			$check_email = $this->Adminuser->find('first',array('conditions'=>array('email'=>$this->request->data('email'))));
+			//pr($check_email);
+			
 			if(!empty($check_email)){
+				//pr($this->request->data);exit;
+					$message='Hello,'.$check_email['Adminuser']['adminname'].'<br><br>
+					Your Password details.<br>
+					=============================================<br> 
+					Email:'."\t".$check_email['Adminuser']['email'].'<br><br>
+					User name:'."\t".$check_email['Adminuser']['username'].'<br><br>
+					Password:'."\t".$check_email['Adminuser']['password'].'<br><br>
+					------------------------------------------------------------------------------------<br/>				
+					<strong>Regards,<br>
+					CVomg team.<br><br>';
+					$options = array($this->request->data['email'],$this->request->data['email'],$message);
+					$this->forgetpass($options);
 				// email function comes here
 				$this->Session->setFlash('Your password details sent to your email address.','');
 				$this->redirect(array('controller'=>'adminpanel','action'=>'index'));
 			} else {
 				$this->Session->setFlash('Invalid email address.','');
+				$this->redirect(array('controller'=>'adminpanel','action'=>'index'));
 			}
 		}
 	}
@@ -93,9 +111,14 @@ class AdminpanelController extends AppController {
 		
 		$check=$this->Session->read('Adminlogin');
 		if(!empty($check) && $check =='True'){		
-			//$this->redirect(array('controller'=>'admin','action'=>'blogs'));
-			$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
+			$this->redirect(array('controller'=>'adminpanel','action'=>'dashboard','admin'=>false));
+			//$this->redirect(array('controller'=>'adminpanel','action'=>'index','admin'=>false));
 		}
+	}
+	
+	public function dashboard() {
+		$this->layout = 'admin';
+		//$this->checkadmin();
 	}
 	
 	public function logout() {

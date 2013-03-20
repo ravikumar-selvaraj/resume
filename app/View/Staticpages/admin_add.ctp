@@ -25,10 +25,15 @@
  <div class="tab-pane active in" id="home">
  
  <form action="" name="blog" id="myblog" method="post" enctype="multipart/form-data">
+						 <label>Language</label>
+						<select name="data[lan]" id="lan" class="validate[required] input-xlarge">
+						  <option value="eng">English</option>
+						  <option value="spa">Spanish</option>
+						</select>
 						<label>Name</label>
 						<input type="text" name="data[sta_name]" id="sta_name" value="" class="validate[required] input-xlarge">
-                        <label>URL</label>
-						<input type="text" name="data[sta_url]" id="sta_url" value="" class="validate[required] input-xlarge">
+                        <!--<label>URL</label>
+						<input type="text" name="data[sta_url]" id="sta_url" value="" class="validate[required] input-xlarge">-->
 						<label>Title</label>
 						<input type="text" name="data[sta_title]" id="sta_title" value="" class="validate[required] input-xlarge">
                         <label>Meta Keyword</label>

@@ -11,7 +11,9 @@
                     <!-- Blog Posts -->
 					<?php 
 					if(!empty($blogs)) {
-					foreach($blogs as $career) { ?>
+					foreach($blogs as $career) {
+						if($career['Blog']['title'] != '') {
+						 ?>
                     <article class="row article">
                         <div class="span9">
                             <div class="row">
@@ -27,8 +29,8 @@
                                     </a>
                                 </div>
                                 <div class="span7">
-                                    <p><?php echo substr($career['Blog']['content'],0,500);?></p>
-                                    <p><a class="btn" href="<?php echo BASE_URL;?>blogs/view/<?php echo $career['Blog']['key'];?>">Read more</a></p>
+                                    <p><?php echo substr(strip_tags($career['Blog']['content']),0,500);?></p>
+                                    <p><a class="btn" href="<?php echo BASE_URL;?>blogs/view/<?php echo $career['Blog']['key'];?>"><?php echo __("Read more");?></a></p>
                                 </div>
                             </div>
                             <div class="row">
@@ -42,7 +44,7 @@
                             </div>
                         </div>
                     </article>
-                    <hr><?php }?>
+                    <hr><?php } }?>
 						<div class="pagination pull-right">
 						<ul>
 							<li><?php echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));?></li>
@@ -54,7 +56,7 @@
 						<article class="row article">
 							<div class="row">
 									<div class="span9">
-										<h4>No record found</h4>
+										<h4><?php echo __("No record found");?></h4>
 									</div>
 								</div>
 						</article>
@@ -73,7 +75,7 @@
                         </div>-->
 
                         <div class="well search">
-                            <h5>Search by title</h5>
+                            <h5><?php echo __("Search by title");?></h5>
                             <form class="form-search" action="" method="post">
                                 <div class="input-append">
                                     <input type="text" name="search" class="span2 search-query">

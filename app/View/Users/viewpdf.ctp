@@ -119,6 +119,11 @@ th
 <th>Start date</th>
 <th>End date</th>
 </tr>';
+if(empty($edu))
+{
+	echo'<tr><th colspan="4">No Records Found</th></tr>';
+}
+else{
 $i=1; foreach($edu as $edu):
 $htm.='<tr>
 <td>'.$i.'</td>
@@ -126,7 +131,7 @@ $htm.='<tr>
 <td>'.$edu['Education']['organization'].'</td>
 <td>'.$edu['Education']['start_date'].'</td>
 <td>'.$edu['Education']['end_date'].'</td>
-</tr>'; endforeach;
+</tr>'; $i++; endforeach; }
 $htm.='</table>
 </td></tr>
 </table>
@@ -140,23 +145,30 @@ $htm.='<tr>
 <td colspan="5" align="right" class="abttd">
 <table width="100%" cellpadding="3" cellspacing="3"  border="0"  align="center">
 <tr><td class="abtme">Work Experience</td></tr>';
-
+if(empty($exp))
+{
+	echo'No Records Found';
+}
+else{
 foreach($exp as $exp){
 $htm.='<tr>
-<td width="50%" class="exp">
+<td width="70%" class="exp" bordercolor="#000000">
             
             <p class="jobcon"  align="left" style="text-indent:5px;"><u>'.$exp['Experience']['job_title'].'</u> :</p>';
             $cou=ClassRegistry::init('Country')->find('first',array('conditions'=>array('iso_code2'=>$exp['Experience']['country'])));
-           $htm.='<p class="abtmecon"> '.$exp['Experience']['company'].'-'."\t".$exp['Experience']['city'].'-'."\t".$cou['Country']['country_name']."\t".'('.$exp['Experience']['contract_type']."\t".'-'."\t".
+           $htm.='<p class="abtmecon" style="text-align:left"> '.$exp['Experience']['company'].'-'."\t".$exp['Experience']['city'].'-'."\t".$cou['Country']['country_name']."\t".'('.$exp['Experience']['contract_type']."\t".'-'."\t".
             date("M Y", strtotime($exp['Experience']['start_date']))."\t".'-'."\t".date("M Y", strtotime($exp['Experience']['end_date'])).  ')'.'
 			</p>';
             $htm.='<p class="abtmecon" align="left"  style="text-indent:25px;">Responisibily : </p>
             <ul>';
             $sp=explode(',',$exp['Experience']['responsibility']) ;
             $k=1;
+			if(!empty($sp)) {
             foreach($sp as $sp1):
+			if(!empty($sp1)){	
             $htm.='<li class="abtmecon">'.$sp1.'</li>';
-            $k++; endforeach;
+            $k++; } endforeach;
+			}
             $htm.='</ul>';
            if(!empty( $exp['Experience']['comapny_desc'])){
            $htm.='<p class="abtmecon" align="left"  style="text-indent:25px;"> Company Description : </p>
@@ -176,7 +188,7 @@ $htm.='<tr>
             
            </td>
 </tr>';
- }	
+ }	 }
 $htm.='</table>
 </td>
 </tr>';
@@ -186,10 +198,14 @@ $htm.='<tr>
 <td colspan="5" align="right" class="abttd">
 <table width="100%" cellpadding="3" cellspacing="3"  border="0"   align="center">
 <tr><td class="abtme">Skill Information</td></tr>
-<tr><td class="abtmecon" width="50%">
+<tr><td class="abtmecon" width="70%">
 
-                    <p class="abtmecon" align="left">Skills : </p>
-                    ';
+                    <p class="abtmecon" align="left">Skills : </p>';
+					if(empty($skill))
+					{
+						echo'No Records Found';
+					}
+					else{
                    
                     foreach($skill as $skill) { 
 					
@@ -197,12 +213,14 @@ $htm.='<tr>
                    <ul class="">';	
                     $sp=explode(',',$skill['Skill']['skills']) ;
                     $i=0;
+					if(!empty($sp)){
                     foreach($sp as $sp1) {
+						if(!empty($sp1)){
                     $htm.='<li class="abtmecon">'.$sp1.'</li>';
-                     $i++;}
+                     $i++;} } }
                     $htm.='</ul>';
                     
-                     }
+                     } }
                     $htm.='
 </td></tr>
 </table>
@@ -213,22 +231,27 @@ $htm.='<tr>
 <td colspan="5" align="right" class="abttd">
 <table width="100%" cellpadding="3" cellspacing="3"  border="0"   align="center">
 <tr><td class="abtme">Interest</td></tr>
-<tr><td class="abtmecon" width="50%">
+<tr><td class="abtmecon" width="70%">
 
-                        <p class="abtmecon" align="left">Interest : </p>
-                        ';
-                          
+                        <p class="abtmecon" align="left">Interest : </p>';
+                       if(empty($int))
+						{
+							echo'No Records Found';
+						}
+						else{   
                         foreach($int as $int) { 
                         
                             $htm.='<p class="abtmecon" align="left"  style="text-indent:25px;"><u>'.$int['Interest']['interest_type'].' : </u></p>
                            <ul class="">';
                                $sp=explode(',',$int['Interest']['interest']) ;
-                        $i=0;
+                       if(!empty($sp)){
+					    $i=0;
                         foreach($sp as $sp1) {
+							if(!empty($sp1)){
                        $htm.=' <li class="abtmecon">'.$sp1.'</li>';
-                        $i++;}
+                        $i++;} } }
                             $htm.='</ul>';
-                             }
+                             } }
                        $htm.=' 
                 
 </td></tr>
@@ -249,7 +272,10 @@ $tcpdf->writeHTML($htm, true, false, true, false, '');
 // output the HTML content
 $tcpdf->lastPage();
 $filename="Cvomg.pdf";
- $tcpdf->Output($filename, 'D');
+header('Content-type: application/pdf');
+header('Content-Disposition: inline; filename="' . $filename . '"');
+@readfile($file);
+$tcpdf->Output($filename, 'D');
 
 
 ?>

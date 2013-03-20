@@ -26,12 +26,21 @@
 					  <div class="tab-pane active in" id="home">
 					<form action="" name="blog" id="myblog" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="data[bid]" value="<?php echo $this->request->data['Blog']['bid'];?>" />
+					<input name="data[lan]" type="hidden" value="<?php echo $this->params['pass'][0];?>" />
+						<label>Language</label>
+						<select name="data[lan1]" id="lan" class="validate[required] input-xlarge" onchange="MM_jumpMenu(this.value);">
+						  <option value="<?php echo BASE_URL;?>admin/blogs/edit/eng/<?php echo $this->params['pass'][1];?>" <?php if($this->params['pass'][0] == 'eng') echo 'selected="selected"';;?>>English</option>
+						  <option value="<?php echo BASE_URL;?>admin/blogs/edit/spa/<?php echo $this->params['pass'][1];?>" <?php if($this->params['pass'][0] == 'spa') echo 'selected="selected"';?>>Spanish</option>
+						</select>
+						
 						<label>Title</label>
 						<input type="text" name="data[title]" id="title" value="<?php echo $this->request->data['Blog']['title'];?>" class="validate[required] input-xlarge">
+						<?php if($this->request->data['Blog']['image'] !='') { ?>
 						<label>Old image</label>
 						<?php echo $this->html->image('blog-images/small/'.$this->request->data['Blog']['image'],array('border'=>0,'alt'=>h($this->request->data['Blog']['title']))); ?>
+						<?php $opt = 'optional';} else $opt = 'required'; ?>
 						<label>Image</label>
-						<input type="file" name="data[image]" id="image" class="validate[optional,custom[image]] input-xlarge">
+						<input type="file" name="data[image]" id="image" class="validate[<?php echo $opt;?>,custom[image]] input-xlarge">
 						<label>Content</label>
 						<textarea name="data[content]" id="content" rows="5" class="validate[required] input-xlarge ckeditor"><?php echo $this->request->data['Blog']['content'];?></textarea>
 						<label>Status</label>

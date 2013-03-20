@@ -93,6 +93,11 @@ th
 <th>Start date</th>
 <th>End date</th>
 </tr>';
+if(empty($edu))
+{
+	echo'<tr><th colspan="4">No Records Found</th></tr>';
+}
+else{
 $i=1; foreach($edu as $edu):
 $htm.='<tr>
 <td>'.$i.'</td>
@@ -100,7 +105,7 @@ $htm.='<tr>
 <td>'.$edu['Education']['organization'].'</td>
 <td>'.$edu['Education']['start_date'].'</td>
 <td>'.$edu['Education']['end_date'].'</td>
-</tr>'; endforeach;
+</tr>';  $i++; endforeach; }
 $htm.='</table>
 </td></tr>
 </table>
@@ -114,7 +119,11 @@ $htm.='<tr>
 <td colspan="5" align="right" class="abttd">
 <table width="100%" cellpadding="3" cellspacing="3"  border="0"  align="center">
 <tr><td class="abtme">Work Experience</td></tr>';
-
+if(empty($exp))
+{
+	echo'<tr><th colspan="4">No Records Found</th></tr>';
+}
+else{
 foreach($exp as $exp){
 $htm.='<tr>
 <td width="50%" class="exp">
@@ -150,7 +159,7 @@ $htm.='<tr>
             
            </td>
 </tr>';
- }	
+ }	}
 $htm.='</table>
 </td>
 </tr>';

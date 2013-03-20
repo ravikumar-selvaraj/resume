@@ -13,7 +13,7 @@
 		
 <?php	
 		echo $this->html->css(array('page/normalize.min','page/bootstrap','page/main')); 
-		echo $this->html->script(array('jquery','page/vendor/modernizr-2.6.2-respond-1.1.0.min','jquery.validationEngine','chart/highcharts','chart/exporting'));
+		echo $this->html->script(array('jquery','page/vendor/modernizr-2.6.2-respond-1.1.0.min'));
 ?>
 <style>
 #myres
@@ -37,25 +37,59 @@
             <div class="topbar row">
                <div class="container">
                     <div class="row">
-					<?php if(isset($_SESSION['User']['username'])) { ?>
+					<?php 
+					if($this->Session->check('User.username') == true) { ?>
 					<div class="pull-left">
                         <a class="return-dash" href="<?php echo BASE_URL;?>pages/dashboard"><img alt="" src="<?php echo BASE_URL;?>img/dashboard_icon.png"></a>
-                        <a href="<?php echo BASE_URL.$this->Session->read('User.username');?>" class="site_links">My Resume</a>
+                        <a href="<?php echo BASE_URL.$this->Session->read('User.username');?>" class="site_links"><?php echo __("My Resume");?></a>
                     </div>
-					<?php } ?>
-                        <div class="span4 site_links offset4">
-						
-                            <a href="<?php echo BASE_URL;?>features"><?php echo __("Features");?></a>
+					<?php } if($this->Session->read('Config.language') == 'spa')
+							$style = 'style="width:600px; margin-left:200px;"';
+							else
+							$style = '';
+							if(!$this->Session->read('User.username'))
+							$style = 'style="width:600px; margin-left:200px;"';
+							else
+							$style = 'style="width:394px; margin-left:200px;"';
+					?>
+                        <div class=" span4 site_links offset4" <?php echo $style;?>>
+							<?php  
+                           /* $das=array('pages');
+                           
+                            if(in_array($this->params['controller'],$das)):$current='color:#FCFCFC';else:$current='';endif;
+                            echo $this->html->link(__("Home"),array('controller'=>'','action'=>'index'),array('style'=>$current)); */
+                            ?>
+							<?php  
+                            $fea=array('features');
+                            if(in_array($this->params['controller'],$fea)):$current='color:#FCFCFC';else:$current='';endif;
+                             echo $this->html->link(__("Features"),array('controller'=>'','action'=>'features'),array('style'=>$current)) ;
+                            ?>
+                            <?php  
+                            $car=array('careers');
+                            if(in_array($this->params['controller'],$car)):$current='color:#FCFCFC';else:$current='';endif;
+                             echo $this->html->link(__("Career advice"),array('controller'=>'','action'=>'careers'),array('style'=>$current)) ;
+                            ?>
+                            <?php  
+                            $blog=array('blogs');
+                            if(in_array($this->params['controller'],$blog)):$current='color:#FCFCFC';else:$current='';endif;
+                             echo $this->html->link(__("Blog"),array('controller'=>'','action'=>'blogs'),array('style'=>$current)) ;
+                            ?>
+                            <?php  
+                            $con=array('sitecontacts');
+                            if(in_array($this->params['controller'],$con)):$current='color:#FCFCFC';else:$current='';endif;
+                             echo $this->html->link(__("Contact"),array('controller'=>'','action'=>'sitecontacts'),array('style'=>$current)) ;
+                            ?>
+                          <!--  <a href="<?php echo BASE_URL;?>features" ><?php echo __("Features");?></a>
                             <a href="<?php echo BASE_URL;?>careers"><?php echo __("Career advice");?></a>
                             <a href="<?php echo BASE_URL;?>blogs"><?php echo __("Blog");?></a>
-                            <a href="<?php echo BASE_URL;?>sitecontacts"><?php echo __("Contact");?></a>
+                            <a href="<?php echo BASE_URL;?>sitecontacts"><?php echo __("Contact");?></a>-->
 							
                         </div>
 
                         <div class="span2 pull-right language">
                             <?php echo __("Language");?>:
-                            <a href="" class="lang_active"><img src="<?php echo Router::url('/'); ?>img/page/eng.png" alt="english"></a>
-                            <a href=""><img src="<?php echo Router::url('/'); ?>img/page/es.png" alt="english"></a>
+                            <a href="<?php echo BASE_URL;?>pages/change/eng" <?php if($this->Session->read('Config.language') == 'eng') echo 'class="lang_active"';?>><img src="<?php echo Router::url('/'); ?>img/page/eng.png" alt="english"></a>
+                            <a href="<?php echo BASE_URL;?>pages/change/spa" <?php if($this->Session->read('Config.language') == 'spa') echo 'class="lang_active"';?>><img src="<?php echo Router::url('/'); ?>img/page/es.png" alt="spanish"></a>
                         </div>
                     </div>
                 </div>
@@ -63,8 +97,13 @@
            <div class="container">
                 <div class="row brand_bar">
                     <a href="<?php echo BASE_URL;?>" id="brand" class="span3 pull-left"><img src="<?php echo Router::url('/'); ?>img/page/logo.png" alt="CVomg - The best way to show yourself"></a>
-                    <?php if(!isset($_SESSION['User']['uid'])) {?>
-                    <div class="span3 pull-right ">
+                    <?php if(!$this->Session->read('User.uid')) {
+							if($this->Session->read('Config.language') == 'spa')
+							$style = 'style="width:250px;"';
+							else
+							$style = '';
+						?>
+                    <div class="span3 pull-right" <?php echo $style;?>>
                         <button type="button" data-toggle="modal" data-target="#signup" class="btn primary_btn signup_btn"><?php echo __("Sign up");?></button>
                         <button type="button" data-toggle="modal" data-target="#login" class="btn secondary_btn pull-right" ><?php echo __("Sign in");?></button>
 
@@ -81,14 +120,14 @@
                                     <div class="control-group" id="sign_up_email">
                                         <label class="control-label" for="inputInfo"><?php echo __("Email");?></label>
                                         <div class="controls">
-                                            <input type="text" id="signup_email" name="data[email]" placeholder="Email">
+                                            <input type="text" id="signup_email" name="data[email]" placeholder="<?php echo __("Email");?>">
                                              <span class="help-inline" id="sign_up_email_error"></span>
                                         </div>
                                     </div>
                                     <div class="control-group" id="sign_up_pwd">
                                         <label class="control-label" for="inputPassword"><?php echo __("Password");?></label>
                                         <div class="controls">
-                                            <input type="password" id="signup_password" name="data[password]" placeholder="Password">
+                                            <input type="password" id="signup_password" name="data[password]" placeholder="<?php echo __("Password");?>">
 											<span class="help-inline" id="sign_up_pwd_error"></span>
                                         </div>
                                     </div>
@@ -114,21 +153,21 @@
                                     <div class="control-group" id="log_in_email">
                                         <label class="control-label" for="inputInfo"><?php echo __("Email");?></label>
                                         <div class="controls">
-                                            <input type="text" id="login_email" placeholder="Email" name="data[email]">
+                                            <input type="text" id="login_email" placeholder="<?php echo __("Email");?>" name="data[email]">
 											<span class="help-inline" id="login_email_error"></span>
                                         </div>
                                     </div>
                                     <div class="control-group" id="log_in_pwd">
                                         <label class="control-label" for="inputPassword"><?php echo __("Password");?></label>
                                         <div class="controls">
-                                            <input type="password" id="login_password" placeholder="Password" name="data[password]">
+                                            <input type="password" id="login_password" placeholder="<?php echo __("Password");?>" name="data[password]">
 											<span class="help-inline" id="login_pwd_error"></span>
                                         </div>
                                     </div>
                                     <div class="control-group">
                                         <div class="controls">
                                             <button type="submit" class="btn btn-primary" id="login_btn"><?php echo __("Sign in");?></button>
-											<a id="forget" onClick="showpass(id)" style="cursor:pointer;"><?php echo __("Forgot password?");?></a>
+											<a id="forget" onClick="showpass(id)" style="cursor:pointer;"><?php echo __("Forgot password");?>?</a>
                                         </div>
                                     </div>
                                 </form>
@@ -145,7 +184,7 @@
                                     <div class="control-group" id="forget_error">
                                         <label class="control-label" for="inputInfo"><?php echo __("Email");?></label>
                                         <div class="controls">
-                                            <input type="text" id="forget_email" name="data[email]" placeholder="Email">
+                                            <input type="text" id="forget_email" name="data[email]" placeholder="<?php echo __("Email");?>">
 											<span class="help-inline" id="forget_pwd_error"></span>
                                         </div>
                                     </div>
@@ -174,13 +213,13 @@
                     <!--<img src="<?php echo Router::url('/'); ?>img/page/profile_pic_mini.jpg" alt="">--></span>
                     <ul class="pull-left unstyled">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Welcome, <?php echo $_SESSION['User']['firstname'] ;?> <b class="caret"></b></a>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo __("Welcome");?>, <?php echo $this->Session->read('User.firstname') ;?> <b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <li><a href="<?php echo BASE_URL?>pages/dashboard"><i class="icon-home"></i> Dashboard</a></li>
+                                <li><a href="<?php echo BASE_URL?>pages/dashboard"><i class="icon-home"></i> <?php echo  __("Dashboard");?></a></li>
                                <!-- <li><a href=""><i class="icon-user"></i> My Account</a></li>-->
-                                <li><a href="<?php echo BASE_URL?>pages/setting"><i class="icon-cog"></i> Settings</a></li>
+                                <li><a href="<?php echo BASE_URL?>pages/setting"><i class="icon-cog"></i> <?php echo __("Settings");?></a></li>
                                 <li class="divider"></li>
-                                <li><a href="<?php echo BASE_URL?>pages/logout"><i class="icon-off"></i> Logout</a></li>
+                                <li><a href="<?php echo BASE_URL?>pages/logout"><i class="icon-off"></i> <?php echo __("Logout");?></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -199,13 +238,73 @@
                 <div class="row">  
                     <section class="span8 pull-left footer-links">
                         <ul class="unstyled inline">
-                            <li><a href="<?php echo Router::url('/'); ?>"><?php echo __("Home");?></a></li>
-                            <li><a href="<?php echo Router::url('/'); ?>staticpages/about"><?php echo __("About us");?></a></li>
-                            <li><a href="<?php echo Router::url('/'); ?>staticpages/contact"><?php echo __("Contact us");?></a></li>
-                            <li><a href="<?php echo Router::url('/'); ?>staticpages/faq"><?php echo __("F.A.Q");?></a></li>
-                            <li><a href="<?php echo Router::url('/'); ?>staticpages/partners"><?php echo __("Partners");?></a></li>
-                            <li><a href="<?php echo Router::url('/'); ?>staticpages/terms"><?php echo __("Term of service");?></a></li>
-                            <li><a href="<?php echo Router::url('/'); ?>staticpages/policy"><?php echo __("Privacy policy");?></a></li>
+				<?php  
+                $dasarray=array('pages');
+				
+                if(in_array($this->params['controller'],$dasarray)):$current='color:#FCFCFC';else:$current='';endif;
+                echo '<li >'.$this->html->link(__("Home"),array('controller'=>'','action'=>'index'),array('style'=>$current)).'</li>'; 
+                ?>
+                <?php  
+                $abt=array('about_us');
+				//echo $this->params['action'];
+				if(isset($this->params['pass'][1])){
+                if(in_array($this->params['pass'][1],$abt)):$current='color:#FCFCFC';else:$current='';endif;
+                echo '<li >'.$this->html->link(__("About us"),array('controller'=>'staticpages','action'=>'about_us'),array('style'=>$current)).'</li>'; }
+				else
+				{
+				 echo '<li >'.$this->html->link(__("About us"),array('controller'=>'staticpages','action'=>'about_us'),array()).'</li>'; 
+				}
+                ?>
+                  
+               
+                <?php  
+                $faq=array('faq');
+				if(isset($this->params['pass'][1])){
+                if(in_array($this->params['pass'][1],$faq)):$current='color:#FCFCFC';else:$current='';endif;
+                echo '<li >'.$this->html->link(__("F.A.Q"),array('controller'=>'staticpages','action'=>'faq'),array('style'=>$current)).'</li>'; }
+				else
+				{
+                echo '<li >'.$this->html->link(__("F.A.Q"),array('controller'=>'staticpages','action'=>'faq'),array()).'</li>'; 
+				}
+                ?>
+                 <?php  
+                $par=array('partners');
+				if(isset($this->params['pass'][1])){
+                if(in_array($this->params['pass'][1],$par)):$current='color:#FCFCFC';else:$current='';endif;
+                echo '<li >'.$this->html->link(__("Partners"),array('controller'=>'staticpages','action'=>'partners'),array('style'=>$current)).'</li>'; }
+				else
+				{
+                echo '<li >'.$this->html->link(__("Partners"),array('controller'=>'staticpages','action'=>'partners'),array()).'</li>'; 
+				}
+                ?>
+                
+                  <?php  
+                $ter=array('term_of_service');
+				if(isset($this->params['pass'][1])){
+                if(in_array($this->params['pass'][1],$ter)):$current='color:#FCFCFC';else:$current='';endif;
+                echo '<li >'.$this->html->link(__("Terms of service"),array('controller'=>'staticpages','action'=>'term_of_service'),array('style'=>$current)).'</li>'; }
+				else
+				{
+                echo '<li >'.$this->html->link(__("Terms of service"),array('controller'=>'staticpages','action'=>'term_of_service'),array()).'</li>'; 
+				}
+                ?>
+                  <?php  
+                $pri=array('privacy_policy');
+				if(isset($this->params['pass'][1])){
+                if(in_array($this->params['pass'][1],$pri)):$current='color:#FCFCFC';else:$current='';endif;
+                echo '<li >'.$this->html->link(__("Privacy policy"),array('controller'=>'staticpages','action'=>'privacy_policy'),array('style'=>$current)).'</li>'; }
+				else
+				{
+                echo '<li >'.$this->html->link(__("Privacy policy"),array('controller'=>'staticpages','action'=>'privacy_policy'),array()).'</li>'; 
+				}
+                ?>
+                           <!-- <li><a href="<?php //echo Router::url('/'); ?>"><?php //echo __("Home");?></a></li>
+                            <li><a href="<?php //echo Router::url('/'); ?>staticpages/about_us"><?php //echo __("About us");?></a></li>
+                            <li><a href="<?php //echo Router::url('/'); ?>sitecontacts"><?php //echo __("Contact");?></a></li>
+                            <li><a href="<?php //echo Router::url('/'); ?>staticpages/faq"><?php //echo __("F.A.Q");?></a></li>
+                            <li><a href="<?php //echo Router::url('/'); ?>staticpages/partners"><?php //echo __("Partners");?></a></li>
+                            <li><a href="<?php //echo Router::url('/'); ?>staticpages/term_of_service"><?php //echo __("Terms of service");?></a></li>
+                            <li><a href="<?php //echo Router::url('/'); ?>staticpages/privacy_policy"><?php //echo __("Privacy policy");?></a></li>-->
                         </ul> 
                         <p>© 2013 CVomg.com</p>
                     </section>
@@ -217,14 +316,20 @@
 		
 		
 ?>
+	
 
-<script>
 <?php
 $msg = $this->Session->flash();
 if(!empty($msg)){ ?>
-	bootbox.alert(<?php echo $msg;?>);	
-<?php }?>
+<script>
+$(document).ready(function(){
+	bootbox.alert('<?php echo $msg;?>');	
+
+	});
 </script>
+
+<?php }?>
+
 
 
 <script type="text/javascript">
@@ -654,91 +759,7 @@ $("#set_cur_pwd").blur(function(){
 
 </script>
 
-<?php
-                            $today = date("D M j G:i:s T Y"); 
-                            $d = new DateTime();
-                            $one=$d->format('dM');
-                            $d->modify('-7 day');
-                            $two=$d->format('dM');
-                            $d->modify('-7 day');
-                            $three=$d->format('dM');
-                            $d->modify('-7 day');
-                            $four=$d->format('dM');
-                            $d->modify('-7 day');
-                            $five=$d->format('dM');
-                            
-                             ?> 
-                        
-                        <?php
-							//$exp=count(ClassRegistry::init('Profileview')->find('all',array('conditions'=>array('uid'=>$_SESSION['User']['uid']))));
-						 //echo 'Profile View ---'.$exp; ?>
-                         <script>
-    $(function () {
-    var chart;
-    $(document).ready(function() {
-        chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'charting',
-                type: 'line',
-                marginRight: 130,
-                marginBottom: 25
-            },
-            title: {
-                text: '',
-                x: -20 //center
-            },
-            subtitle: {
-                text: '',
-                x: -20
-            },
-			grid: {
-                backgroundColor: { colors: ["#D1D1D1", "#7A7A7A"] }
-            },
-			 backgroundColor: {
-	                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
-	                stops: [
-	                    [0, '#333'],
-	                    [1, '#FFF']
-	                ]
-	            },
 
-            xAxis: {
-                categories: ['', '<?php echo $five; ?>', '', '', '', '','', '', '<?php echo $four; ?>', '', '', '','', '', '', '<?php echo $three; ?>', '', '','', '', '', '', '<?php echo $two; ?>', '','', '', '', '', '', '<?php echo $one; ?>']
-            },
-            yAxis: {
-                title: {
-                    text: 'Page Views'
-                },
-				min: 0,
-                plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
-                }]
-            },
-            tooltip: {
-                formatter: function() {
-                        return '<b>'+ this.series.name +'</b><br/>'+this.x +': '+ this.y +'°C';
-						//return '<b>'+ this.series.name +'</b><br/>'+ this.y +'peoples';
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'top',
-                x: 10,
-                y: 100,
-                borderWidth: 0
-            },
-            series: [{
-                name: 'Views',
-                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 5, 0, 3, 0, 9, 0]
-            }]
-        });
-    });
-    
-});
-  </script>
   </body>
   
 </html>

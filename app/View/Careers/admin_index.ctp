@@ -10,12 +10,13 @@
         <div class="container-fluid">
             <div class="row-fluid">
 			
-			<?php 
-			if(!empty($_SESSION['Message']['flash'])) { ?>
+				<?php 
+		$msg = $this->Session->flash();
+		if(!empty($msg)) { ?>
 	 		
 		<div class="alert alert-info">
 			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong><?php echo $_SESSION['Message']['flash']['message'];?> </strong>
+			<strong><?php echo $msg;?> </strong>
 		</div>
      <?php } ?>
                     
@@ -28,13 +29,13 @@
     <table class="table display" id="example" style="border:1px solid #aaa; padding:10px; margin-bottom:20px;">
       <thead>
         <tr>
-          	<th>No</th>
-			<th>Title</th>
-            <th>Category</th>
-			<th>Content</th>
+          	<th class="notsort">No</th>
+			<th><div id="sort">Title<div id="sorticon"></div></div></th>
+            <th><div id="sort">Category<div id="sorticon"></div></div></th>
+			<th><div id="sort">Content<div id="sorticon"></div></div></th>
 			<th>Image</th>
 			<!--<th><?php echo $this->Paginator->sort('created_date'); ?></th>-->
-			<th>Status</th>
+			<th><div id="sort">Status<div id="sorticon"></div></div></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
         </tr>
       </thead>
@@ -51,9 +52,9 @@
 			<!--<td><?php echo h($careers['Career']['created_date']); ?>&nbsp;</td>-->
 			<td><?php echo h($careers['Career']['status']); ?>&nbsp;</td>
 			<td class="actions">
-				<a href="<?php echo BASE_URL?>admin/careers/view/<?php echo $careers['Career']['cid'];?>"><i class="icon-zoom-in"></i></a>
-				<a href="<?php echo BASE_URL?>admin/careers/edit/<?php echo $careers['Career']['cid'];?>"><i class="icon-pencil"></i></a>
-              	<a rel="<?php echo BASE_URL?>admin/careers/delete/<?php echo $careers['Career']['cid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+				<a href="<?php echo BASE_URL?>admin/careers/view/<?php echo $careers['Career']['lan'].'/'.$careers['Career']['link'];?>" title="view" ><i class="icon-zoom-in"></i></a>
+				<a href="<?php echo BASE_URL?>admin/careers/edit/<?php echo $careers['Career']['lan'].'/'.$careers['Career']['link'];?>" title="edit" ><i class="icon-pencil"></i></a>
+              	<a rel="<?php echo BASE_URL?>admin/careers/delete/<?php echo $careers['Career']['cid'];?>" class="test" href="#myModal" title="delete" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 			</td>
         </tr>
 		<?php $i++; } ?>
@@ -76,7 +77,7 @@
         <h3 id="myModalLabel">Delete Confirmation</h3>
     </div>
     <div class="modal-body">
-        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete this career?</p>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>

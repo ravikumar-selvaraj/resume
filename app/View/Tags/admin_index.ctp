@@ -10,12 +10,13 @@
         <div class="container-fluid">
             <div class="row-fluid">
 			
-			<?php 
-			if(!empty($_SESSION['Message']['flash'])) { ?>
+				<?php 
+		$msg = $this->Session->flash();
+		if(!empty($msg)) { ?>
 	 		
 		<div class="alert alert-info">
 			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong><?php echo $_SESSION['Message']['flash']['message'];?> </strong>
+			<strong><?php echo $msg;?> </strong>
 		</div>
      <?php } ?>
                     
@@ -28,9 +29,9 @@
     <table class="table display" id="example" style="border:1px solid #aaa; padding:10px; margin-bottom:20px;">
       <thead>
         <tr>
-          	<th>Tid</th>
-			<th>Tag name</th>
-            <th>Created date</th>
+          	<th class="notsort">No</th>
+			<th><div id="sort">Tag name<div id="sorticon"></div></div></th>
+            <th><div id="sort">Created date<div id="sorticon"></div></div></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
         </tr>
       </thead>
@@ -43,9 +44,9 @@
 		<td><?php echo h($tag['Tag']['tag_name']); ?>&nbsp;</td>
 		<td><?php echo h($tag['Tag']['created_date']); ?>&nbsp;</td>
 		<td class="actions">
-			
-			<a href="<?php echo BASE_URL?>admin/tags/edit/<?php echo $tag['Tag']['tid'];?>"><i class="icon-pencil"></i></a>
-            <a rel="<?php echo BASE_URL?>admin/tags/delete/<?php echo $tag['Tag']['tid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+			<a href="<?php echo BASE_URL?>admin/tags/edit/<?php echo $tag['Tag']['lan'].'/'.$tag['Tag']['link'];?>" title="edit"><i class="icon-pencil"></i></a>
+            <a rel="<?php echo BASE_URL?>admin/tags/delete/<?php echo $tag['Tag']['tid'];?>" class="test" title="delete" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+
 		</td>
 	</tr>
         
@@ -69,7 +70,7 @@
         <h3 id="myModalLabel">Delete Confirmation</h3>
     </div>
     <div class="modal-body">
-        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete this tag?</p>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>

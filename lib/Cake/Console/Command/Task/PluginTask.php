@@ -127,7 +127,7 @@ class PluginTask extends AppShell {
 			foreach ($directories as $directory) {
 				$dirPath = $this->path . $plugin . DS . $directory;
 				$Folder->create($dirPath);
-				new File($dirPath . DS . 'empty', true);
+				$File = new File($dirPath . DS . 'empty', true);
 			}
 
 			foreach ($Folder->messages() as $message) {
@@ -170,7 +170,6 @@ class PluginTask extends AppShell {
 /**
  * Update the app's bootstrap.php file.
  *
- * @param string $plugin Name of plugin
  * @return void
  */
 	protected function _modifyBootstrap($plugin) {
@@ -187,7 +186,7 @@ class PluginTask extends AppShell {
  * find and change $this->path to the user selection
  *
  * @param array $pathOptions
- * @return void
+ * @return string plugin path
  */
 	public function findPath($pathOptions) {
 		$valid = false;

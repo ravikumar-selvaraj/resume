@@ -11,7 +11,7 @@ class UsersController extends AppController {
 		public $name = 'Users';
 		public $helpers = array('Session','Html');
 		public $layout = 'resume';
-		public $uses = array('User','Country','Skill','Education','Experience','Interest','Mylink','Portimage','Portvideo','Portdocument','Portaudio','Portpresent','Contact','Profileview','Userdashboard','Recommentation','Recomment');
+		public $uses = array('User','Country','Skill','Education','Experience','Interest','Mylink','Portimage','Portvideo','Portdocument','Portaudio','Portpresent','Contact','Profileview','Userdashboard','Recommentation','Recomment','Portfolio');
 		//public $paginate = array('limit'=>1);
 		public $components = array('Lastrss','RequestHandler','Session','Image');
 	
@@ -22,7 +22,7 @@ class UsersController extends AppController {
 
  /* @return void
  */
- public function admin_view($id = null) {
+       public function admin_view($id = null) {
 		$this->layout = 'admin';
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid user'));
@@ -47,6 +47,7 @@ class UsersController extends AppController {
 		$this->set('portpresent', $portpresent);
 		
 	}
+	
     public function checkadmin(){
 		$check=$this->Session->read('Adminlogin');
 		if(empty($check) && $check !='True'){			
@@ -56,10 +57,74 @@ class UsersController extends AppController {
 	public function index() {
 	
 	}
+	
 	public function errorpage()
 	{
 		$this->layout='webpage';
 	}
+	
+	public  function addrec()
+	 {
+		 
+			$this->render(false); 	
+			  if(isset($this->params['data']['recommentsubmit']))
+			  {				
+				  $i=0;
+				  foreach($this->params['data']['resp']  as $resp){
+					  if(!empty($this->params['data']['rid'][$i])){
+						   $rem['Recommentation']['rid']=$this->params['data']['rid'][$i];
+					  }
+					  $rem['Recommentation']['skills']=$resp;
+					  $rem['Recommentation']['uid']=$this->Session->read('User.uid');					
+					  $this->Recommentation->saveAll($rem);
+					  $i++;
+				  }				
+				  $user = $this->Recommentation->find('all',array('conditions'=>array('uid'=>$this->Session->read('User.uid'))));
+				  foreach($user as $user)
+				  {
+					  if(empty($user['Recommentation']['skills']))
+					  {
+						  $this->Recomment->deleteAll(array('rid'=>$user['Recommentation']['rid']));
+					  }
+				  }
+				   $this->Session->setFlash(__('Recommentations Added Successfully'));
+				   $mymsg=$this->Session->read('User.username');
+				   $this->Session->write(array('submenu'=>'recomment'));
+				  $this->redirect(array('controller'=>'','action'=>$mymsg));
+				// $this->redirect(array('controller'=>'','action'=>$msg));
+			  }
+			  
+			
+				
+			
+			 $user= $this->User->find('first',array('conditions'=>array('uid'=>$this->Session->read('User.uid'))));
+			  $this->set('user',$user);
+	 }
+
+	/*public function editmylinks(){
+		$new =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
+		$this->set('new', $new);
+		if($this->request->is('post')){
+			pr($this->request->data);exit;
+			$i=0;
+			
+			foreach($this->params['data']['im_type'] as $im_type1){
+				if(!empty($this->params['data']['mlid'][$i])){
+						   $rem['Mylink']['mlid']=$this->params['data']['mlid'][$i];
+					  }
+					  
+					$this->request->data['im_link'] = $this->params['data']['im_link'][$i];
+					$this->request->data['key'] = $this->params['data']['key'][$i];
+					$this->request->data['im_type'] = $im_type1;
+					$this->Mylink->saveAll($rem);					
+				$i++;
+			}
+			$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
+			$this->Session->setFlash(__('Links Updated Successfully'));
+			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+		}
+	}*/
+	
 
 /**
  * view method
@@ -192,6 +257,7 @@ class UsersController extends AppController {
 			throw new NotFoundException(__('Invalid user'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
+			//pr($this->request->data);exit;
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The user has been saved'));
 				$this->redirect(array('action' => 'index'));
@@ -199,8 +265,9 @@ class UsersController extends AppController {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.'));
 			}
 		} else {
-			$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
-			$this->request->data = $this->User->find('first', $options);
+			$this->request->data = $this->User->read(null, $id);
+			//$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
+			//$this->request->data = $this->User->find('first', $options);
 		}
 	}
 
@@ -250,17 +317,92 @@ class UsersController extends AppController {
 
 	}
 	
+	public function resume_password(){
+	
+		if($this->request->is('post')){
+		
+		$user = $this->User->find('first',array('conditions'=>array('username'=>$this->request->data['user'])));
+		
+		/*if(in_array($new['User']['uid'],$this->Session->read('user_resume'))){			
+			$this->redirect(array('action'=>$user['User']['username']));
+		}*/
+		if($this->request->data['resume_password'] == $user['User']['resume_password'])
+		{					
+			if(!($this->Session->read('user_resume'))){
+				$this->Session->write('user_resume',array());
+			}
+			$user_resume=$this->Session->read('user_resume');
+			$this->Session->write('user_resume',array_merge($user_resume,array($user['User']['uid'])));								
+			$this->redirect(array('controller'=>'','action'=>$this->request->data('user')));	
+		}
+			//pr($this->request->data('user'));exit;
+			//$this->Session->write('user_resume',1);
+			//$this->redirect(array('controller'=>'','action'=>$this->request->data('user')));
+		}
+		
+		
+	}
+	
+	public function check_rp() {
+		$this->layout = '';
+		$user = $this->User->find('first',array('conditions'=>array('username'=>$this->request->data['user'])));
+		if($this->request->data['resume_password'] == $user['User']['resume_password'])
+		echo 'success';
+		else
+		echo 'failed';
+		$this->render(false);
+	}
+	
 	public function resume()
 	{
+		//pr($_SERVER['PHP_SELF']);exit;
+		//pr($this->Session->read());
 		
 		$this->set('county', $this->Country->find('all'));
-		
+		//$this->Session->delete('user_resume');
 		$new =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
 		$this->set('new', $new);
+		//echo $this->Session->read('User.username') ;
+		//echo Configure::read('userpage');
+		//exit;
+		if(!$this->Session->read('User.username'))
+		{
+			if($new['User']['set_password']==1)
+			{
+				if(!($this->Session->read('user_resume')) || !in_array($new['User']['uid'],$this->Session->read('user_resume'))){	
+					$this->redirect(array('action'=>'resume_password'));
+				}
+			}
+		}
+		/*else if($this->Session->read('User.username')==Configure::read('userpage'))
+		{
+			$this->redirect(array('controller'=>'','action'=>$this->request->data('user')));
+		}*/
+		
+		/*if($this->Session->read('user_resume') != 1) {
+			if($new['User']['uid'] != $this->Session->read('User.uid')) {
+				if($new['User']['set_password'] == 1){
+					$this->Session->write('user_resume',2);
+					$this->redirect(array('action'=>'resume_password'));
+				}
+			}
+		}*/
+	//echo in_array($new['User']['uid'],array(22));
+	//pr($this->Session->read('user_resume'));exit;
+	//$this->Session->delete('user_resume');exit;
+	
+	
+		/*if(!($this->Session->read('user_resume')) || !in_array($new['User']['uid'],$this->Session->read('user_resume'))){			
+			$this->redirect(array('action'=>'resume_password'));
+		}
+		*/
 		
 		$links =$this->Mylink->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('links', $links);
-		
+		$editlinks =$this->Mylink->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('editlinks', $editlinks);
+		$portfolios = $this->Portfolio->find('all',array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
+		$this->set('portfolios', $portfolios);
 		
 		
 		$exp =$this->Experience->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
@@ -306,23 +448,57 @@ class UsersController extends AppController {
 		$co+=count($portaud);
 		$c=$this->set('c',$co);
 	    //unset($_SESSION['views']);exit;
-		if(!isset($_SESSION['views']))
+		if(!$this->Session->read('views'))
 		{
-		$_SESSION['views']=array();
+		$this->Session->write('views',array());
 		}
-		if(!in_array($new['User']['uid'],$_SESSION['views']))
+		if(!in_array($new['User']['uid'],$this->Session->read('views')))
 		{
-		$_SESSION['views'][]=$new['User']['uid'];
+		$this->Session->write('views.uid',$new['User']['uid']);
 		$this->request->data['uid']=$new['User']['uid'];
 		$this->Profileview->save($this->request->data);
 		}
 		//unset($_SESSION['views']);
 		//echo $new['User']['uid'];exit;
 		
+		$new1 =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
 		
+		$recedu =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recedu', $recedu);
+		
+		$recskill =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recskill', $recskill);
+		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Waiting')));
+		$this->set('recomment', $recomment);
+		$this->set('recount', count($recomment));
+		$recommentmy1=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>"Approved")));
+		$this->set('recommentmy1', $recommentmy1);
+		$this->set('recount1', count($recommentmy1));
 	 
 	}
-	
+	function passreq()
+	{
+		//pr($this->request->data);
+		//exit;
+			if($this->request->is('post')){
+			
+			$message='Hello,'.$this->request->data['f_name']."\t".$this->request->data['l_name'].'<br><br>
+			'.$this->request->data['fname']."\t".$this->request->data['lname'].' has requested access to your resume. <br>
+			=============================================<br> 
+			You can reach them at '.$this->request->data['email_from'].'<br><br>
+			
+			Here,'."'".'s the personal message they sent you: <br>
+			'.$this->request->data['msg'].'	<br><br>		
+			<strong>Regards,<br>
+			CVomg team.<br><br>';
+			/*$this->smtpoptions();
+			$this->mailsend($message,'Contract Management Tool : Daily report','manikandan@aparajayah.com','manikandan@aparajayah.com','default');
+			$this->Session->setFlash(__('About me Added Successfully'));*/
+			$options = array($this->request->data['email_to'],$this->request->data['email_to'],$message,$this->request->data['email_from']);
+			$this->smtpoptions($options);
+		   $this->redirect(array('controller'=>'pages','action'=>'index'));
+		}
+	}
 	function cimage(){
 		$this->layout='';
 		$eid=$_REQUEST['eid'];
@@ -330,22 +506,7 @@ class UsersController extends AppController {
 		$this->set('exp', $exp);
 	}
 	
-	public function blog()
-	{
-		//echo "dfd";die;
-		$new =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
-		$this->set('new', $new);
-		$catlist =$this->Country->find('all');
-		$this->set('catlist',$catlist);
-        $cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
-		$this->set('cou',$cou);	
-		$items = $this->Lastrss->feed($new['User']['rss_feed']); // Get feed
-		//pr($items); die;
-		$this->set("items",$items['items']);
-		//
-		//$this->render(false);
-	}
-	
+
 	
 	
 	
@@ -365,17 +526,17 @@ class UsersController extends AppController {
 		$this->request->data['uid']=$new['User']['uid'];
 		//pr($this->request->data);exit;
 		$this->User->save($this->request->data);
+		$this->Session->setFlash(__('Information updated successfully'));
 		$this->redirect(array('controller'=>'','action'=>$this->request->data['base']));
 		
 		}
 		
 		if(isset($_REQUEST['contact']))
 		{
-		$this->request->data['uid']=$new['User']['uid'];
-		//pr($this->request->data);exit;
-		$this->User->save($this->request->data);
-		$this->redirect(array('controller'=>'','action'=>$this->request->data['base']));
-		
+			$this->request->data['uid']=$new['User']['uid'];
+			$this->User->save($this->request->data);
+			$this->Session->setFlash(__('Contact information updated successfully'));
+			$this->redirect(array('controller'=>'','action'=>$this->request->data['base']));
 		}
 		
 		if(isset($_REQUEST['about']))
@@ -383,6 +544,7 @@ class UsersController extends AppController {
 		$this->request->data['uid']=$new['User']['uid'];
 		//pr($this->request->data);exit;
 		$this->User->save($this->request->data);
+		$this->Session->setFlash(__('updated successfully'));
 		$this->redirect(array('controller'=>'','action'=>$this->request->data['base']));
 		
 		}
@@ -392,6 +554,7 @@ class UsersController extends AppController {
 		$this->request->data['uid']=$new['User']['uid'];
 		//pr($this->request->data);exit;
 		$this->User->save($this->request->data);
+		$this->Session->setFlash(__('Status updated successfully'));
 		$this->redirect(array('controller'=>'','action'=>$this->request->data['base']));
 		
 		}
@@ -401,7 +564,7 @@ class UsersController extends AppController {
 	
 	public function editphoto()
 	{
-		$id=$_SESSION['User']['uid'];
+		$id=$this->Session->read('User.uid');
 		$this->User->uid = $id;
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid staticpage'));
@@ -411,18 +574,20 @@ class UsersController extends AppController {
 			 $options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
 					$data = $this->User->find('first', $options);
 			if($this->request->data['image']['name'] !=''){
+				//pr($data);exit;
 				$this->Image->delete_image($data['User']['image'],"user-images");
 					$this->request->data['image'] = $this->Image->upload_image_and_thumbnail($this->request->data['image'],100,100,80,80, "user-images");	
+					$this->Session->setFlash(__('The Picture has been updated'));
 				} else {
-						
+						//pr($this->request->data);exit;
 					$this->request->data['image'] = $data['User']['image'];
 				}
 			if ($this->User->save($this->request->data)) {
-				$this->Session->setFlash(__('The blog has been saved'));
+				$this->Session->setFlash(__('The Picture has been updated'));
 				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 			} 
 			else {
-				$this->Session->setFlash(__('The blog could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The Picture could not be updated. Please, try again.'));
 			}
 		 
 			}
@@ -433,45 +598,47 @@ class UsersController extends AppController {
 	
 	public function userphoto()
 	{
-		$id=$_SESSION['User']['uid'];
+		$id=$this->Session->read('User.uid');
 		$this->User->uid = $id;
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid staticpage'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {	
 		 if(!empty($this->request->data)){
-			if($this->request->data['image']['name'] !=''){
+			// pr($this->request->data);exit;
+			/*if($this->request->data['image']['name'] !=''){
 					$this->request->data['image'] = $this->Image->upload_image_and_thumbnail($this->request->data['image'],100,100,80,80, "user-images");	
 				} else {
 						$options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
 					$data = $this->User->find('first', $options);
 					$this->request->data['image'] = $data['User']['image'];
-				}
+				}*/
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The basic information has been saved'));
 				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 			} 
 			else {
-				$this->Session->setFlash(__('The blog could not be saved. Please, try again.'));
+				$this->Session->setFlash(__('The basic information could not be saved. Please, try again.'));
 			}
 		 
 			}
 		} else {
-			$this->Session->setFlash(__('The blog could not be saved. Please, try again.'));
+			$this->Session->setFlash(__('The basic information could not be saved. Please, try again.'));
 		}
 	}
 	
 	
 	public function usercontact()
 	{
-		//pr($this->request->data);exit;
-		$id=$_SESSION['User']['uid'];
+		
+		$id=$this->Session->read('User.uid');
 		$this->User->uid = $id;
 		if (!$this->User->exists($id)) {
 			throw new NotFoundException(__('Invalid staticpage'));
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {	
 		 if(!empty($this->request->data)){
+			 //pr($this->request->data);exit;
 			if ($this->User->save($this->request->data)) {
 				$this->Session->setFlash(__('The basic information has been saved'));
 				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
@@ -491,13 +658,17 @@ class UsersController extends AppController {
 	
 	{
 	       if(!empty($this->request->data)){
+			  // pr($this->request->data);exit;
 			$resp = implode(',',$this->request->data['resp']);
 					$this->request->data['uid'] = $this->Session->read('User.uid');
 					$this->request->data['key'] = $this->str_rand();
 					$this->request->data['responsibility'] = $resp;
 					$this->Experience->save($this->request->data);
+					$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
+					$this->Session->write(array('submenu'=>'content'));
+				 $this->Session->write(array('addcontentsubmenus'=>'essential'));
 			$this->Session->setFlash(__('Professional Details Added Successfully'));
-				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username').'#cv'));
 		}
 	}
 	
@@ -509,7 +680,10 @@ class UsersController extends AppController {
 					$this->request->data['key'] = $this->str_rand();
 					$this->request->data['skills'] = $skills;
 					$this->Skill->save($this->request->data);
-			$this->Session->setFlash(__('Skills Added Successfully'));
+					$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
+			     $this->Session->setFlash(__('Skills Added Successfully'));
+				 $this->Session->write(array('submenu'=>'content'));
+				 $this->Session->write(array('addcontentsubmenus'=>'essential'));
 				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 		}
 	}
@@ -521,20 +695,27 @@ class UsersController extends AppController {
 			$this->request->data['key'] = $this->str_rand();
 			$this->request->data['extra_curricular'] = $extra_curriculars;
 			$this->Education->save($this->request->data);
+			$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
 			$this->Session->setFlash(__('Education Added Successfully'));
+			$this->Session->write(array('submenu'=>'content'));
+				 $this->Session->write(array('addcontentsubmenus'=>'essential'));
 				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 		}
 	}
 	
 	public function interests() {
+		
 		if($this->request->is('post')){
 			$interests = implode(',',$this->request->data['interest']);
 			$this->request->data['uid'] = $this->Session->read('User.uid');
 			$this->request->data['key'] = $this->str_rand();
 			$this->request->data['interest'] = $interests;
 			$this->Interest->save($this->request->data);
-			$this->Session->setFlash(__('Interest Added Successfully'));
-				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+			$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
+			$this->Session->write(array('submenu'=>'content'));
+				 $this->Session->write(array('addcontentsubmenus'=>'essential'));
+			//$this->Session->setFlash(__('Interest Added Successfully'));
+				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username').'#cv'));
 		}
 	}
 	
@@ -542,7 +723,10 @@ class UsersController extends AppController {
 		if($this->request->is('post')){
 			$this->request->data['uid'] = $this->Session->read('User.uid');
 			$this->User->save($this->request->data);
+			$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
 			$this->Session->setFlash(__('About me Added Successfully'));
+			$this->Session->write(array('submenu'=>'content'));
+				 $this->Session->write(array('addcontentsubmenus'=>'essential'));
 				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 		}
 	}
@@ -559,7 +743,10 @@ class UsersController extends AppController {
 					$this->Mylink->saveAll($this->request->data);					
 				$i++;
 			}	
+			$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
 			$this->Session->setFlash(__('Links Added Successfully'));
+			$this->Session->write(array('submenu'=>'content'));
+				 $this->Session->write(array('addcontentsubmenus'=>'essential'));
 				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 		}
 	}
@@ -575,6 +762,8 @@ class UsersController extends AppController {
 					$this->Mylink->saveAll($this->request->data);					
 				$i++;
 			}
+			$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
+			$this->Session->setFlash(__('links updated successfully'));
 			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));	
 		}
 		
@@ -584,36 +773,118 @@ class UsersController extends AppController {
 		if($this->request->is('post')){
 		$this->request->data['uid'] = $this->Session->read('User.uid');
 		$this->User->save($this->request->data);
+		$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
 		$this->Session->setFlash(__('Rss feed added successfully'));
-		
-	$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));		}
+		$this->Session->write(array('submenu'=>'content'));
+				 $this->Session->write(array('addcontentsubmenus'=>'essential'));
+		$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));		}
 		}
 
 		public function experience()
 		{
+		
 		$new =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
+		if(!$this->Session->read('User.username'))
+		{
+			if($new['User']['set_password']==1)
+			{
+				if(!($this->Session->read('user_resume')) || !in_array($new['User']['uid'],$this->Session->read('user_resume'))){	
+					$this->redirect(array('action'=>'resume_password'));
+				}
+			}
+		}
 		$this->set('new', $new);
 		$catlist =$this->Country->find('all');
 		$this->set('catlist',$catlist);
         $cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
 		$this->set('cou',$cou);	
 		
-		$exp =$this->Experience->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$exp =$this->Experience->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
 		$this->set('exp', $exp);
 		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('recmd', $recmd);
+		$new1 =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
+		
+		$recedu =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recedu', $recedu);
+		
+		$recskill =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recskill', $recskill);
+		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Waiting')));
+		$this->set('recomment', $recomment);
+		$this->set('recount', count($recomment));
+		$recomment1=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Approved')));
+		$this->set('recomment1', $recomment1);
+		$this->set('recount1', count($recomment1));
 
 	    }
-		public function educations()
+		public function blog()
 		{
+		//echo "dfd";die;
 		$new =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
 		$this->set('new', $new);
+		if(!$this->Session->read('User.username'))
+		{
+			if($new['User']['set_password']==1)
+			{
+				if(!($this->Session->read('user_resume')) || !in_array($new['User']['uid'],$this->Session->read('user_resume'))){	
+					$this->redirect(array('action'=>'resume_password'));
+				}
+			}
+		}
+		
+		$catlist =$this->Country->find('all');
+		$this->set('catlist',$catlist);
+		$cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
+		$this->set('cou',$cou);	
+		$items = $this->Lastrss->feed($new['User']['rss_feed']); // Get feed
+		//pr($items); die;
+		$this->set("items",$items['items']);
+		//
+		//$this->render(false);
+		$cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
+		$this->set('cou',$cou);	
+		
+		$exp =$this->Experience->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
+		$this->set('exp', $exp);
+		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('recmd', $recmd);
+		$new1 =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
+		
+		$recedu =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recedu', $recedu);
+		
+		$recskill =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recskill', $recskill);
+		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Waiting')));
+		$this->set('recomment', $recomment);
+		$this->set('recount', count($recomment));
+		$recomment1=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Approved')));
+		$this->set('recomment1', $recomment1);
+		$this->set('recount1', count($recomment1));
+		
+		
+		}
+		public function educations()
+		{
+			
+		$new =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
+		$this->set('new', $new);
+		if(!$this->Session->read('User.username'))
+		{
+			if($new['User']['set_password']==1)
+			{
+				if(!($this->Session->read('user_resume')) || !in_array($new['User']['uid'],$this->Session->read('user_resume'))){	
+					$this->redirect(array('action'=>'resume_password'));
+				}
+			}
+		}
 		$catlist =$this->Country->find('all');
 		$this->set('catlist',$catlist);
         $cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
 		$this->set('cou',$cou);	
 		
-		$edu =$this->Education->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$edu =$this->Education->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
 		$this->set('edu', $edu);
 		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('recmd', $recmd);
@@ -624,50 +895,116 @@ class UsersController extends AppController {
 		
 		$recedu =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
 		$this->set('recedu', $recedu);
-
-	    }
 		
-		public function skill()
-		{
-		$new =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
-		$this->set('new', $new);
-		$catlist =$this->Country->find('all');
-		$this->set('catlist',$catlist);
-        $cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
-		$this->set('cou',$cou);	
-		
-		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
-		$this->set('skill', $skills);
-		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
-		$this->set('recmd', $recmd);
-
+		$recskill =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recskill', $recskill);
+		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Waiting')));
+		$this->set('recomment', $recomment);
+		$this->set('recount', count($recomment));
+		$recomment1=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Approved')));
+		$this->set('recomment1', $recomment1);
+		$this->set('recount1', count($recomment1));
 	    }
 		
 		public function interest()
 		{
+			
 		$new =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
 		$this->set('new', $new);
+		if(!$this->Session->read('User.username'))
+		{
+			if($new['User']['set_password']==1)
+			{
+				if(!($this->Session->read('user_resume')) || !in_array($new['User']['uid'],$this->Session->read('user_resume'))){	
+					$this->redirect(array('action'=>'resume_password'));
+				}
+			}
+		}
 		$catlist =$this->Country->find('all');
 		$this->set('catlist',$catlist);
         $cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
 		$this->set('cou',$cou);	
 		
-		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
 		$this->set('int', $int);
 		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('recmd', $recmd);
+		
+		$new1 =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
+		
+		$recedu =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recedu', $recedu);
+		
+		$recskill =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recskill', $recskill);
+		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Waiting')));
+		$this->set('recomment', $recomment);
+		$this->set('recount', count($recomment));
+		$recomment1=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Approved')));
+		$this->set('recomment1', $recomment1);
+		$this->set('recount1', count($recomment1));
+	    }
+		
+		public function skill()
+		{
 			
-
+		$new =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
+		$this->set('new', $new);
+		if(!$this->Session->read('User.username'))
+		{
+			if($new['User']['set_password']==1)
+			{
+				if(!($this->Session->read('user_resume')) || !in_array($new['User']['uid'],$this->Session->read('user_resume'))){	
+					$this->redirect(array('action'=>'resume_password'));
+				}
+			}
+		}
+		$catlist =$this->Country->find('all');
+		$this->set('catlist',$catlist);
+        $cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
+		$this->set('cou',$cou);	
+		
+		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
+		$this->set('skill', $skills);
+		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('recmd', $recmd);
+		
+		$new1 =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
+		
+		$recedu =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recedu', $recedu);
+		
+		$recskill =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recskill', $recskill);
+		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Waiting')));
+		$this->set('recomment', $recomment);
+		$this->set('recount', count($recomment));
+		$recomment1=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Approved')));
+		$this->set('recomment1', $recomment1);
+		$this->set('recount1', count($recomment1));
 	    }
 		
 		public function portfolio()
 		{
+			
 		$new =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
+		if(!$this->Session->read('User.username'))
+		{
+			if($new['User']['set_password']==1)
+			{
+				if(!($this->Session->read('user_resume')) || !in_array($new['User']['uid'],$this->Session->read('user_resume'))){	
+					$this->redirect(array('action'=>'resume_password'));
+				}
+			}
+		}
 		$this->set('new', $new);
 		$catlist =$this->Country->find('all');
 		$this->set('catlist',$catlist);
         $cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
 		$this->set('cou',$cou);	
+		
+		$portfolios = $this->Portfolio->find('all',array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
+		$this->set('portfolios', $portfolios);
 		
 		$portimg =$this->Portimage->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('portimg', $portimg);
@@ -685,43 +1022,80 @@ class UsersController extends AppController {
 		$this->set('portpre', $portpre);	
 		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
 		$this->set('recmd', $recmd);
+		
+		$new1 =$this->User->find('first', array('conditions' => array('username'=>Configure::read('userpage'))));
+		
+		$recedu =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recedu', $recedu);
+		
+		$recskill =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recskill', $recskill);
+		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Waiting')));
+		$this->set('recomment', $recomment);
+		$this->set('recount', count($recomment));
+		$recomment1=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Approved')));
+		$this->set('recomment1', $recomment1);
+		$this->set('recount1', count($recomment1));
 
 	    }
 		
 		public function contactform()
 		{
 		if($this->request->is('post')){
-			$this->request->data['uid'] = $this->Session->read('User.uid');
+			//$this->request->data['uid'] = $this->Session->read('User.uid');
+			$this->request->data['uid'] = '0';
 			$this->Contact->save($this->request->data);
-			$message='Post permission,<br><br>
-			CVomg<br>
-			=============================================<br> 
+			//pr($this->request->data);exit;
 			
-			<strong>Content<br><br>
+			$message='Hello,<br><br>
+			You have a message<br>
+			=============================================<br> 
+			Subject:'."\t".$this->request->data['sub'].'<br><br>
+			
+			Message:'."\t".$this->request->data['msg'].'<br><br>
 			------------------------------------------------------------------------------------<br/>				
-			Regards,<br>
+			<strong>Regards,<br>
 			CVomg team.<br><br>';
 			/*$this->smtpoptions();
 			$this->mailsend($message,'Contract Management Tool : Daily report','manikandan@aparajayah.com','manikandan@aparajayah.com','default');
 			$this->Session->setFlash(__('About me Added Successfully'));*/
-			$options = array($this->request->data['to'],$this->request->data['to'],$message);
+			$options = array($this->request->data['to'],$this->request->data['to'],$message,$this->request->data['from']);
 			$this->smtpoptions($options);
-		    $this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
+		    $this->redirect(array('controller'=>'','action'=>Configure::read('userpage')));
 		}
 
 	    }
 		
-		public function uploadimage(){
+	public function uploadimage(){
 		$this->layout='';
 		$this->render(false);
 		$image= $this->Image->upload_image_and_thumbnail($_FILES['file'], 800,800,180,180, "users");
 	    $this->request->data['eid'] = $this->params['pass']['0'];
 		$this->request->data['logo'] = $image;
 		$this->Experience->save($this->request->data);
+		//echo"dfgsdg";
 		echo "{ msg: 'success',id:'".$this->params['pass']['0']."' }";
 		
 	}
+	
+	public function uploadexpimage(){
+		$this->layout='';
+		$this->render(false);
+		$image= $this->Image->upload_image_and_thumbnail($_FILES['userlogofile'], 800,800,180,180, "users");
+		$_SESSION['uploadimage']=$image;
+		echo "{ msg: 'success',image:'".$image."' }";
 		
+	}
+		
+	public function userportimage(){
+		$this->layout='';
+		$this->render(false);
+		$image= $this->Image->upload_image_and_thumbnail($_FILES['image'], 800,800,180,180, "user-images");
+	    $_SESSION['userportimage']=$image;
+		//echo"dfgsdg";
+		echo "{ msg: 'success',image:'".$image."' }";
+		
+	}	
 	public function delimage() {
 		$this->layout='';$this->render(false);
 		$val=$_REQUEST['id'];		
@@ -733,6 +1107,15 @@ class UsersController extends AppController {
 		echo "done";
 		
 	}
+	
+	public function deluploadlogo() {
+		$this->layout='';
+		$this->render(false);
+			$this->Image->delete_image($this->Session->read('uploadimage'),"users");
+		echo '<input name="userlogofile" type="file" id="userlogofile" value="" class="box upload hai"  onchange="return ajaxFile();"  >';
+		
+	}
+	
 	function imgcheck(){
 		$this->layout='';
 		$this->render(false);
@@ -752,7 +1135,6 @@ class UsersController extends AppController {
 		if(isset($_REQUEST['exp']))
 		{
 		if(!empty($this->request->data)){
-			pr($this->request->data);exit;
 		        $pic =$this->Experience->find('first', array('conditions' => array('eid'=>$this->request->data['eid'])));
 				$this->set('pic', $pic);
 				if($this->request->data['logo']!='')
@@ -866,7 +1248,7 @@ class UsersController extends AppController {
 	function viewpdf()
 	{
 		$this->layout = 'pdf'; 
-		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
+		$new =$this->User->find(array('username'=>Configure::read('userpage')));
 		$this->set('new', $new);
 		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
 		$this->set('edu', $edu);
@@ -881,7 +1263,7 @@ class UsersController extends AppController {
 	function viewpdf2()
 	{
 		$this->layout = 'pdf'; 
-		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
+		$new =$this->User->find(array('username'=>Configure::read('userpage')));
 		$this->set('new', $new);
 		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
 		$this->set('edu', $edu);
@@ -896,7 +1278,7 @@ class UsersController extends AppController {
 	
 	function viewdoc()
 	{
-		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
+		$new =$this->User->find(array('username'=>Configure::read('userpage')));
 		$this->set('new', $new);
 		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
 		$this->set('edu', $edu);
@@ -912,7 +1294,7 @@ class UsersController extends AppController {
 	}
 	function viewdoc2()
 	{
-		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
+		$new =$this->User->find(array('username'=>Configure::read('userpage')));
 		$this->set('new', $new);
 		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
 		$this->set('edu', $edu);
@@ -929,7 +1311,7 @@ class UsersController extends AppController {
 	
 	function viewodt()
 	{
-		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
+		$new =$this->User->find(array('username'=>Configure::read('userpage')));
 		$this->set('new', $new);
 		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
 		$this->set('edu', $edu);
@@ -945,7 +1327,7 @@ class UsersController extends AppController {
 	}
 	function viewodt2()
 	{
-		$new =$this->User->find(array('username'=>$this->Session->read('User.username')));
+		$new =$this->User->find(array('username'=>Configure::read('userpage')));
 		$this->set('new', $new);
 		$edu =$this->Education->findAll(array('uid'=>$new['User']['uid']));
 		$this->set('edu', $edu);
@@ -973,6 +1355,7 @@ class UsersController extends AppController {
 				$resp = implode(',',$this->request->data['resp']);
 					$this->request->data['responsibility'] = $resp;
 				$this->Experience->save($this->request->data);
+				$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
 				$this->Session->setFlash(__('Photo updated successfully'));
 				$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 		}
@@ -985,6 +1368,7 @@ class UsersController extends AppController {
 			$extra_curriculars = implode(',',$this->request->data['extra_curricular']);
 			$this->request->data['extra_curricular'] = $extra_curriculars;
 			$this->Education->save($this->request->data);
+			$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
 			$this->Session->setFlash(__('Education Updated Successfully'));
 			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 		}
@@ -998,6 +1382,7 @@ class UsersController extends AppController {
 			$interests = implode(',',$this->request->data['interest']);
 			$this->request->data['interest'] = $interests;
 			$this->Interest->save($this->request->data);
+			$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
 			$this->Session->setFlash(__('Interest Updated Successfully'));
 			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 		}
@@ -1010,10 +1395,13 @@ class UsersController extends AppController {
 			$skills = implode(',',$this->request->data['skill']);
 			$this->request->data['skills'] = $skills;
 			$this->Skill->save($this->request->data);
+			$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
 			$this->Session->setFlash(__('Skills Updated Successfully'));
 			$this->redirect(array('controller'=>'','action'=>$this->Session->read('User.username')));
 		}
 	}
+	
+	
 	
 	public function edit_port_photo(){
 		$new =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
@@ -1164,7 +1552,19 @@ class UsersController extends AppController {
 		//unset($_SESSION['views']);
 		//echo $new['User']['uid'];exit;
 		
+		$new1 =$this->User->find('first', array('conditions' => array('username'=>$this->Session->read('User.username'))));
 		
+		$recedu =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recedu', $recedu);
+		
+		$recskill =$this->Recommentation->find('all', array('conditions' => array('uid'=>$new1['User']['uid'])));
+		$this->set('recskill', $recskill);
+		$recomment=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Waiting')));
+		$this->set('recomment', $recomment);
+		$this->set('recount', count($recomment));
+		$recomment1=$this->Recomment->find('all', array('conditions' => array('skill_user'=>$new1['User']['uid'],'status'=>'Approved')));
+		$this->set('recomment1', $recomment1);
+		$this->set('recount1', count($recomment1));
 	 
 	}
 	
@@ -1189,26 +1589,207 @@ class UsersController extends AppController {
 		$this->Render(false);
 		
 			if($this->request->is('ajax')){
-				$this->request->data['User']['uid']=$_SESSION['User']['uid'];
+				$this->request->data['User']['uid']=$this->Session->read('User.uid');
 				$this->request->data['User']['template']=$this->params['pass'][0];
 				$this->User->save($this->request->data);
+				
+				$user_details = $this->User->find('first',array('conditions'=>array('uid'=>$this->Session->read('User.uid'))));
+				$this->Session->write($user_details);
+				
 				echo 'success';
 			}else{
 				echo 'flop';
 			}
+			$this->Session->write(array('submenu'=>'design'));
 	}
 	function recommentme()
 	 {
-		$this->render(false);
 		$this->layout=''; 
+		$this->render(false);
 		$user=$_REQUEST['recid'];
 		$skill=$_REQUEST['skill'];
+		if($_REQUEST['recid']!="nologin")
+		{
 		$edu = $this->Recommentation->find(array('rid' =>$skill));
 		$rec = $this->Recomment->find(array('uid' =>$user,'rid'=>$skill));
-		if(empty($rec))
-		echo $user . $skill ;
+		
+		if($this->Session->read('User.uid')==$edu['Recommentation']['uid'])
+		
+		echo '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="padding-right:5px;" onclick="closepopup()">×</button><div class="norecm same_rec" style="color:#f00;">'. __('To recommend on self is not possible,sorry!').' <br /> <br />
+     <a href="'.BASE_URL.'" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline">'.__('Back to resume').'</a></div>';
+		
+		else if(empty($rec))
+		echo
+		 '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="padding-right:5px;" onclick="closepopup()">×</button>
+		 <div class="norecm "><textarea rows="2" cols="5" id="recm_code23" name="data[present_code]" style="width:242px;"></textarea></div>
+		 <div class="resumebtn">
+			 <input type="hidden" name="" id="fetchid" value="'.$skill.'"  class="myskill" />
+			 <button class="btn btn-large btn-primary disabled recmbtn1" id="recmbtn" style="cursor:pointer" onClick="sentrecomment()"> 
+			 <img src="'.BASE_URL.'img/hand_pro_icon.png" alt="" style="padding-right:15px;">'.__('Recomment '.Configure::read('userpage').'').'</button>
+			  <br /> <br />
+			 <a href="#" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline" data-toggle="modal" data-target=".recommendtr">'.__('See all recommentation').'    </a>
+		   </div>' ;
+		
 		else
-		echo "no";
+		echo '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="padding-right:5px;" onclick="closepopup()">×</button><div class="norecm same_rec" style="color:#f00;">'. __('One recommendation by Tag possible!').' <br /> <br />
+     <a href="'.BASE_URL.'" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline">'.__('Back to resume').'</a></div>';
+		}
+		else
+		{
+			echo'<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="padding-right:5px;" onclick="closepopup()">×</button><div class="norecm same_rec" style="color:#f00;">'. __('Please login to post the recommendation!').' <br /> <br />
+     <a href="'.BASE_URL.'" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline">'.__('Login').'</a></div>';
+		}
 	 }
+	 
+	 function sentrecomment()
+	 {
+		$this->render(false);
+		$this->layout=''; 
+		if($this->request->is('ajax')){
+		$this->request->data['Recomment']['recommend']=$_REQUEST['content'];
+		$this->request->data['Recomment']['rid']=$_REQUEST['skill_id'];
+		$this->request->data['Recomment']['uid']=$_REQUEST['user_id'];
+		$this->request->data['Recomment']['status']="Waiting";
+		$edu = $this->Recommentation->find(array('rid'=>$_REQUEST['skill_id']));
+		$this->request->data['Recomment']['skill_user']=$edu['Recommentation']['uid'];
+		$this->Recomment->save($this->request->data);
+		echo '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="padding-right:5px;" onclick="closepopup()">×</button><div class="norecm success_rec">
+      '.__('Your recommendation sent successfully waiting for approval').'
+     <br /> <br />
+     <a href="'.BASE_URL.'/'.Configure::read('userpage').'" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline">'.__('Back to resume').'</a>
+     </div>';
+		}
+		else
+		echo 'flop';
+	 }
+	 
+	 function acknowledge()
+	 {
+		$this->render(false);
+		$this->layout=''; 
+		if($this->request->is('ajax')){
+		$edu = $this->Recomment->find(array('recid' =>$_REQUEST['rid']));	
+		$user_send_rec1 = $this->User->find(array('uid' =>$edu['Recomment']['uid']));	
+		if($_REQUEST['msgk']=="ok")
+		$edu['Recomment']['status']="Approved";
+		else {
+		$edu['Recomment']['status']="Cancel";
+		$this->Recomment->delete(array('recid' =>$_REQUEST['rid']));
+		}
+		$this->Recomment->save($edu);
+		if($edu['Recomment']['status']=="Approved"){
+		$allcount = $this->Recomment->findcount(array('skill_user' =>$this->Session->read('User.uid'),'status'=>"Approved"));	
+		$waitcount = $this->Recomment->findcount(array('skill_user' =>$this->Session->read('User.uid'),'status'=>"Waiting"));	
+		$htm= '
+		<div style="float:left; width:510px; padding-left:10px; padding-bottom:5px;">'; 
+		
+												if(empty($user_send_rec1['User']['image'])) {
+                                           $htm.='<img src="'.BASE_URL.'img/profile_pic_mini.jpg" alt="" class="pull-left img-polaroid">';
+                                            } else { 
+									       $htm.='<img src="'.Router::url('/').'img/user-images/small/'.$user_send_rec1['User']['image'].'" height="20" width="20" class="pull-left img-polaroid">';
+									 } 
+		
+		
+                                           $htm.=' <div class="resume-cont recommend-list clearfix pull-left span6">
+                                                <span>';
+												if($this->Session->read('User.username')==Configure::read('userpage')) {
+													 
+												$htm.='<a href=""><i class="icon-remove pull-right"></i></a>';
+												} 
+												$htm.='</span>
+                                                <div class=" resume_head">
+                                                    <h5><a href="">'.$user_send_rec1['User']['username'].'</a></h5>
+                                                    <small class="muted">'.$user_send_rec1['User']['resume_title'].'</small>
+                                                    <span class="label label-info">Php</span>
+                                                </div>
+
+                                                <input type="text" placeholder="'.$edu['Recomment']['recommend'].'" class="span6" disabled="">
+                                                <small class="muted">'.date("j / n / Y",strtotime($edu['Recomment']['createdate'])).'</small>
+                                            </div></div>';
+											echo $htm.'::'.__('All my recommendations ('.$allcount.')').'::'. __('Waiting for approval ('.$waitcount.')');
+		}
+		else
+		{
+			$htm='cancel';
+			echo $htm;
+		}
+		
+		
+		}
+		else
+		echo 'flop';
+	 }
+	 
+	 
+	public function newresume()
+	{
+		$this->layout = 'newresume';
+		$this->set('county', $this->Country->find('all'));
+		
+		$new =$this->User->find('first', array('conditions' => array('username'=>'ravikumar')));
+		
+		$this->set('new', $new);
+		
+		$links =$this->Mylink->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('links', $links);
+		
+		
+		
+		$exp =$this->Experience->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
+		$this->set('exp', $exp);
+		
+		$catlist =$this->Country->find('all');
+		$this->set('catlist',$catlist);
+		
+        $cou =$this->Country->find('first', array('conditions' => array('iso_code2'=>$new['User']['country'])));
+		$this->set('cou',$cou);	
+		
+		$skills =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
+		$this->set('skill', $skills);
+		
+		$int =$this->Interest->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
+		$this->set('int', $int);
+		
+		$edu =$this->Education->find('all', array('conditions' => array('uid'=>$new['User']['uid']),'order'=>'order ASC'));
+		$this->set('edu', $edu);
+		
+		$portimg =$this->Portimage->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('portimg', $portimg);
+		
+		$portvid =$this->Portvideo->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('portvid', $portvid);
+		
+		$portaud =$this->Portaudio->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('portaud', $portaud);
+		
+		$portpre = $this->Portpresent->find('all', array('conditions' => array('Portpresent.uid' =>$new['User']['uid'])));
+		
+		$this->set('portpre', $portpre);	
+		
+		$portdoc =$this->Portdocument->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('portdoc', $portdoc);
+		
+		$recmd =$this->Skill->find('all', array('conditions' => array('uid'=>$new['User']['uid'])));
+		$this->set('recmd', $recmd);
+		
+		$co=count($portdoc);
+		$co+=count($portvid);
+		$co+=count($portimg);
+		$co+=count($portaud);
+		$c=$this->set('c',$co);
+	    //unset($_SESSION['views']);exit;
+		if(!isset($_SESSION['views']))
+		{
+		$_SESSION['views']=array();
+		}
+		if(!in_array($new['User']['uid'],$_SESSION['views']))
+		{
+		$_SESSION['views'][]=$new['User']['uid'];
+		$this->request->data['uid']=$new['User']['uid'];
+		$this->Profileview->save($this->request->data);
+		}
+		//unset($_SESSION['views']);
+		//echo $new['User']['uid'];exit;
+	}
 	
 }

@@ -16,6 +16,12 @@
 				
 					  <div class="tab-pane active in" id="home">
 					<form action="" name="career" id="mycareer" method="post" enctype="multipart/form-data">
+					<input type="hidden" value="eng" name="data[lan]" />
+					<!--<label>Language</label>
+						<select name="data[lan]" id="lan" class="validate[required] input-xlarge">
+						  <option value="eng">English</option>
+						  <option value="spa">Spanish</option>
+						</select>-->
                     <label>Title</label>
 						<input type="text" name="data[title]" id="title" value="" class="validate[required] input-xlarge">
                     <label>Category</label>

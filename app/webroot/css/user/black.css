@@ -15,10 +15,11 @@
    }
 
    a.brand{
-   	color: #fff;
-   	font-size: 35px;
+      color: #fff;
+   	  font-size: 35px;
       font-weight: bold;
       margin-top: 15px;
+	  text-transform: capitalize;
    }
 
    a.brand:hover{
@@ -70,7 +71,7 @@
    }
 
    .left-col-widget li{
-      color: #a1a1a1;
+       color: #3D3D3D;
    }
 
    .resume-contact  li{
@@ -130,7 +131,7 @@
    }
 
    .middle-col h3 a, .right-col h3 a{
-      font-size: 17px;
+      font-size: 14px;
       color: #032130;
    }
 
@@ -152,6 +153,7 @@
    }
     .resume-navigations{
         padding: 10px;
+		background:#000;
     }
 
     .acc_settings_menu{
@@ -247,7 +249,8 @@
     }
 
     .config-menus li a{
-        background: #1C62C4 url(../../img/black/sprite-icons.png)  no-repeat;
+      
+		background: #1C62C4 url(../../img/sprite-icons.png)  no-repeat;
         border-radius: 50px;
         color: #fff;
         padding: 45px;
@@ -337,3 +340,313 @@
     li.presentation-nav a{
       background-position: center -913px;
     }
+			li.facebook-nav a{
+      background-position: center -996px;
+    }
+	
+	li.twitter-nav a{
+      background-position: center -1074px;
+    }
+	
+	li.linkedin-nav a{
+      background-position: center -1152px;
+    }
+	#prof
+	{
+		
+		float:left;
+		width:243px;
+		font-size:12px;
+		font-weight:600;
+	}
+	#prof1
+	{
+		
+		float:left;
+		width:125px;
+		padding-right:18px;
+		font-size:12px;
+		font-weight:600;
+	}
+	
+	
+	/*For recommentation*/
+	
+	
+	#recommend{
+    padding: 10px;
+}
+
+.recommend-skills{
+    background: #433E3E;
+    padding: 10px;
+    color: #fff;
+    margin: 10px 0;
+}
+
+.recommend-list h5{
+margin:0;
+}
+
+.recommend-list .resume_head{
+    margin-bottom: 10px;
+}	
+	img.templateimg{		
+		padding: 5px 25px;
+			cursor:pointer;
+	}
+	.recommend-skillsfix{
+    color: #fff;
+}	
+	 .recommend-fix{
+      position: fixed;
+      bottom: 0;
+      background:transparent;
+       filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#50000000,endColorstr=#50000000); 
+      background:rgba(0, 0, 0, 0.5);
+       zoom: 1;
+      width: 100%;
+      padding: 10px;
+    }
+
+    a.add-recommend{
+      color: #fff;
+    }
+
+    a.add-recommend img{
+      padding-right: 5px;
+    }
+	
+.exp_image {   
+    float: right;
+    height: 39px;
+    margin-top: -25px;
+    position: relative;
+    width: 145px;
+}
+
+	a.site_links{
+   	 text-align: right;
+	}
+	
+	a.site_links{
+		color: #d6d6d6;
+		margin: 5px;
+	}
+	
+	a.site_links:hover{
+		color: #c8c6c6;
+		text-decoration: none;
+	}
+	textarea{
+		 width: 183px;
+	}
+	
+	.icon-white, .nav-pills > .active > a > [class^="icon-"], .nav-pills > .active > a > [class*=" icon-"], .nav-list > .active > a > [class^="icon-"], .nav-list > .active > a > [class*=" icon-"], .navbar-inverse .nav > .active > a > [class^="icon-"], .navbar-inverse .nav > .active > a > [class*=" icon-"], .dropdown-menu > li > a:hover > [class^="icon-"], .dropdown-menu > li > a:focus > [class^="icon-"], .dropdown-menu > li > a:hover > [class*=" icon-"], .dropdown-menu > li > a:focus > [class*=" icon-"], .dropdown-menu > .active > a > [class^="icon-"], .dropdown-menu > .active > a > [class*=" icon-"], .dropdown-submenu:hover > a > [class^="icon-"], .dropdown-submenu:focus > a > [class^="icon-"], .dropdown-submenu:hover > a > [class*=" icon-"], .dropdown-submenu:focus > a > [class*=" icon-"]{
+		  background-image: url("../../img/red/glyphicons-halflings.png");
+	}
+	
+	.downloaddoc {
+    	width: 420px;
+	}
+	
+	.downloaddoc a {
+    color: #000000;
+    display: block;
+    float: left;
+    text-align: center;
+    width: 130px;
+}
+.downloaddoc a img {
+    height: 60px;
+    width: 60px;
+}
+
+.resume_footer
+	{
+		position:fixed;
+		background:url(../../img/staff.png) repeat;
+		height:35px;
+		bottom:0px;
+		width: 100%;
+	    opacity: 0.7;
+        z-index: 1;
+		border-top:solid 1px #666;
+	}
+	.resume_footer1
+	{
+		position:fixed;
+		background: none repeat scroll 0 0 rgb(0, 0, 0);
+		height:35px;
+		bottom:0px;
+		border-left: 1px solid rgb(71, 71, 71);
+		border-radius: 5px 5px 0 0;
+		border-right: 1px solid rgb(71, 71, 71);
+		border-top: 1px solid rgb(71, 71, 71);
+		right: 5%;
+		width:3%;
+		opacity: 0.7;
+		z-index: 1;
+	}
+	.resume_footer_rec
+	{
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:14px;
+		color:#FFF;
+		width:200px;
+		float:left;
+		height:35px;
+		border-right:solid 1px #666;
+	}
+	.resume_footer_rec span
+	{
+		height:25px;
+		padding-right:10px;
+		padding-top:5px;
+		padding-bottom:5px;
+	}
+	.resume_footer_skill
+	{
+		font-family:Arial, Helvetica, sans-serif;
+		font-size:14px;
+		color:#FFF;
+		width:47%;
+		float:left;
+		padding-top:7px;
+		padding-bottom:5px;
+		height:25px;
+		border-right:solid 1px #666;
+		padding-left:35%
+	}
+	.resume_footer_skill a
+	{
+		
+		width:10%;
+		border:1px solid #000;
+		padding-bottom: 7px;
+		text-decoration:none;
+		cursor:pointer;
+		color:#FFF;
+		
+	}
+	.re_skill
+	{
+		background:#666;
+    	padding-bottom: 5px;
+    	padding-left: 20px;
+		padding-right: 20px;
+		padding-top:3px;
+		border-radius:5px 0px 0px 5px;
+	}
+	.re_skill2
+	{
+		background:#999;
+		padding-bottom: 5px;
+    	padding-left: 10px;
+		padding-right:10px;
+		padding-top:3px;
+		border-radius:0px 5px 5px 0px;
+		}
+		
+		.editdelete {
+width: 200px;
+float: right;
+height: 20px;
+}
+
+.nowaiting
+	{
+	font-size: 18px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+    width: 550px;
+	}
+	.forh2	{
+		font-size:24px;
+	}
+	
+	.info input[type=text]
+	{
+		width:50%;
+		height:10px;
+	}
+	
+	.cont_info input[type=text]
+	{
+		width:90%;
+		height:10px;
+	}
+	
+	.widget_identity form .identity\[country\] select {
+	height: 23px;
+	padding-bottom: 0;
+	top: 10px;
+	width: 99%;
+	}
+	.widget form .field select {
+	
+	width: 57%;
+	z-index: 0;
+	}
+	
+	.info select {
+	margin: 0 0 0 -3px;
+	padding: 1px 2px 0;
+	width: 61%;
+	}
+	
+	.info select, input[type="file"] {
+	height: 23px;
+	line-height: 30px;
+	}
+	.cont_info  input[type="file"] {
+	height: 23px;
+	line-height: 30px;
+	}
+	.cont_info  table td textarea {
+	
+	width:185px;
+	}
+	.cont_info table td
+	{
+		color:#C6C6C6;
+	}
+	.loader_block {
+    background: url(../../img/loader_bg.png) no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 87px;
+    left: 50%;
+    position: fixed;
+    top: 50%;
+    width: 130px;
+    z-index: 100;
+}
+.loader_block .loader_block_inner {
+    background: url(../../img/loading-32-onwhite.gif) no-repeat scroll 0 0 transparent;
+    height: 32px;
+    margin: 10px auto;
+    width: 32px;
+}
+.loader_block .loader_text {
+    color: #000000;
+    font-size: 11px;
+    line-height: 16px;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+.helpfade {
+    background: none repeat scroll 0 0 #222222;
+    height: 1500px;
+    left: 0;
+    opacity: 0.5;
+	filter:alpha(opacity=50);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+	display:none;
+}
+	
+	

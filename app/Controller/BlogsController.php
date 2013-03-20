@@ -16,6 +16,7 @@ class BlogsController extends AppController {
 	public $helpers = array('Session');
 	public $layout = 'admin';
 	public $paginate = array('limit'=>5);
+	public $uses = array('Blog','User');
 
 /**
  * Components
@@ -40,11 +41,16 @@ class BlogsController extends AppController {
 	public function index() {
 		$this->layout = 'webpage';
 		$this->Blog->recursive = 0;
+		if($this->Session->read('Config.language') == '')
+		$this->Session->write('Config.language',Configure::read('Config.language'));
+		
 		if($this->request->is('post')){
-			$this->paginate = array('conditions' => array('title LIKE ' =>"%".$this->request->data('search')."%"),'limit' =>5);
+			$this->paginate = array('conditions' => array('title LIKE ' =>"%".$this->request->data('search')."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
 			$this->set('blogs', $this->paginate());
-		} else
+		} else {
+			$this->paginate = array('conditions' => array('lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
 			$this->set('blogs', $this->paginate());
+		}
 	}
 
 /**
@@ -135,7 +141,7 @@ class BlogsController extends AppController {
 		$this->checkadmin();
 		$this->Blog->recursive = 0;
 		//$this->set('blogs', $this->paginate());
-		$this->set('blogs', $this->Blog->find('all'));
+		$this->set('blogs', $this->Blog->find('all',array('conditions'=>array('lan'=>'eng'))));
 	}
 
 /**
@@ -145,12 +151,9 @@ class BlogsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function admin_view($id = null) {
+	public function admin_view($lan = null,$link = null) {
 		$this->checkadmin();
-		if (!$this->Blog->exists($id)) {
-			throw new NotFoundException(__('Invalid blog'));
-		}
-		$options = array('conditions' => array('Blog.' . $this->Blog->primaryKey => $id));
+		$options = array('conditions' => array('lan'=>$lan,'link'=>$link));
 		$this->set('blogs', $this->Blog->find('first', $options));
 	}
 
@@ -161,13 +164,46 @@ class BlogsController extends AppController {
  */
 	public function admin_add() {
 		$this->checkadmin();
+		
 		if ($this->request->is('post')) {
 			if(!empty($this->request->data)){ 				
 				if($this->request->data['image']['name'] !=''){
 					$this->request->data['image'] = $this->Image->upload_image_and_thumbnail($this->request->data['image'],573,380,150,150, "blog-images");	
 				}
+				$str = explode("&",$this->request->data['title']);
+					$link='';
+				foreach($str as $str){
+					$link .=$str;
+				}
 				$this->request->data['key'] = $this->str_rand();
+				$this->request->data['link'] = strtolower(str_replace(' ','_',$link));
+				$content = $this->request->data['content'];
 				$this->Blog->save($this->request->data);
+				$last_id = $this->Blog->getInsertID();
+				
+				
+				$this->request->data = '';
+				
+				$details = $this->Blog->find('first',array('conditions'=>array('bid'=>$last_id)));
+				if($details['Blog']['lan'] == 'eng')				
+				$this->request->data['lan'] = 'spa';
+				else 
+				$this->request->data['lan'] = 'eng';
+				$this->request->data['link'] = $details['Blog']['link'];
+				$this->request->data['key'] = $this->str_rand();
+				$this->Blog->saveAll($this->request->data);
+				
+				
+				$users = $this->User->find('all',array('conditions'=>array('newsletter'=>1,'status'=>'Active')));
+				foreach($users as $user){
+					if($user['User']['email'] !=''){
+						$link = BASE_URL.'pages/blog_newsletter_deactive/'.$user['User']['user_key'];
+						$options = array($user['User']['firstname'],$user['User']['email'],$content,$link);
+						$this->emailoptions(12,$options);
+					}
+				}
+				
+				
 				$this->Session->setFlash(__('The blog has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -183,16 +219,14 @@ class BlogsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function admin_edit($id = null) {
+	public function admin_edit($lan = null,$link = null) {
 		$this->checkadmin();
-		if (!$this->Blog->exists($id)) {
-			throw new NotFoundException(__('Invalid blog'));
-		}
+		
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if($this->request->data['image']['name'] !=''){
 					$this->request->data['image'] = $this->Image->upload_image_and_thumbnail($this->request->data['image'],573,380,150,150, "blog-images");	
 				} else {
-					$options = array('conditions' => array('Blog.' . $this->Blog->primaryKey => $id));
+					$options = array('conditions' => array('lan'=>$lan,'link'=>$link));
 					$data = $this->Blog->find('first', $options);
 					$this->request->data['image'] = $data['Blog']['image'];
 				}
@@ -204,7 +238,7 @@ class BlogsController extends AppController {
 				$this->Session->setFlash(__('The blog could not be saved. Please, try again.'));
 			}
 		} else {
-			$options = array('conditions' => array('Blog.' . $this->Blog->primaryKey => $id));
+			$options = array('conditions' => array('lan'=>$lan,'link'=>$link));
 			$this->request->data = $this->Blog->find('first', $options);
 		}
 	}
@@ -222,6 +256,8 @@ class BlogsController extends AppController {
 		$this->layout = '';
 		$this->Blog->id = $id;
 		$this->Blog->delete(array('bid'=>$id));
+		$this->Blog->id = $id + 1;
+		$this->Blog->deleteAll(array('bid'=>$id +1));
 		$this->Session->setFlash(__('Blog deleted'));
 		$this->redirect(array('action' => 'index'));
 		$this->render(false);

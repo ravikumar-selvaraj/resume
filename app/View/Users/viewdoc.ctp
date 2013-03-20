@@ -84,6 +84,12 @@ th
 <th>Start date</th>
 <th>End date</th>
 </tr>';
+if(empty($edu))
+{
+	echo'<tr><th colspan="4">No Records Found</th></tr>';
+}
+else{
+
 $i=1; foreach($edu as $edu):
 $htm.='<tr>
 <td>'.$i.'</td>
@@ -91,7 +97,7 @@ $htm.='<tr>
 <td>'.$edu['Education']['organization'].'</td>
 <td>'.$edu['Education']['start_date'].'</td>
 <td>'.$edu['Education']['end_date'].'</td>
-</tr>'; endforeach;
+</tr>'; $i++; endforeach; }
 $htm.='</table>
 </td></tr>
 </table>
@@ -105,7 +111,11 @@ $htm.='<tr>
 <td colspan="5" align="right" class="abttd">
 <table width="100%" cellpadding="3" cellspacing="3"  align="center">
 <tr><td class="abtme"><p style="background-color:#e8e8e8;">Work Experience</p></td></tr>';
-
+if(empty($exp))
+{
+	echo'<tr><th colspan="4">No Records Found</th></tr>';
+}
+else{
 foreach($exp as $exp){
 $htm.='<tr>
 <td width="50%" class="exp">
@@ -120,8 +130,9 @@ $htm.='<tr>
             $sp=explode(',',$exp['Experience']['responsibility']) ;
             $k=1;
             foreach($sp as $sp1):
+			if(!empty($sp1)){
             $htm.='<li class="abtmecon">'.$sp1.'</li>';
-            $k++; endforeach;
+            $k++; } endforeach;
             $htm.='</ul>';
            if(!empty( $exp['Experience']['comapny_desc'])){
            $htm.='<p class="abtmecon" align="left"  style="text-indent:25px;"> Company Description : </p>
@@ -141,7 +152,7 @@ $htm.='<tr>
             
            </td>
 </tr>';
- }	
+ }	 }
 $htm.='</table>
 </td>
 </tr>';
@@ -153,21 +164,26 @@ $htm.='<tr>
 <tr><td class="abtme"><p style="background-color:#e8e8e8;">Skill Information</p></td></tr>
 <tr><td class="abtmecon" width="50%">
 
-                    <p class="abtmecon" align="left">Skills : </p>
-                    ';
+                    <p class="abtmecon" align="left">Skills : </p>';
                    
-                    foreach($skill as $skill) { 
+                    if(empty($skill))
+						{
+							echo'<tr><th colspan="4">No Records Found</th></tr>';
+						}
+						else{
+				    foreach($skill as $skill) { 
 					
                     $htm.='<p class="abtmecon" align="left"  style="text-indent:25px;"><u>'.$skill['Skill']['skill_area'].' : </u></p>
                    <ul class="">';	
                     $sp=explode(',',$skill['Skill']['skills']) ;
                     $i=0;
                     foreach($sp as $sp1) {
+						if(!empty($sp1)){
                     $htm.='<li class="abtmecon">'.$sp1.'</li>';
-                     $i++;}
+                     $i++;} }
                     $htm.='</ul>';
                     
-                     }
+                     } }
                     $htm.='
 </td></tr>
 </table>
@@ -182,7 +198,11 @@ $htm.='<tr>
 
                         <p class="abtmecon" align="left">Interest : </p>
                         ';
-                          
+                        if(empty($int))
+							{
+								echo'<tr><th colspan="4">No Records Found</th></tr>';
+							}
+							else{  
                         foreach($int as $int) { 
                         
                             $htm.='<p class="abtmecon" align="left"  style="text-indent:25px;"><u>'.$int['Interest']['interest_type'].' : </u></p>
@@ -190,10 +210,12 @@ $htm.='<tr>
                                $sp=explode(',',$int['Interest']['interest']) ;
                         $i=0;
                         foreach($sp as $sp1) {
+							if(!empty($sp1)){
                        $htm.=' <li class="abtmecon">'.$sp1.'</li>';
-                        $i++;}
+                        $i++;} }
+						
                             $htm.='</ul>';
-                             }
+                             } }
                        $htm.=' 
                 
 </td></tr>

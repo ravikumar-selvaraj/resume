@@ -27,7 +27,7 @@
 										</div>
 										<div class="control-group">
 											<label class="control-label">Content :</label>
-											<div class="controls"> <?php echo h($blogs['Blog']['content']); ?>	</div>
+											<div class="controls"> <?php echo h(strip_tags($blogs['Blog']['content'])); ?>	</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">Image :</label>

@@ -10,38 +10,40 @@
     <div class="modal-header" style="margin-bottom:10px;padding-bottom:0px;">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
       <input type="hidden" name="data[responsibility]"  value="" />
-      <h2 id="myModalLabel" style="font-size:15px; padding:0px; margin:0px;"><?php echo __("Professional Experience");?></h2>
+      <h2 id="myModalLabel" class="forh2"><?php echo __("Professional Experience");?></h2>
     </div>
     <div class="modal-body" style="padding-top:0px;" >
     
-      <div class="control-group" id="job_title_div">
-       <label class="control-label" for="inputInfo" id="prof" style="width:310px; font-size:14px;font-family:arial;font-weight: bold;"><?php echo __("Job Title");?></label>
-       <div id="delme" style="display:none; float:left; width:50px;">
-       <a id="delimg" onclick="return scat();" style="cursor:pointer; color:#foo"><img src="<?php echo Router::url('/'); ?>img/delete.png" width="18" height="18" /></a></div>
+      <div class="control-group" id="job_title_new_div">
+       <label class="control-label" for="inputInfo" id="prof" style="width:310px; font-size:14px;font-family:arial;font-weight: bold;"><?php echo __("Job Title");?></label>       
         <div class="controls">
-          <input type="text" placeholder="Job Title" id="job_title" name="data[job_title]" style="padding:2px; margin-right:25px;">
-        <div class="cp-bl" style="width:150px; float:right;" id="mylogo2">
-        <input name="file" type="file" id="file" value="" class="box upload hai"  onchange="return ajaxFileUpload();"  >
-        <input type="submit" id="submiti" name="upload" value="upload" class="cp-bl-bu" style="display:none;float:right;cursor:pointer;" >
-        <input type="hidden" name="data[logo]" value="0" id="user_logo" />
-        </div>
-        <div id="ploading" style="display:none;"><?php echo $this->html->image('loading.gif',array());?>Loading....</div>
+          <input type="text" id="job_title_new" name="data[job_title]" style="padding:2px; margin-right:25px;">
+          <div id="ploading" style="display:none; float:right; width:100px;"><?php echo $this->html->image('loading.gif',array());?>Loading....</div>
+        <div class="cp-bl" id="mylogo2">
+        <input name="userlogofile" type="file" id="userlogofile" value="" class="box upload hai"  onchange="return ajaxFile();"  >
         
-        <div style="width:150px; float:right; height:50px; display:none; text-align:center; position:relative; bottom:25px;" id="mylogo">
-        
+        <input type="submit" id="submiti" name="upload" value="upload" class="cp-bl-bu" style="display:none;float:right;cursor:pointer;" >  
+       
         </div>
         
-          <span class="help-inline" id="job_title_div_error"></span> </div>
+        
+        <div id="mylogo">
+        <input type="hidden" name="data[logo]" id="mylogos" value=""  />
+        </div>
+        
+          <span class="help-inline" id="job_title_new_div_error"></span> </div>
       </div>
+	  
+	  
       
       <div class="control-group" id="company_val_div">
         <label class="control-label" for="inputInfo" id="prof"><?php echo __("Company");?></label>
         <label class="control-label" for="inputInfo" id="prof"><?php echo __("Contract Type(Optional)");?></label>
         <div class="controls">
-          <input type="text" placeholder="Company" id="company_val" name="data[company]" style="padding:2px; margin-right:25px;">
+          <input type="text"  id="company_val" name="data[company]" style="padding:2px; margin-right:25px;">
         
           <select name="data[contract_type]" id="" style="height:26px;">
-            <option value="">Contract Type (optional)</option>
+            <option value=""><?php echo __("Contract Type(Optional)");?></option>
             <option value="Full-time"><?php echo __("Full-time");?></option>
             <option value="Part-time"><?php echo __("Part-time");?></option>
             <option value="Internship"><?php echo __("Internship");?></option>
@@ -63,10 +65,10 @@
         <label class="control-label" for="inputInfo" id="prof" style="float:left"><?php echo __("Country");?></label>
        
         <div class="controls">
-          <input type="text" placeholder="City" id="city" name="data[city]" style="padding:2px; margin-right:25px;">
+          <input type="text"  id="city" name="data[city]" style="padding:2px; margin-right:25px;">
           
           <select name="data[country]" id="country" style="width:225px;height:26px;">
-             <option value="" >[-Select country-]</option>  
+             <option value="" ><?php echo __("Country");?></option>  
                         <?php 
 						  $i=1;
 						  foreach ($catlist as $coun): ?>
@@ -80,8 +82,8 @@
         <label class="control-label datepicker" for="inputInfo" id="prof"><?php echo __("Start Date");?></label>
         <label class="control-label datepicker" for="inputInfo" id="prof"><?php echo __("End Date");?></label>
         <div class="controls">
-          <input type="text" placeholder="Start Date" id="start_date" name="data[start_date]" style="padding:2px; margin-right:25px;">
-          <input type="text" placeholder="End Date" id="end_date" name="data[end_date]" style="padding:2px; margin-right:25px;">
+          <input type="text"  id="start_date" name="data[start_date]" style="padding:2px; margin-right:25px;">
+          <input type="text"  id="end_date" name="data[end_date]" style="padding:2px; margin-right:25px;">
           <span class="help-inline" id="date_div_error"></span> </div>
       </div>
       
@@ -90,10 +92,11 @@
         <div class="controls">
           <table border="0" align="left" cellpadding="0" cellspacing="0" id="myTable" width="100%" class="miletab" >
             <tr>
-              <td align="left" valign="middle" width="1%"><input type="text" id="resp" name="resp[]" class="team" placeholder="Responsibilities" style="width:425px;padding:2px; margin-bottom:10px;"  >
+              <td align="left" valign="middle" width="1%"><input type="text" id="resp" name="resp[]" class="team"  style="width:425px;padding:2px; margin-bottom:10px;"  >
                 
                 <input name="team1[]" maxlength="30" type="hidden" id="name23" value="fds" class="team" /></td>
-              <td align="left" valign="top" width="1%"><a onClick="insRow()" style="cursor:pointer;" class="btn btn-mini btn-primary">
+              <td align="left" valign="top" width="1%">
+              <a onclick="insRow()" style="cursor:pointer;" class="btn btn-mini btn-primary" id="delmy">
               <?php echo __("Add");?></a><br /></td>
             </tr>
             <tr id="add_rows">
@@ -107,10 +110,10 @@
     </div>
     <div class="modal-footer">
      
-      <label class="checkbox" style="display:block;">
+     <!-- <label class="checkbox" style="display:block;">-->
         <input type="hidden" name="data[display_home]" value="1">
-        <!--<span style="margin-left:5px; float:left; font-size:12px;"><?php echo __("Display on home page");?></span>--> </label>
-      <button type="submit" id="exp_btn" class="btn btn-primary "><?php echo __("Submit resume");?></button>
+        <!--<span style="margin-left:5px; float:left; font-size:12px;"><?php //echo __("Display on home page");?></span>--> </label>
+      <button type="submit" id="exp_btn" class="btn btn-primary "><?php echo __("Submit");?></button>
     </div>
     
     <!--</div>-->
@@ -131,7 +134,7 @@
 	   color:#F00;
    }
    </style>
-    <script type="text/javascript">
+   <script type="text/javascript">
 	$(document).ready(function(){
 		 $("input.upload").filestyle({ 	
 			 image: "<?php echo BASE_URL; ?>img/cp.png",
@@ -140,79 +143,9 @@
 			 width : 150,
 			 top : 20
 		 });
-		 $(".display").css({'width' : '150px', 'padding-top' : '0px','top' :'15px'});
+		 $(".display").css({'width' : '150px', 'padding-top' : '0px','top':'2px','left':'390px'});
 		  });
 		 
-		
-</script>
-<script type="text/javascript">
-	function ajaxFileUpload()
-{
-	var fileextension=/(\.jpg|\.gif|\.png|\.JPG|\.GIF|\.PNG|\.jpeg|\.JPEG)$/;
-	$("#ploading").ajaxStart(function(){
-			$(this).show();
-		}).ajaxComplete(function(){
-			$(this).hide();
-		});
-	$('#image').val('');	
-	if($('#file').val().match(fileextension)){
-	$.ajaxFileUpload
-	(
-		{
-			url:'<?php echo BASE_URL; ?>users/uploadimage',
-			secureuri:false,
-			fileElementId:'file',
-			dataType: 'json',
-			success: function (data, status)
-			{
-				if(typeof(data.error) != 'undefined') {
-					if(data.error != '')
-						alert(data.error);
-				} else {
-					$('#user_logo').val(data.msg);
-					$('#mylogo').show();
-					$('#delme').show();
-					$('#mylogo2').hide();
-					$('#mylogo').html('<img src="<?php echo BASE_URL.'img/users/small/'; ?>'+data.msg+'" height="30" width="50" >');
-					
-					//window.location="newuploadimage";	
-					/*$.fancybox({ 
-					 'width'    : '9',
-					 'height'   : '6',
-					 'autoScale'   : false,
-					 'href'    : 'newuploadimage',					
-					 'type'    : 'iframe',					 
-					 'centerOnScroll' : true,
-					 'onClosed'   : function() {changeimg();}
-					});	*/
-									
-				}
-			}			
-		}
-	)}else{
-		$("#error").html("Oops..Please upload profile image").show(500);
-	setTimeout(function(){  $('.error').hide(500); }, 5000); 
-	$('#image').focus();
-	}
-	return false;
-}
-
-function scat(){
-	var logodel=$('#user_logo').val()
-		$.ajax({
-		type: "POST",
-		data: "imgval="+logodel,
-		url: "<?php echo BASE_URL; ?>users/delimage",
-		success: function(msg){
-			$('#mylogo').hide();
-			$('#mylogo2').show();
-			$(".hai").css({'width' : '140px', 'padding-top' : '0px','top' :'15px'})
-			$("#delme").hide();
-			$('.display').show();
-			$(".display").css({'width' : '150px', 'padding-top' : '0px','top' :'15px'})
-				
-		}});
-	}
 		
 </script>
    
@@ -226,9 +159,9 @@ function scat(){
 			var w=x.insertCell(1);
 			a.align='left';
 			w.align='left';	
-			a.innerHTML='<input type="text"  class="team'+ax+' validate[required] text" name="resp[]"  placeholder="Responsibilities" style="width:425px;padding:2px; margin-bottom:10px;" >';
-		//w.innerHTML='<?php // echo $this->html->link('Delete',array('onclick'=>'deleteRow(this.parentNode.parentNode.rowIndex)','style'=>'cursor:pointer;','class'=>'btn btn-mini btn-primary')); ?>';
-		w.innerHTML='<!--<a onClick="deleteRow(this.parentNode.parentNode.rowIndex)" style="cursor:pointer;" class="btn btn-mini btn-primary"> <?php //echo __("Delete");?></a>-->';
+			a.innerHTML='<input type="text"  class="team'+ax+' validate[required] text" name="resp[]"  style="width:425px;padding:2px; margin-bottom:10px;" >';
+		w.innerHTML='<?php  echo $this->html->link('Delete',array('onclick'=>'deleteRow(this.parentNode.parentNode.rowIndex)','style'=>'cursor:pointer;','class'=>'btn btn-mini btn-primary','id'=>'delmy')); ?>';
+		w.innerHTML='<a onClick="deleteRow(this.parentNode.parentNode.rowIndex)" style="cursor:pointer;" class="btn btn-mini btn-primary" id="delmy"> <?php echo __("Delete");?></a>';
 			var comvalue=parseInt(ax)+1;
 			document.getElementById('name23').value=comvalue;
 		}else{
@@ -251,7 +184,84 @@ $('.sub-config a').click(function (e) {
   $(this).tab('show');
 })*/
 	
-	
+ function ajaxFile(){
+	var fileextension=/(\.jpg|\.gif|\.png|\.JPG|\.GIF|\.PNG|\.jpeg|\.JPEG)$/;	
+	$('#ploading').show();
+	$('#mylogo2').hide();
+	if($('#userlogofile').val().match(fileextension)){		
+	$.ajaxFileUpload
+	(
+		{
+			url:'<?php echo BASE_URL;?>users/uploadexpimage',
+			secureuri:false,
+			fileElementId:'userlogofile',
+			dataType: 'json',
+			success: function (data, status)
+			{
+				if(typeof(data.error) != 'undefined') {
+					if(data.error != '')
+						alert(data.error);
+				} else {										
+					if(data.msg=='success'){
+						$('#mylogo2').html('<img src="<?php echo BASE_URL;?>img/users/small/'+data.image+'" style="width:40px;"/><span id="delme1"><a id="deluploadlogo" style="cursor:pointer; color:#f00;margin:0 0 0 10px;"><?php echo $this->Html->image('delete.png',array('width'=>'18','height'=>'18'));?></a></span>');
+						$('#mylogos').val(data.image);
+						$('#ploading').hide();
+						$('#mylogo2').show();
+						$('#mylogo2').css({'width':'60px', 'position':'relative', 'float':'right','bottom':'25px'});
+						//$('#makeheight').css({'height':'25px'});
+					}
+				
+				}
+			}			
+		}
+	)}else{
+		$("#error").html("Oops..Please upload profile image").show(500);
+		setTimeout(function(){  $('.error').hide(500); }, 5000); 
+		$('#image').focus();
+	}
+	return false;
+	 }	
+	 
+	 $('#deluploadlogo').live('click',function(){
+		 $.ajax({
+		type: "POST",
+		url: "<?php echo BASE_URL; ?>users/deluploadlogo",
+		success: function(msg){
+			$('#makeheight').css({'height':'70px'});
+			$('#mylogo2').html(msg);
+			 $("input.upload").filestyle({ 	
+			 image: "<?php echo BASE_URL; ?>img/cp.png",
+			 imageheight : 50,
+			 imagewidth : 146,
+			 width : 150,
+			 top : 20
+		 });
+			 $(".display").css({'width' : '150px', 'padding-top' : '0px','text-align':'none'});	
+			  $("#mylogo2").css({'width' : '150px'});	
+		}});
+	 });
 	</script>
     
+<script type="text/javascript">
+
+
+function scat(){
+	var logodel=$('#user_logo').val();
+	
+		$.ajax({
+		type: "POST",
+		data: "imgval="+logodel,
+		url: "<?php echo BASE_URL; ?>users/delimage",
+		success: function(msg){
+			$('#mylogo').hide();
+			$('#mylogo2').show();
+			//$(".hai").css({'width' : '140px', 'padding-top' : '0px','top' :'15px'})
+			$("#delme").hide();
+			$('.display').show();
+			//$(".display").css({'width' : '150px', 'padding-top' : '0px','top' :'2px'})
+				
+		}});
+	}
+		
+</script>    
     

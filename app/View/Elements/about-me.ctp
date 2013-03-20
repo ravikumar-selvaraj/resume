@@ -23,3 +23,26 @@
                                 </form>
                             </div>
                         </div>
+                        
+                        
+                   
+                        <div id="aboutme_msg" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:350px;">
+  <form class="form-inline" name="update" action="" method="post" style="margin-bottom:0px;width:350px;" enctype="multipart/form-data" >
+ 
+  
+    <div class="modal-header" style="margin-bottom:10px;padding-bottom:0px;">
+      <h2 id="myModalLabel" style="font-size:15px; padding:0px; margin:0px; background:#fff;"><?php echo __("");?></h2>
+    </div>
+    <div class="modal-body" style="padding-top:0px;" >
+      <div class="control-group" id="job_title_div">
+        <div class="controls"> To edit this widget, hover over the element in your resume .</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+   
+    <button type="submit" class="btn btn-primary"  data-dismiss="modal" aria-hidden="true"><?php echo __("ok");?></button>
+    </div>
+    
+  
+  </form>
+</div>

@@ -801,3 +801,58 @@ dl.inline dt {
 dl.inline dd {
     margin: 0 0 15px;
 }
+
+.sorting, .sorting_asc, .sorting_desc{
+	cursor:pointer;
+}
+.notsort{
+	cursor:auto;
+}
+#sort {
+    display: inline;
+    position: relative;
+	cursor:pointer;
+	text-transform:capitalize;
+}
+.sorting #sorticon {
+    background-image: url("../../img/ui-icons_888888_256x240.png");
+    background-position: -128px 0;
+    height: 16px;
+    position: absolute;
+    right: -18px;
+    top: 0;
+    width: 16px;
+}
+.sorting_asc #sorticon, .sorting:hover #sorticon, .sorting_desc:hover #sorticon{
+    background-image: url("../../img/ui-icons_888888_256x240.png");
+	background-position: -64px -16px;
+    height: 16px;
+    position: absolute;
+    right: -18px;
+    top: 0;
+    width: 16px;
+}
+.sorting_desc #sorticon, .sorting_asc:hover #sorticon{
+    background-image: url("../../img/ui-icons_888888_256x240.png");
+	background-position: 0pt -16px;
+    height: 16px;
+    position: absolute;
+    right: -18px;
+    top: 0;
+    width: 16px;
+}
+.actions a
+{
+	margin-right:5px;
+}
+
+
+.bold
+{
+	font-weight:bold;
+}
+
+.span0
+{
+	width:100px;
+}

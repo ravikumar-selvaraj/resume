@@ -1,11 +1,16 @@
 <div class="content">
   <div class="header">
-    <h1 class="page-title">View Static pages</h1>
+    <h1 class="page-title">View Contact pages</h1>
   </div>
-  <ul class="breadcrumb">
+<!--  <ul class="breadcrumb">
     <li><a href="<?php echo BASE_URL;?>admin/sitecontacts">Home</a> <span class="divider">/</span></li>
     <li><a href="<?php echo BASE_URL;?>admin/sitecontacts">Contact pages</a> <span class="divider"></span></li>
-  </ul>
+  </ul>-->
+   <ul class="breadcrumb">
+					<li><a href="#">Home</a> <span class="divider">/</span></li>
+					<li><a href="<?php echo BASE_URL;?>admin/sitecontacts">Contact page</a> <span class="divider">/</span></li>
+					<li class="active">View Contact page</li>
+				</ul>
   <div class="container-fluid">
     <div class="row-fluid">
       <div class="well">
@@ -39,16 +44,41 @@
                 </div>
                 
                 <div class="control-group">
-                  <label class="control-label"><?php echo __('Createddate'); ?>:</label>
+                  <label class="control-label"><?php echo __('Post date'); ?>:</label>
                   <div class="controls"> <?php echo h($sitecontact['Sitecontact']['date']); ?></div>
                 </div>
                  <div class="control-group">
                   <label class="control-label"><?php echo __('Reply Message'); ?>:</label>
-                  <div class="controls"> <?php if(!empty($sitecontact['Sitecontact']['replymessage'])) echo h($sitecontact['Sitecontact']['replymessage']); else echo '---'; ?></div>
+                  <?php if(!empty($sitecontact['Sitecontact']['replymessage'])) { ?>
+                  <div class="controls"> <?php if(!empty($sitecontact['Sitecontact']['replymessage'])) echo h($sitecontact['Sitecontact']['replymessage']);  ?></div>
+                  <?php } else { ?>
+                  <form class="form-horizontal" name="reply" action="" id="reply" method="post">
+                                <input type="hidden" name="cid" value="<?php echo $sitecontact['Sitecontact']['cid']; ?>">
+                                <input type="hidden" name="reply" value="1">
+                                 <input type="hidden" name="rlysubject " value="<?php echo $sitecontact['Sitecontact']['subject']; ?>">
+                                    
+                                 <div class="controls">
+                                           <textarea name="data[replymessage]" id="replymessage" cols="10" class="validate[required] input"></textarea>
+											<span class="help-inline" id="sign_up_pwd_error"></span>
+                                        </div>   
+                                 <div class="controls">
+                                            <button type="submit" id="replymail" class="btn btn-primary" name="">Reply</button>
+                                        </div>   
+                                </form>
+                  
+                
+                   
+                  <?php }?>
                 </div>
+                <?php if(!empty($sitecontact['Sitecontact']['reply_date'])){ ?>
                 <div class="control-group">
-                  <label class="control-label"><a href="" type="button" data-toggle="modal" data-target="#basic" class=""> <?php if(!empty($sitecontact['Sitecontact']['reply'])) echo __('Reply again'); else echo __('Reply'); ?></a> </label>
+                  <label class="control-label"><?php echo __('Reply date'); ?>:</label>
+                  <div class="controls"> <?php echo h($sitecontact['Sitecontact']['reply_date']); ?></div>
                 </div>
+                <?php }?>
+                <!--<div class="control-group">
+                  <label class="control-label"><a href="" type="button" data-toggle="modal" data-target="#basic" class=""> <?php if(!empty($sitecontact['Sitecontact']['reply'])) echo __('Reply again'); else echo __('Reply'); ?></a> </label>
+                </div>-->
               </form>
             </div>
           </div>

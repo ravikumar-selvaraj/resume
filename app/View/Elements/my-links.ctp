@@ -1,7 +1,7 @@
 <div id="mylink" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h2 id="myModalLabel"><?php echo __("My links");?></h2>
+                                <h2 id="myModalLabel"  class="forh2"><?php echo __("My Links");?></h2>
                             </div>
 
                             <div class="modal-body" id="for_social_links">
@@ -16,11 +16,11 @@
 												<option value="Linkedin">Linkedin</option>
 											</select>
                                             <input type="text" id="im_link" name="data[im_link][]">
-											<a id="mylink_add_btn" class="btn btn-mini btn-primary"><?php echo __("Add");?></a>
+											<a id="delmy" class="mylinkbt btn btn-mini btn-primary"><?php echo __("Add");?></a>
 											<span class="help-inline" id="social_links_error"></span>
                                         </div>
                                     </div>
-                                    
+                                    <div class="news_link"> </div>
                                     <div class="control-group">
                                         <div class="controls">
                                             <button type="submit" id="social_btn" class="btn btn-primary "><?php echo __("Submit");?></button>

@@ -10,12 +10,13 @@
         <div class="container-fluid">
             <div class="row-fluid">
 			
-			<?php 
-			if(!empty($_SESSION['Message']['flash'])) { ?>
+				<?php 
+		$msg = $this->Session->flash();
+		if(!empty($msg)) { ?>
 	 		
 		<div class="alert alert-info">
 			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong><?php echo $_SESSION['Message']['flash']['message'];?> </strong>
+			<strong><?php echo $msg;?> </strong>
 		</div>
      <?php } ?>
                     
@@ -28,12 +29,12 @@
     <table id="example" style="border:1px solid #aaa; padding:10px; margin-bottom:20px;"class="table display">
       <thead>
         <tr>
-          	<th>No</th>
-			<th>Title</th>
-			<th>Content</th>
-			<th>Image</th>
-			<th>Created_date</th>
-			<th>Status</th>
+          	<th class="notsort">No</th>
+			<th><div id="sort">Title<div id="sorticon"></div></div></th>
+			<th><div id="sort">Content<div id="sorticon"></div></div></th>
+			<th><div id="sort">Image<div id="sorticon"></div></div></th>
+			<th><div id="sort">Created date<div id="sorticon"></div></div></th>
+			<th><div id="sort">Status<div id="sorticon"></div></div></th>
 			<th class="actions">Actions</th>
         </tr>
       </thead>
@@ -44,14 +45,14 @@
         <tr>
           	<td><?php echo h($i); ?></td>
 			<td><?php echo h($blogs['Blog']['title']); ?>&nbsp;</td>
-			<td><?php echo h($blogs['Blog']['content']); ?>&nbsp;</td>
+			<td><?php echo substr(strip_tags($blogs['Blog']['content']),0,30); if(strlen($blogs['Blog']['content'])>30) echo '...'; ?>&nbsp;</td>
 			<td><?php echo $this->html->image('blog-images/small/'.$blogs['Blog']['image'],array('border'=>0,'alt'=>h($blogs['Blog']['title']))); ?>&nbsp;</td>
 			<td><?php echo h($blogs['Blog']['created_date']); ?>&nbsp;</td>
 			<td><?php echo h($blogs['Blog']['status']); ?>&nbsp;</td>
 			<td class="actions">
-				<a href="<?php echo BASE_URL?>admin/blogs/view/<?php echo $blogs['Blog']['bid'];?>"><i class="icon-zoom-in"></i></a>
-				<a href="<?php echo BASE_URL?>admin/blogs/edit/<?php echo $blogs['Blog']['bid'];?>"><i class="icon-pencil"></i></a>
-              	<a rel="<?php echo BASE_URL?>admin/blogs/delete/<?php echo $blogs['Blog']['bid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+				<a href="<?php echo BASE_URL?>admin/blogs/view/<?php echo $blogs['Blog']['lan'].'/'.$blogs['Blog']['link'];?>" title="view"><i class="icon-zoom-in"></i></a>
+				<a href="<?php echo BASE_URL?>admin/blogs/edit/<?php echo $blogs['Blog']['lan'].'/'.$blogs['Blog']['link'];?>" title="edit"><i class="icon-pencil"></i></a>
+              	<a rel="<?php echo BASE_URL?>admin/blogs/delete/<?php echo $blogs['Blog']['bid'];?>" class="test" title="delete" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 			</td>
         </tr>
 		<?php $i++;  endforeach; ?>
@@ -74,7 +75,7 @@
         <h3 id="myModalLabel">Delete Confirmation</h3>
     </div>
     <div class="modal-body">
-        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete this blog?</p>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>

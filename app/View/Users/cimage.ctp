@@ -2,20 +2,21 @@
 if($exp['Experience']['logo']!=''){
 	echo $this->Html->image('users/small/'.$exp['Experience']['logo'],array('height'=>'30','width'=>'50','style'=>'float:left'));
 	?>
-    <div id="delme1"><a id="delimg<?php echo $exp['Experience']['eid'];?>" rel="<?php echo $exp['Experience']['eid'];?>" style="cursor:pointer; color:#f00;float:left;margin:0 0 0 10px;"><?php echo $this->Html->image('delete.png',array('width'=>'18','height'=>'18'));?></a></div>
+    <div id="delme1"><a id="delimg<?php echo $exp['Experience']['eid'];?>" rel="<?php echo $exp['Experience']['eid'];?>" class="delupimg" style="cursor:pointer; color:#f00;float:left;margin:0 0 0 10px;"><?php echo $this->Html->image('delete.png',array('width'=>'18','height'=>'18'));?></a></div>
     <script type="text/javascript">
-	$('#delimg<?php echo $exp['Experience']['eid'];?>').click(function(){
+	$('.delupimg').click(function(){
+		var delup=$(this).attr('rel');
 		$.ajax({
 			type: "POST",
-			data: "id=<?php echo $exp['Experience']['eid'];?>",
+			data: "id="+delup,
 			url: "<?php echo BASE_URL;?>users/delimage",
 			success: function(msg){
 				$.ajax({
 					type: "POST",
-					data: "eid=<?php echo $exp['Experience']['eid'];?>",
+					data: "eid="+delup,
 					url: "<?php echo BASE_URL;?>users/cimage",
 					success: function(msg){
-						$('#editexp<?php echo $exp['Experience']['eid'];?>').children().find('.exp_image').html(msg);
+						$('#editexp'+delup).children().find('.exp_image').html(msg);
 					}
 				});
 			}
@@ -25,7 +26,7 @@ if($exp['Experience']['logo']!=''){
     <?php
 }else{
 	?>
-    <div id="ploading" style="display:none;"><?php echo $this->html->image('loading.gif',array());?>Loading....</div>
+    <div class="ploading2" style="display:none;"><?php echo $this->html->image('loading.gif',array());?>Loading....</div>
     <input name="file" type="file" id="file2" class="box" onchange="return ajaxFileUpload();"/>
     <!--<input name="upid" type="hidden" value="<?php //echo $exp['Experience']['eid'];?>" id="upid"/>-->
     <script type="text/javascript">
@@ -39,11 +40,7 @@ if($exp['Experience']['logo']!=''){
 	 });
 	 function ajaxFileUpload(){
 		var fileextension=/(\.jpg|\.gif|\.png|\.JPG|\.GIF|\.PNG|\.jpeg|\.JPEG)$/;	
-	$(".ploading").ajaxStart(function(){
-		$(this).show();
-	}).ajaxComplete(function(){
-		$(this).hide();
-	});	
+	$(".ploading2").show();
 	if($('#file2').val().match(fileextension)){		
 	$.ajaxFileUpload
 	(

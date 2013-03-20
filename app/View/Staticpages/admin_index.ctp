@@ -8,28 +8,31 @@
 </ul>
 <div class="container-fluid">
   <div class="row-fluid">
-    <?php 
-			if(!empty($_SESSION['Message']['flash'])) { ?>
-    <div class="alert alert-info">
-      <button type="button" class="close" data-dismiss="alert">×</button>
-      <strong><?php echo $_SESSION['Message']['flash']['message'];?> </strong> </div>
-    <?php } ?>
-    <div class="btn-toolbar"> <a href="<?php echo BASE_URL;?>admin/staticpages/add">
+ 	<?php 
+		$msg = $this->Session->flash();
+		if(!empty($msg)) { ?>
+	 		
+		<div class="alert alert-info">
+			<button type="button" class="close" data-dismiss="alert">×</button>
+			<strong><?php echo $msg;?> </strong>
+		</div>
+     <?php } ?>
+    <!--<div class="btn-toolbar"> <a href="<?php echo BASE_URL;?>admin/staticpages/add">
       <button class="btn btn-primary"><i class="icon-plus"></i> New page </button>
       </a>
       <div class="btn-group"> </div>
-    </div>
+    </div>-->
     <?php //echo $this->Paginator->numbers(); ?>
     <div class="well">
-      <table class="table display" id="example" style="border:1px solid #aaa; padding:10px; margin-bottom:20px;">
+      <table class="table display" id="" style="border:1px solid #aaa; padding:10px; margin-bottom:20px;">
         <thead>
           <tr>
             <?php /*?>  <th><?php echo $this->Paginator->sort('sid'); ?></th><?php */?>
-            <th>No</th>
-            <th>Name</th>
-            <th>Title</th>
-            <th>URL</th>
-            <th>Status</th>
+            <th class="notsort">No</th>
+            <th><div id="sort">Name<div id="sorticon"></div></div></th>
+            <th><div id="sort">Title<div id="sorticon"></div></div></th>
+            <th><div id="sort">Link<div id="sorticon"></div></div></th>
+            <th><div id="sort">Status<div id="sorticon"></div></div></th>
             <th class="actions"><?php echo __('Actions'); ?></th>
           </tr>
         </thead>
@@ -42,11 +45,12 @@
             <td><?php echo h($i); ?>&nbsp;</td>
             <td><?php echo h($staticpage['Staticpage']['sta_name']); ?>&nbsp;</td>
             <td><?php echo h($staticpage['Staticpage']['sta_title']); ?>&nbsp;</td>
-            <td><?php echo h($staticpage['Staticpage']['sta_url']); ?>&nbsp;</td>
+            <td><?php echo h($staticpage['Staticpage']['sta_link']); ?>&nbsp;</td>
             <td><?php echo h($staticpage['Staticpage']['status']); ?>&nbsp;</td>
-            <td class="actions"><?php echo $this->Html->link(__(''), array('action' => 'view', $staticpage['Staticpage']['sta_id'],'admin'=>'true'),array('class' => 'icon-eye-open')); ?> <?php echo $this->Html->link(__(''), array('action' => 'edit', $staticpage['Staticpage']['sta_id']),array('class' => 'icon-pencil')); ?>
-              <?php //echo $this->Form->postLink(__(''), array('action' => 'delete', $staticpage['Staticpage']['sta_id']),array('class' => 'icon-trash test'), null, __('Are you sure you want to delete # %s?', $staticpage['Staticpage']['sta_id'])); ?>
-              <a rel="<?php echo BASE_URL?>admin/staticpages/delete/<?php echo $staticpage['Staticpage']['sta_id'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a></td>
+            <td class="actions">
+			<?php echo $this->Html->link(__(''), array('action' => 'view', $staticpage['Staticpage']['lan'],$staticpage['Staticpage']['sta_link'],'admin'=>'true'),array('class' => 'icon-zoom-in','title'=>'view')); ?> 
+			<?php echo $this->Html->link(__(''), array('action' => 'edit', $staticpage['Staticpage']['lan'],$staticpage['Staticpage']['sta_link']),array('class' => 'icon-pencil','title'=>'edit')); ?>
+              <!--<a rel="<?php echo BASE_URL?>admin/staticpages/delete/<?php echo $staticpage['Staticpage']['sta_id'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>--></td>
           </tr>
           <?php $i++; endforeach; ?>
         </tbody>

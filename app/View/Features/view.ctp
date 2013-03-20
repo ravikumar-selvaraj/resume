@@ -1,74 +1,43 @@
-<div class="sitecontacts view">
-<h2><?php  echo __('Sitecontact'); ?></h2>
-	<dl>
-		<dt><?php echo __('Cid'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['cid']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Name'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['name']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Company'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['company']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Email'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['email']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Phone'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['phone']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Subject'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['subject']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Message'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['message']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Date'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['date']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('View'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['view']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Reply'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['reply']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Replymessage'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['replymessage']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Status'); ?></dt>
-		<dd>
-			<?php echo h($sitecontact['Sitecontact']['status']); ?>
-			&nbsp;
-		</dd>
-	</dl>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('Edit Sitecontact'), array('action' => 'edit', $sitecontact['Sitecontact']['cid'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Sitecontact'), array('action' => 'delete', $sitecontact['Sitecontact']['cid']), null, __('Are you sure you want to delete # %s?', $sitecontact['Sitecontact']['cid'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Sitecontacts'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Sitecontact'), array('action' => 'add')); ?> </li>
-	</ul>
-</div>
+<div class="row app-header">
+            <div class="container ">
+                <h1><a href="<?php echo BASE_URL;?>blogs"><?php echo __("Features");?></a> / <?php echo __("View");?></h1>
+            </div>
+        </div>
+
+        <div class="container main-body">
+            <div class="row dashboard">
+                <section class="left-col pull-left span9">
+                    <!-- Blog Posts -->
+                    <div class="row">
+                        <article class="span9 article">
+                            <div class="row">
+                                <div class="span9">
+                                    <h4><a href="#"><?php echo $feature['Feature']['title'];?></a></h4>
+                                    <div class="row">
+                                        <div class="span8">
+                                           <p>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="span2">
+                                    <a href="#" class="thumbnail">
+                                        <?php echo $this->Html->image('feature-images/big/'.$feature['Feature']['image']);?>
+                                    </a>
+                                </div>
+                                <div class="span7">
+                                    <p><?php echo $feature['Feature']['description'];?></p>
+									<p><a class="btn btn-info" href="<?php echo BASE_URL;?>"><?php echo __("Create your resume");?></a></p>
+                                    
+                                 </div>
+                            </div>
+                        </article>
+                    </div>
+                    <hr>
+                </section>
+
+                
+            </div>
+        </div>

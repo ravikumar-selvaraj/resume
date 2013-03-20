@@ -57,6 +57,7 @@
 
    .left-col-widget li{
       color: #a1a1a1;
+	 
    }
 
    .resume-contact  li{
@@ -96,10 +97,21 @@
 
    .exp-box{
       color: #c6c6c6;
-      border-bottom: #2B2828 1px solid;
+      border: #2B2828 1px solid;
       padding-bottom: 10px;
+	  margin: 5px 0;
    }
 
+	.well {
+		
+		border: 1px solid #E3E3E3;
+		border-radius: 4px 4px 4px 4px;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+		margin-bottom: 20px;
+		min-height: 20px;
+		padding: 19px;
+	}
+	
    .exp-box a{
       color: rgb(119, 119, 119);
    }
@@ -116,7 +128,7 @@
    }
 
    .middle-col h3 a, .right-col h3 a{
-      font-size: 17px;
+      font-size: 14px;
       color: rgb(121, 187, 218);
    }
 
@@ -341,6 +353,7 @@
 		float:left;
 		width:243px;
 		font-size:12px;
+		font-weight:600;
 	}
 	#prof1
 	{
@@ -349,6 +362,7 @@
 		width:125px;
 		padding-right:18px;
 		font-size:12px;
+		font-weight:600;
 	}
 	
 	.proftext
@@ -569,6 +583,10 @@ margin:0;
 }	
 	img.templateimg{		
 		padding: 5px 25px;
+		cursor:pointer;
+	}
+	.templateimg:hover{
+		opacity:0.2;
 	}
 	.recommend-skillsfix{
     color: #fff;
@@ -613,4 +631,50 @@ margin:0;
 		color: #c8c6c6;
 		text-decoration: none;
 	}
-	
+	.nowaiting
+	{
+	font-size: 18px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    text-align: center;
+    width: 550px;
+	}
+	.forh2	{
+		font-size:24px;
+	}
+	.loader_block {
+    background: url(../../img/loader_bg.png) no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 87px;
+    left: 50%;
+    position: fixed;
+    top: 50%;
+    width: 130px;
+    z-index: 100;
+}
+.loader_block .loader_block_inner {
+    background: url(../../img/loading-32-onwhite.gif) no-repeat scroll 0 0 transparent;
+    height: 32px;
+    margin: 10px auto;
+    width: 32px;
+}
+.loader_block .loader_text {
+    color: #000000;
+    font-size: 11px;
+    line-height: 16px;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+}
+.helpfade {
+    background: none repeat scroll 0 0 #222222;
+    height: 1500px;
+    left: 0;
+    opacity: 0.5;
+	filter:alpha(opacity=50);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+	display:none;
+}

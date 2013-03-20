@@ -27,9 +27,12 @@ class StaticpagesController extends AppController {
 	}
 		  
 	public function index() {
+		//pr($this->params);
+		if($this->Session->read('Config.language') == '')
+		$this->Session->write('Config.language',Configure::read('Config.language'));
 		
 		if(isset($this->params['pass'][1])){
-		$options = $this->Staticpage->find('first', array('conditions' => array('Staticpage.sta_url' =>$this->params['pass'][1])));
+		$options = $this->Staticpage->find('first', array('conditions' => array('sta_link' =>$this->params['pass'][1],'lan'=>$this->Session->read('Config.language'))));
 		$this->set('page', $options);
 		}
 		else
@@ -136,7 +139,7 @@ class StaticpagesController extends AppController {
 		$this->layout='admin';
 		$this->Staticpage->recursive = 0;
 		//$this->set('staticpages', $this->paginate());
-		$this->set('staticpages', $this->Staticpage->find('all'));
+		$this->set('staticpages', $this->Staticpage->find('all',array('conditions'=>array('lan'=>'eng'))));
 	}
 
 /**
@@ -146,16 +149,10 @@ class StaticpagesController extends AppController {
  * @param string $id
  * @return void
  */
-	public function admin_view($id = null) {
+	public function admin_view($lan = null,$link = null) {
 		$this->checkadmin();
 		$this->layout='admin';
-		if (!$this->Staticpage->exists($id)) {
-			throw new NotFoundException(__('Invalid staticpage'));
-		}
-		
-		//$options = $this->Staticpage->find('first', array('conditions' => array('Staticpage.sta_url' => 'about')));
-		//
-		$options = array('conditions' => array('Staticpage.' . $this->Staticpage->primaryKey => $id));
+		$options = array('conditions' => array('lan'=>$lan,'sta_link'=>$link));
 		$this->set('staticpage', $this->Staticpage->find('first', $options));
 	}
 
@@ -168,8 +165,26 @@ class StaticpagesController extends AppController {
 		$this->checkadmin();
 		$this->layout='admin';
 		if ($this->request->is('post')) {
-			$this->Staticpage->create();
-			if ($this->Staticpage->save($this->request->data)) {
+			if (!empty($this->request->data)) {
+				$str = explode("&",$this->request->data['sta_title']);
+					$link='';
+				foreach($str as $str){
+					$link .=$str;
+				}
+				$this->request->data['sta_link'] = strtolower(str_replace(' ','_',$link));
+				//pr($this->request->data); die;
+				$this->Staticpage->save($this->request->data);
+				$this->request->data = '';
+				
+				$last_id = $this->Staticpage->getInsertID();
+				$details = $this->Staticpage->find('first',array('conditions'=>array('sta_id'=>$last_id)));
+				if($details['Staticpage']['lan'] == 'eng')				
+				$this->request->data['lan'] = 'spa';
+				else 
+				$this->request->data['lan'] = 'eng';
+				$this->request->data['sta_link'] = $details['Staticpage']['sta_link'];
+				$this->Staticpage->saveAll($this->request->data);
+				
 				$this->Session->setFlash(__('The staticpage has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -187,14 +202,10 @@ class StaticpagesController extends AppController {
  * @param string $id
  * @return void
  */
-	public function admin_edit($id = null) {
+	public function admin_edit($lan = null,$link = null) {
 		
 		$this->checkadmin();
 		$this->layout='admin';
-		$this->Staticpage->sta_id = $id;
-		if (!$this->Staticpage->exists($id)) {
-			throw new NotFoundException(__('Invalid staticpage'));
-		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			
 			if ($this->Staticpage->save($this->request->data)) {
@@ -205,7 +216,7 @@ class StaticpagesController extends AppController {
 				$this->Session->setFlash(__('The staticpage could not be saved. Please, try again.'));
 			}
 		} else {
-			$options = array('conditions' => array('Staticpage.' . $this->Staticpage->primaryKey => $id));
+			$options = array('conditions' => array('lan'=>$lan,'sta_link'=>$link));
 			$this->request->data = $this->Staticpage->find('first', $options);
 		}
 		$this->set('languageOptions', array('opt1' => 'Choose Status', 'opt2' => 'Active', 'opt3' => 'Inactive', 'opt4' => 'Trash'));

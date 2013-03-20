@@ -16,7 +16,7 @@ class CareersController extends AppController {
 	public $components = array('Session','Image');
 	public $layout = 'admin';
 	public $paginate = array('limit'=>5);
-	public $uses = array('Career','Tag');
+	public $uses = array('Career','Tag','User');
 
 
 /**
@@ -35,25 +35,31 @@ class CareersController extends AppController {
 	public function index() {
 		$this->layout = 'webpage';
 		$this->Career->recursive = 0;
+		
+		if($this->Session->read('Config.language') == '')
+		$this->Session->write('Config.language',Configure::read('Config.language'));
+		
 		if($this->request->is('post')){
-			$this->paginate = array('conditions' => array('title LIKE ' =>"%".$this->request->data('search')."%"),'limit' =>5);
+			$this->paginate = array('conditions' => array('title LIKE ' =>"%".$this->request->data('search')."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
 			$this->set('careers', $this->paginate());
 		}
 		if(!empty($this->params['pass'][0]) && $this->params['pass'][0] != 'tags' ){
-			$this->paginate = array('conditions' => array('category LIKE ' =>"%".$this->params['pass'][0]."%"),'limit' =>5);
+			$this->paginate = array('conditions' => array('category LIKE ' =>"%".$this->params['pass'][0]."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
 			$this->set('careers', $this->paginate());
 		}
 		else if(!empty($this->params['pass'][0]) && $this->params['pass'][0] == 'tags' ){
-			$this->paginate = array('conditions' => array('tag LIKE ' =>"%".$this->params['pass'][1]."%"),'limit' =>5);
+			$this->paginate = array('conditions' => array('tag LIKE ' =>"%".$this->params['pass'][1]."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
 			$this->set('careers', $this->paginate());
 		}
-		else
-		$this->set('careers', $this->paginate());
+		else{
+			$this->paginate = array('conditions' => array('lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
+			$this->set('careers', $this->paginate());
+		}
 		
 		// for most-popular
 		//$this->paginate = array('limit' =>3, 'order' => array('view' => 'desc'));
-		$this->set('populars', $this->Career->find('all',array('limit'=>3,'order'=>'view desc')));
-		$this->set('tags',$this->Tag->find('all'));
+		$this->set('populars', $this->Career->find('all',array('conditions'=>array('lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit'=>3,'order'=>'view desc')));
+		$this->set('tags',$this->Tag->find('all',array('conditions'=>array('lan'=>$this->Session->read('Config.language')))));
 		
 	}
 
@@ -74,7 +80,7 @@ class CareersController extends AppController {
 		$this->request->data['view'] = $careers['Career']['view'] + 1;
 		$this->Career->save($this->request->data);
 		$this->set('populars', $this->Career->find('all',array('limit'=>3,'order'=>'view desc')));
-		$this->set('tags',$this->Tag->find('all'));
+		$this->set('tags',$this->Tag->find('all',array('conditions'=>array('lan'=>$this->Session->read('Config.language')))));
 		
 	}
 
@@ -151,7 +157,7 @@ class CareersController extends AppController {
 		$this->checkadmin();
 		$this->Career->recursive = 0;
 		//$this->set('careers', $this->paginate());
-		$this->set('careers', $this->Career->find('all'));
+		$this->set('careers', $this->Career->find('all',array('conditions'=>array('lan'=>'eng'))));
 	}
 
 /**
@@ -161,12 +167,9 @@ class CareersController extends AppController {
  * @param string $id
  * @return void
  */
-	public function admin_view($id = null) {
+	public function admin_view($lan = null,$link = null) {
 		$this->checkadmin();
-		if (!$this->Career->exists($id)) {
-			throw new NotFoundException(__('Invalid career'));
-		}
-		$options = array('conditions' => array('Career.' . $this->Career->primaryKey => $id));
+		$options = array('conditions' => array('lan'=>$lan,'link'=>$link));
 		$this->set('careers', $this->Career->find('first', $options));
 		
 		
@@ -189,9 +192,37 @@ class CareersController extends AppController {
 				if($this->request->data['image']['name'] !=''){
 					$this->request->data['image'] = $this->Image->upload_image_and_thumbnail($this->request->data['image'],573,380,150,150, "career-image");	
 				}
+				
 				$this->request->data['tag'] = implode(',',$this->request->data['tag']);
+				$str = explode("&",$this->request->data['title']);
+					$link='';
+				foreach($str as $str){
+					$link .=$str;
+				}
 				$this->request->data['key'] = $this->str_rand();
+				$this->request->data['link'] = strtolower(str_replace(' ','_',$link));
 				$this->Career->save($this->request->data);
+				
+				$users = $this->User->find('all',array('conditions'=>array('career_newsletter'=>1,'status'=>'Active')));
+				foreach($users as $user){
+					$link = BASE_URL.'pages/career_newsletter_deactive/'.$user['User']['user_key'];
+					$options = array($user['User']['firstname'],$user['User']['email'],$this->request->data['content'],$link);
+					$this->emailoptions(13,$options);
+				}
+				
+				
+				$this->request->data = '';
+				
+				$last_id = $this->Career->getInsertID();
+				$details = $this->Career->find('first',array('conditions'=>array('cid'=>$last_id)));
+				if($details['Career']['lan'] == 'eng')				
+				$this->request->data['lan'] = 'spa';
+				else 
+				$this->request->data['lan'] = 'eng';
+				$this->request->data['link'] = $details['Career']['link'];
+				$this->request->data['key'] = $this->str_rand();
+				$this->Career->saveAll($this->request->data);
+				
 				$this->Session->setFlash(__('The Career has been saved'));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -207,12 +238,9 @@ class CareersController extends AppController {
  * @param string $id
  * @return void
  */
-	public function admin_edit($id = null) {
+	public function admin_edit($lan = null,$link = null) {
 		$this->checkadmin();
-		$this->set('tags',$this->Tag->find('all'));
-		if (!$this->Career->exists($id)) {
-			throw new NotFoundException(__('Invalid career'));
-		}
+		$this->set('tags',$this->Tag->find('all',array('conditions'=>array('lan'=>$lan))));
 		if ($this->request->is('post') || $this->request->is('put')) {
 			
 			if(!empty($this->request->data)){ 
@@ -222,7 +250,7 @@ class CareersController extends AppController {
 				}
 				else
 				{
-				$options = array('conditions' => array('Career.' . $this->Career->primaryKey => $id));
+				$options = array('conditions' => array('lan'=>$lan,'link'=>$link));
 				$edit=$this->Career->find('first', $options);
 				$this->request->data['image']=$edit['Career']['image'];
 				}
@@ -235,7 +263,7 @@ class CareersController extends AppController {
 				$this->Session->setFlash(__('The career could not be updated. Please, try again.'));
 			}
 		} else {
-			$options = array('conditions' => array('Career.' . $this->Career->primaryKey => $id));
+			$options = array('conditions' => array('lan'=>$lan,'link'=>$link));
 			$this->request->data = $this->Career->find('first', $options);
 			$this->set('careers', $this->Career->find('first', $options));
 		}
@@ -268,7 +296,9 @@ class CareersController extends AppController {
 		$this->checkadmin();
 		$this->layout = '';
 		$this->Career->id = $id;
-		$this->Career->delete(array('bid'=>$id));
+		$this->Career->delete(array('cid'=>$id));
+		$this->Career->id = $id + 1;
+		$this->Career->deleteAll(array('cid'=>$id +1));
 		$this->Session->setFlash(__('Career deleted'));
 		$this->redirect(array('action' => 'index'));
 		$this->render(false);

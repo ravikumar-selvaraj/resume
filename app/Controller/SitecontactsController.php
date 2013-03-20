@@ -20,7 +20,7 @@ class SitecontactsController extends AppController {
 			if ($this->Recaptcha->verify()) {
 			$this->Sitecontact->create();
 				if ($this->Sitecontact->save($this->request->data)) {
-					$this->Session->setFlash(__('The Contact has been saved'));
+					$this->Session->setFlash(__('Your message sent successfully, admin will contact you soon'));
 					$this->redirect(array('action' => 'index'));
 				} else {
 					$this->Session->setFlash(__('The Contact could not be saved. Please, try again.'));
@@ -119,7 +119,8 @@ class SitecontactsController extends AppController {
 		$this->checkadmin();
 		$this->layout = 'admin';
 		$this->Sitecontact->recursive = 0;
-		$this->set('contact',  $this->Sitecontact->find('all'));
+		//$this->set('contact',  $this->Sitecontact->findAll(array('sids'=>'3')));
+		$this->set('contact', $this->Sitecontact->find('all'));
 	}
 	 public function checkadmin(){
 		$check=$this->Session->read('Adminlogin');
@@ -136,8 +137,10 @@ class SitecontactsController extends AppController {
  * @return void
  */
 	public function admin_view($id = null) {
+		
 		$this->checkadmin();
 		$this->layout = 'admin';
+		$this->Sitecontact->updateAll(array('view'=>'1'),array("cid"=>$this->params['pass']['0']));	
 		if (!$this->Sitecontact->exists($id)) {
 			throw new NotFoundException(__('Invalid sitecontact'));
 		}
@@ -148,11 +151,14 @@ class SitecontactsController extends AppController {
 		
 		if ($this->request->is('post') || $this->request->is('put')) 
 		{
+			$d=date('Y-m-d H:i:s');
+			$this->request->data['reply_date']=$d;
+			
 				if ($this->Sitecontact->save($this->request->data)) 
 				{
-					$values = array($this->data['rlysubject'],$contact['Sitecontact']['email'],$this->data['replymessage'],$contact['Sitecontact']['name']);
+					$values = array($contact['Sitecontact']['subject'],$contact['Sitecontact']['email'],$this->data['replymessage'],$contact['Sitecontact']['name']);
 					$this->emailoptions(11, $values);
-					$this->Session->setFlash(__('The Contact has been saved'));
+					$this->Session->setFlash(__('successfully sent message'));
 					$this->redirect(array('action' => 'index'));
 			} 
 		}

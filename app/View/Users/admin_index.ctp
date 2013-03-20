@@ -11,11 +11,12 @@
             <div class="row-fluid">
 			
 			<?php 
-			if(!empty($_SESSION['Message']['flash'])) { ?>
+		$msg = $this->Session->flash();
+		if(!empty($msg)) { ?>
 	 		
 		<div class="alert alert-info">
 			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong><?php echo $_SESSION['Message']['flash']['message'];?> </strong>
+			<strong><?php echo $msg;?> </strong>
 		</div>
      <?php } ?>
                     
@@ -30,11 +31,11 @@
     <thead>
           <tr>
           <?php /*?>  <th><?php echo $this->Paginator->sort('sid'); ?></th><?php */?>
-            <th>No</th> 
-            <th>Name</th>
-            <th>Title</th>
-            <th>URL</th>
-            <th>Status</th>
+            <th class="notsort">No</th> 
+            <th><div id="sort">Name<div id="sorticon"></div></div></th>
+            <th><div id="sort">Resume title<div id="sorticon"></div></div></th>
+            <th><div id="sort">Email<div id="sorticon"></div></div></th>
+            <th><div id="sort">Status<div id="sorticon"></div></div></th>
           
             <th class="actions"><?php echo __('Actions'); ?></th>
           </tr>
@@ -47,15 +48,15 @@
           <?php /*?>  <td><?php echo h($staticpage['Staticpage']['sid']); ?>&nbsp;</td><?php */?>
            <td><?php echo h($i); ?>&nbsp;</td>
             <td><?php echo h($user['User']['firstname']); ?>&nbsp;</td>
-             <td><?php echo h($user['User']['lastname']); ?>&nbsp;</td>
+             <td><?php echo h($user['User']['resume_title']); ?>&nbsp;</td>
             <td><?php echo h($user['User']['email']); ?>&nbsp;</td>
             <td><?php echo h($user['User']['status']); ?>&nbsp;</td>
              
              <td class="actions">
-			<?php echo $this->Html->link(__(''), array('action' => 'view', $user['User']['uid'],'admin'=>'true'),array('class' => 'icon-eye-open')); ?>
-			<?php //echo $this->Html->link(__(''), array('action' => 'edit', $user['User']['uid']),array('class' => 'icon-pencil')); ?>
+			<?php echo $this->Html->link(__(''), array('action' => 'view', $user['User']['uid'],'admin'=>'true'),array('class' => 'icon-zoom-in','title'=>'view')); ?>
+			<?php echo $this->Html->link(__(''), array('action' => 'edit', $user['User']['uid']),array('class' => 'icon-pencil')); ?>
 			<?php //echo $this->Form->postLink(__(''), array('action' => 'delete', $staticpage['Staticpage']['sta_id']),array('class' => 'icon-trash test'), null, __('Are you sure you want to delete # %s?', $staticpage['Staticpage']['sta_id'])); ?>
-            	<a rel="<?php echo BASE_URL?>admin/users/delete/<?php echo $user['User']['uid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+            	<a rel="<?php echo BASE_URL?>admin/users/delete/<?php echo $user['User']['uid'];?>" title="delete" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 		</td>
              
              
@@ -72,7 +73,7 @@
         <h3 id="myModalLabel">Delete Confirmation</h3>
     </div>
     <div class="modal-body">
-        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete this user?</p>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>

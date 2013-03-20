@@ -1,3 +1,5 @@
+
+
 <div class="row slider_container">
                 <!-- MAIN SLIDER -->
                 <div id="main_slider" class="carousel slide">
@@ -9,29 +11,30 @@
                     <!-- Carousel items -->
                     <div class="carousel-inner">
                         <div class="active item ">
-                            <div class="headline span8 ">Create an elegant and effective resume for free</div>
-                            <?php if(!isset($_SESSION['User']['uid'])) {?>
-                            <button type="button" data-toggle="modal" data-target="#signup" class="slider_btn">Create a cv now</button>
+                            <div class="headline span8 "><?php echo __("Create an elegant and effective resume for free");?></div>
+                            <?php if(!$this->Session->read('User.uid')) {?>
+                            <button type="button" data-toggle="modal" data-target="#signup" class="slider_btn"><?php echo __("Create a cv now");?></button>
                              <?php } else {?>
-                             <a href="<?php echo BASE_URL?>pages/dashboard"> <button type="button"   class="slider_btn">Create a cv now</button></a>
+                             <a href="<?php echo BASE_URL?>pages/dashboard"> <button type="button"   class="slider_btn"><?php echo __("Create a cv now");?></button></a>
                               <?php }?>
-                            <img src="img/page/template_screens.png" alt="">
+                            <img src="img/page/customize.png" alt="">
                         </div>
-                        <div class="item">  <div class="headline span8 ">Create an elegant and effective resume for free</div>
-                           <?php if(!isset($_SESSION['User']['uid'])) {?>
-                            <button type="button" data-toggle="modal" data-target="#signup" class="slider_btn">Create a cv now</button>
+                        <div class="item">  <div class="headline span8 "><?php echo __("Create an elegant and effective resume for free");?></div>
+                           <?php if(!$this->Session->read('User.uid')) {?>
+                            <button type="button" data-toggle="modal" data-target="#signup" class="slider_btn"><?php echo __("Create a cv now");?></button>
                              <?php } else {?>
-                             <a href="<?php echo BASE_URL?>pages/dashboard"> <button type="button"   class="slider_btn">Create a cv now</button></a>
+                             <a href="<?php echo BASE_URL?>pages/dashboard"> <button type="button"   class="slider_btn"><?php echo __("Create a cv now");?></button></a>
                               <?php }?>
-                            <img src="img/page/template_screens.png" alt="">
+                            <img src="img/page/template_screens1.png" alt="">
                         </div>
-                        <div class="item">  <div class="headline span8 ">Create an elegant and effective resume for free</div>
-                            <?php if(!isset($_SESSION['User']['uid'])) {?>
-                            <button type="button" data-toggle="modal" data-target="#signup" class="slider_btn">Create a cv now</button>
+						
+                        <div class="item">  <div class="headline span8 "><?php echo __("Create an elegant and effective resume for free");?></div>
+                            <?php if(!$this->Session->read('User.uid')) {?>
+                            <button type="button" data-toggle="modal" data-target="#signup" class="slider_btn"><?php echo __("Create a cv now");?></button>
                              <?php } else {?>
-                             <a href="<?php echo BASE_URL?>pages/dashboard"> <button type="button"   class="slider_btn">Create a cv now</button></a>
+                             <a href="<?php echo BASE_URL?>pages/dashboard"> <button type="button"   class="slider_btn"><?php echo __("Create a cv now");?></button></a>
                               <?php }?>
-                            <img src="img/page/template_screens.png" alt="">
+                            <img src="img/page/cloud-resume.png" alt="">
                         </div>
                     </div>
                      <!-- Carousel nav -->
@@ -46,29 +49,29 @@
         <div class="container">
             <div class="row">
                 <section class="samples">
-                    <h2>Take a look at these sample resumes</h2>
+                    <h2><?php echo __("Take a look at these sample resumes");?></h2>
                     <ul class="thumbnails">
                         <li class="span3">
                             <a href="" class="thumbnail">
-                                <img src="img/page/resume.jpg" alt="">
+                                <img src="img/resume-1.jpg" width="210" height="137" alt="">
                             </a>
                         </li>
 
                         <li class="span3">
                             <a href="" class="thumbnail">
-                                <img src="img/page/resume.jpg" alt="">
+                                <img src="img/resume-2.jpg" width="210" height="137" alt="">
                             </a>
                         </li>
 
                         <li class="span3">
                             <a href="" class="thumbnail">
-                                <img src="img/page/resume.jpg" alt="">
+                                <img src="img/resume-3.jpg" width="210" height="137" alt="">
                             </a>
                         </li>
 
                         <li class="span3">
                             <a href="" class="thumbnail">
-                                <img src="img/page/resume.jpg" alt="">
+                                <img src="img/resume-4.jpg" width="210" height="137" alt="">
                             </a>
                         </li>
                     </ul>

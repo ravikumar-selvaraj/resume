@@ -53,6 +53,7 @@ class AdminusersController extends AppController {
 	public function add() {
 		$this->checkadmin();
 		if ($this->request->is('post')) {
+			
 			$this->Adminuser->create();
 			if ($this->Adminuser->save($this->request->data)) {
 				$this->Session->setFlash(__('The adminuser has been saved'));
@@ -148,6 +149,12 @@ class AdminusersController extends AppController {
 	public function admin_add() {
 		$this->checkadmin();
 		if ($this->request->is('post')) {
+			$d=date('Y-m-d H:i:s');
+			
+			$this->request->data['createddate']=$d;
+			//pr($this->request->data('createddate'));
+			
+			//pr($this->request->data);exit;
 			$check_email = $this->Adminuser->find('first',array('conditions'=>array('email'=>$this->request->data('email'))));
 			if(empty($check_email)){
 				$check_username = $this->Adminuser->find('first',array('conditions'=>array('username'=>$this->request->data('username'))));
@@ -176,6 +183,7 @@ class AdminusersController extends AppController {
  * @return void
  */
 	public function admin_edit($id = null) {
+		
 		$this->checkadmin();
 		if (!$this->Adminuser->exists($id)) {
 			throw new NotFoundException(__('Invalid adminuser'));

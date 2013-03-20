@@ -10,12 +10,13 @@
         <div class="container-fluid">
             <div class="row-fluid">
 			
-			<?php 
-			if(!empty($_SESSION['Message']['flash'])) { ?>
+				<?php 
+		$msg = $this->Session->flash();
+		if(!empty($msg)) { ?>
 	 		
 		<div class="alert alert-info">
 			<button type="button" class="close" data-dismiss="alert">×</button>
-			<strong><?php echo $_SESSION['Message']['flash']['message'];?> </strong>
+			<strong><?php echo $msg;?> </strong>
 		</div>
      <?php } ?>
                     
@@ -28,15 +29,11 @@
     <table class="table display" id="example" style="border:1px solid #aaa; padding:10px; margin-bottom:20px;">
       <thead>
         <tr>
-          	<th>No</th>
-			<th>Name</th>
-			<th>Subject</th>
-			<th>From</th>
-		<!--	<th><?php echo $this->Paginator->sort('to'); ?></th>
-			<th><?php echo $this->Paginator->sort('reply'); ?></th>-->
-			<th>Message</th>
-			<!--<th><?php echo $this->Paginator->sort('option'); ?></th>
-			<th><?php echo $this->Paginator->sort('created_date'); ?></th>-->
+          	<th class="notsort">No</th>
+			<th><div id="sort">Name<div id="sorticon"></div></div></th>
+			<th><div id="sort">Subject<div id="sorticon"></div></div></th>
+			<th><div id="sort">From<div id="sorticon"></div></div></th>
+			<th><div id="sort">Message<div id="sorticon"></div></div></th>
 			<th class="actions"><?php echo __('Actions'); ?></th>
         </tr>
       </thead>
@@ -51,15 +48,11 @@
 		<td><?php echo h($emailcampaign['Emailcampaign']['name']); ?>&nbsp;</td>
 		<td><?php echo h($emailcampaign['Emailcampaign']['subject']); ?>&nbsp;</td>
 		<td><?php echo h($emailcampaign['Emailcampaign']['from']); ?>&nbsp;</td>
-	<!--	<td><?php echo h($emailcampaign['Emailcampaign']['to']); ?>&nbsp;</td>
-		<td><?php echo h($emailcampaign['Emailcampaign']['reply']); ?>&nbsp;</td>-->
-		<td><?php echo substr(strip_tags($emailcampaign['Emailcampaign']['message']),0,30); if(strlen($emailcampaign['Emailcampaign']['message'])>30) echo '...'; ?>&nbsp;</td>
-		<!--<td><?php echo h($emailcampaign['Emailcampaign']['option']); ?>&nbsp;</td>
-		<td><?php echo h($emailcampaign['Emailcampaign']['created_date']); ?>&nbsp;</td>-->
+		<td><?php echo substr(strip_tags($emailcampaign['Emailcampaign']['message']),0,30); if(strlen(strip_tags($emailcampaign['Emailcampaign']['message']))>30) echo '...'; ?>&nbsp;</td>
 			<td class="actions">
-				<a href="<?php echo BASE_URL?>admin/emailcampaigns/view/<?php echo $emailcampaign['Emailcampaign']['ecid'];?>"><i class="icon-zoom-in"></i></a>
-				<a href="<?php echo BASE_URL?>admin/emailcampaigns/edit/<?php echo $emailcampaign['Emailcampaign']['ecid'];?>"><i class="icon-pencil"></i></a>
-              	<a rel="<?php echo BASE_URL?>admin/emailcampaigns/delete/<?php echo $emailcampaign['Emailcampaign']['ecid'];?>" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+				<a href="<?php echo BASE_URL?>admin/emailcampaigns/view/<?php echo $emailcampaign['Emailcampaign']['ecid'];?>" title="view" ><i class="icon-zoom-in"></i></a>
+				<a href="<?php echo BASE_URL?>admin/emailcampaigns/edit/<?php echo $emailcampaign['Emailcampaign']['ecid'];?>" title="edit" ><i class="icon-pencil"></i></a>
+              	<a rel="<?php echo BASE_URL?>admin/emailcampaigns/delete/<?php echo $emailcampaign['Emailcampaign']['ecid'];?>"  title="delete" class="test" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
 			</td>
         </tr>
 		<?php $i++; }  ?>
@@ -82,7 +75,7 @@
         <h3 id="myModalLabel">Delete Confirmation</h3>
     </div>
     <div class="modal-body">
-        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete the user?</p>
+        <p class="error-text"><i class="icon-warning-sign modal-icon"></i>Are you sure you want to delete this email campaign?</p>
     </div>
     <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>

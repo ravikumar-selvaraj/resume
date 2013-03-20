@@ -1,7 +1,7 @@
 <div id="education" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                <h2 id="myModalLabel"><?php echo __("Add Education");?></h2>
+                                <h2 id="myModalLabel" class="forh2"><?php echo __("Add Education");?></h2>
                             </div>
 
                             <div class="modal-body" id="for_education">
@@ -50,11 +50,11 @@
                                         <label class="control-label" for="inputInfo"><?php echo __("Details");?></label>
                                         <div class="controls">
                                             <input type="text" id="extra_curricular" name="data[extra_curricular][]">                                             
-											 <a id="extra_add_btn" class="btn btn-mini btn-primary"><?php echo __("Add");?></a>
+											 <a id="delmy" class="edutab btn btn-mini btn-primary"><?php echo __("Add");?></a>
 											 <span class="help-inline" id="details_error"></span>
                                         </div>
                                     </div>
-									
+									 <div class="edunews"></div>
                                     <div class="control-group">
                                         <div class="controls">
                                             <button type="submit" id="education_btn" class="btn btn-primary "><?php echo __("Submit");?></button>

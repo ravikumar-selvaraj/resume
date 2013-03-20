@@ -58,10 +58,15 @@ $( "#tabslu" ).tabs();
                                 </ul>
                                 
                                 <!--Personal Details-->
-                                
+                                <?php 
+								$coun= ClassRegistry::init('Country')->find('first',array('conditions'=>array('iso_code2'=>$users['User']['country'])));
+								//$exp_coun= ClassRegistry::init('Country')->find('first',array('conditions'=>array('iso_code2'=>$exp['Experience']['country'])));
+							
+								?>
                                 <div id="tabs-1">
                                 <p>
                                 <div class="widget-content nopadding">
+                                
 								<form id="form-wizard" class="form-horizontal ui-formwizard" method="post" novalidate="novalidate" _lpchecked="1">
 									<div id="form-wizard-1" class="step ui-formwizard-content" style="display: block;">
 										<div class="control-group" id="con">
@@ -88,21 +93,28 @@ $( "#tabslu" ).tabs();
 											<label class="control-label">Phone :</label>
 											<div class="controls"><?php echo h($users['User']['phone']); ?></div>
 										</div>
+                                        <?php if(!empty($users['User']['skype'])) {?>
                                         <div class="control-group" id="con">
-											<label class="control-label">IM Id :</label>
-											<div class="controls"><?php echo h($users['User']['im']); ?></div>
+											<label class="control-label">Skype :</label>
+											<div class="controls"><?php echo h($users['User']['skype']); ?></div>
 										</div>
-                                        
+                                        <?php }?>
+                                         <?php if(!empty($users['User']['yahoo'])) {?>
                                          <div class="control-group" id="con">
-											<label class="control-label">Gender :</label>
-											<div class="controls"> <?php echo h($users['User']['city']); ?>	</div>
+											<label class="control-label">Yahoo :</label>
+											<div class="controls"> <?php echo h($users['User']['yahoo']); ?>	</div>
 										</div>
+                                         <?php }?>
 										<div class="control-group" id="con">
-											<label class="control-label">Phone :</label>
-											<div class="controls"><?php echo h($users['User']['country']); ?></div>
+											<label class="control-label">City :</label>
+											<div class="controls"><?php echo h($users['User']['city']); ?></div>
 										</div>
                                         <div class="control-group" id="con">
-											<label class="control-label">IM Id :</label>
+											<label class="control-label">Country :</label>
+											<div class="controls"><?php echo h($coun['Country']['country_name']); ?></div>
+										</div>
+                                        <div class="control-group" id="con">
+											<label class="control-label">Zipcode</label>
 											<div class="controls"><?php echo h($users['User']['zipcode']); ?></div>
 										</div>
                                         
@@ -169,6 +181,7 @@ $( "#tabslu" ).tabs();
                                 <div id="tabs-3">
                                 <p>
                                  <?php 
+								 	//echo 'hi'.$exp['Experience']['city'];
 								  if(empty($exp))
 									  echo "No Records Found";
 									  else{ 
@@ -212,7 +225,10 @@ $( "#tabslu" ).tabs();
 										</div>
                                           <div class="control-group" id="con">
 											<label class="control-label" id="con1">Country :</label>
-											<div class="controls"> <?php echo h($exp['Experience']['country']); ?>	</div>
+											<div class="controls"> <?php
+											$exp_coun= ClassRegistry::init('Country')->find('first',array('conditions'=>array('iso_code2'=>$exp['Experience']['country'])));
+											//echo $exp['Experience']['country']
+											 echo h($exp_coun['Country']['country_name']); ?>	</div>
 										</div>
 										
 									</div>
@@ -260,7 +276,7 @@ $( "#tabslu" ).tabs();
                                 
                                   <form id="form-vid" class="form-horizontal ui-formwizard" method="post" novalidate="novalidate" _lpchecked="1" style="width:900px; margin-left:200px;">
                                 <fieldset style=" border: 1px solid #BBBBBB;">	
-              						<p id="leg"><b> Portpolio Video </b></p> 
+              						<p id="leg"><b> Portfolio Video </b></p> 
 									<?php 
 									  $i=1;
 									   if(empty($portvideo))
@@ -311,60 +327,20 @@ $( "#tabslu" ).tabs();
                                 
                                 <!-- Word/Pdf-->
                                
-                                  <form id="form-word" class="form-horizontal ui-formwizard" method="post" novalidate="novalidate" _lpchecked="1" style="width:900px; margin-left:200px;">
-                                <fieldset style=" border: 1px solid #BBBBBB;">	
-              						<p id="leg"><b> Portfolio Documents </b></p> 
-									<?php 
-									
-									  $i=1;
-									   if(empty($portdocument))
-									  echo "No Records Found";
-									  else{
-										 
-									  foreach ($portdocument as $portd): 
-									  $ex=explode('.',$portd['Portdocument']['document_file']); ?>
-                                      
-                                      <div id="form-wizard-1" class="step ui-formwizard-content" style="display: block; width:150px; float:left; padding:20px;">
-										<div class="control-group" id="con">
-											 <?php echo $portd['Portdocument']['document_title']; ?><br /> 
-											 <?php 
-												if($ex[1]=='pdf'){
-												echo $this->Html->image('PDFicon.png',array('border'=>0,'width'=>'','height'=>'','alt'=>'Resume','class'=>'pull-left img-polaroid'));
-												echo '<a href="'.BASE_URL.'files/portfolio-documents/'.$portd['Portdocument']['document_file'].'" target="_blank">'."Download".'<a>';
-												}
-												else{
-												echo $this->Html->image('microsoft-word.jpg',array('border'=>0,'alt'=>'Resume','width'=>'','height'=>'','class'=>'profile-photo','style'=>'border:1px solid #ccc')); 
-												echo '<a href="'.BASE_URL.'files/portfolio-documents/'.$portd['Portdocument']['document_file'].'" target="_blank">'."Download".'<a>';} ?> 
-                                               
-										</div>
-                                       
-										
-									</div>
-									<div id="form-wizard-1" class="step ui-formwizard-content" style="display: block; padding:20px;">
-										<div class="control-group" id="con">
-											 <?php //echo $portd['Portdocument']['audio_title']; ?><br /> 
-											
-                                               
-										</div>
-                                       
-										
-									</div>
-									<?php $i++; endforeach; } ?>
-								</fieldset>	
-								</form>
+                                  
                                 
                                  <!--Presentation-->
                                 
-                                <form id="form-pres" class="form-horizontal ui-formwizard" method="post" novalidate="novalidate" _lpchecked="1" style="width:900px; margin-top:20px;">
+                                <form id="form-pres" class="form-horizontal ui-formwizard" method="post" novalidate="novalidate" _lpchecked="1" style="width:900px;margin:20px 0 0 200px">
                                 <fieldset style=" border: 1px solid #BBBBBB;">	
-              						<p id="leg"><b> Portpolio Presentation </b></p> 
+              						<p id="leg"><b> Portfolio Presentation </b></p> 
 									<?php 
 									  $i=1;
 									   if(empty($portpresent))
 									  echo "No Records Found";
 									  else{
 									  foreach ($portpresent as $portp): ?>
-									<div id="form-wizard-1" class="step ui-formwizard-content" style="display: block; padding:20px;">
+								  <div id="form-wizard-1" class="step ui-formwizard-content" style="display: block; width:700px; float:left; padding:20px;">
 										<div class="control-group" id="con">
 											 <?php echo $portp['Portpresent']['present_title']; ?><br /> 
                                              <?php
@@ -382,6 +358,38 @@ $( "#tabslu" ).tabs();
 								</fieldset>	
 								</form>
                                 
+                                <form id="form-word" class="form-horizontal ui-formwizard" method="post" novalidate="novalidate" _lpchecked="1" style="width:900px; margin:20px 0 0 200px;">
+                                <fieldset style=" border: 1px solid #BBBBBB;">	
+              						<p id="leg"><b> Portfolio Documents </b></p> 
+									<?php 
+									
+									  $i=1;
+									   if(empty($portdocument))
+									  echo "No Records Found";
+									  else{
+									  foreach ($portdocument as $portd): 
+									  $ex=explode('.',$portd['Portdocument']['document_file']); ?>
+                                      <div id="form-wizard-1" class="step ui-formwizard-content" style="display: block; width:150px; float:left; padding:20px;">
+										<div class="control-group" id="con">
+											 <?php echo $portd['Portdocument']['document_title']; ?><br /> 
+											 <?php 
+												if($ex[1]=='pdf'){
+												echo $this->Html->image('PDFicon.png',array('border'=>0,'width'=>'','height'=>'','alt'=>'Resume','class'=>'pull-left img-polaroid'));
+												echo '<a href="'.BASE_URL.'files/portfolio-documents/'.$portd['Portdocument']['document_file'].'" target="_blank">'."Download".'<a>';
+												}
+												else{
+												echo $this->Html->image('microsoft-word.jpg',array('border'=>0,'alt'=>'Resume','width'=>'','height'=>'','class'=>'profile-photo','style'=>'border:1px solid #ccc')); 
+												echo '<a href="'.BASE_URL.'files/portfolio-documents/'.$portd['Portdocument']['document_file'].'" target="_blank">'."Download".'<a>';} ?> 
+										</div>
+									</div>
+									<div id="form-wizard-1" class="step ui-formwizard-content" style="display: block; padding:20px;">
+										<div class="control-group" id="con">
+											 <?php //echo $portd['Portdocument']['audio_title']; ?><br /> 
+										</div>
+									</div>
+									<?php $i++; endforeach; } ?>
+								</fieldset>	
+								</form>
                                 </p>
                                 
                                 </div>

@@ -2,8 +2,8 @@
        <div id="content">
         <div id="inner-content">
 <div class="about_para1" style="border-radius:10px; border:1px solid #d6d6d6; padding:20px; text-align:justify">
-		<h2><?php echo h($page['Staticpage']['sta_title']); ?> </h2>
-		<p><?php echo h(strip_tags($page['Staticpage']['sta_content'])); ?></p>
+		<h2><?php echo h($page['Staticpage']['sta_name']); ?> </h2>
+		<p><?php echo html_entity_decode(h($page['Staticpage']['sta_content'])); ?></p>
         
     </div>        
 </div>

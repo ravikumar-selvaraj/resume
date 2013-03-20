@@ -1,6 +1,6 @@
 <div class="row app-header">
             <div class="container ">
-                <h1>Contact</h1>
+                <h1><?php echo __("Contact");?></h1>
             </div>
         </div>
 
@@ -11,36 +11,36 @@
                     <div class="row">
                         <div class="span3">
                          <div class="control-group" id="contact_name" style="margin-bottom:0;">
-                          <label>Name</label>
-                            <input type="text" id="name" name="data[name]" class="span3" placeholder="Name">
+                          <label><?php echo __("Name");?></label>
+                            <input type="text" id="name" name="data[name]" class="span3" placeholder="">
                            <span id="contact_name_error" style="color:#B94A48"></span>
                           </div>
                           <div class="control-group" id="contact_email" style="margin-bottom:0;">
-                          <label>Email Address</label>
-                            <input type="text" id="SitecontactEmail" name="data[email]" class="span3" placeholder="Your email address">
+                          <label><?php echo __("Email");?></label>
+                            <input type="text" id="SitecontactEmail" name="data[email]" class="span3" placeholder="">
                             <span id="contact_email_error" style="color:#B94A48"></span>
                          </div>
                           <div class="control-group" id="contact_phone" style="margin-bottom:0;">
-                           <label>Phone</label>
-                            <input type="text" id="SitecontactPhone" name="data[phone]" class="span3" placeholder="Phone number">
+                           <label><?php echo __("Phone");?></label>
+                            <input type="text" id="SitecontactPhone" name="data[phone]" class="span3" placeholder="">
                             <span id="contact_phone_error" style="color:#B94A48"></span>
                           </div>
                          <div class="control-group" id="contact_sub" style="margin-bottom:0;">
-                           <label>Subject</label>
-                            <input type="text" id="SitecontactSubject" name="data[subject]" class="span3" placeholder="Subject">
+                           <label><?php echo __("Subject");?></label>
+                            <input type="text" id="SitecontactSubject" name="data[subject]" class="span3" placeholder="">
                             <span id="contact_sub_error" style="color:#B94A48"></span>
                           </div>
                         </div>
                         <div class="span5">
                         <div class="control-group" id="contact_mes" style="margin-bottom:0;">
-                            <label>Message</label>
+                            <label><?php echo __("Message");?></label>
                             <textarea name="data[message]" id="SitecontactMessage" class="input-xlarge span5" rows="10"></textarea>
                              <span id="contact_mes_error" style="color:#B94A48"></span>
-							 <label>Captcha</label>
+							 <label><?php echo __("Captcha");?></label>
 							 <?php echo $this->Recaptcha->display(); ?>
                          </div>
                         </div>
-                        <button type="submit" class="btn btn-primary pull-right" id="contact">Send</button>
+                        <button type="submit" class="btn btn-primary pull-right" id="contact"><?php echo __("Send");?></button>
                     </div>
                 </form>
 

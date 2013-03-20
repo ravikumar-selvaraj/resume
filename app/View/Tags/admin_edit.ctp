@@ -16,6 +16,12 @@
 					  <div class="tab-pane active in" id="home">
 					<form action="" name="career" id="mycareer" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="data[tid]" value="<?php echo $tags['Tag']['tid'];?>"  />
+					<input name="data[lan]" type="hidden" value="<?php echo $this->params['pass'][0];?>" />
+						<label>Language</label>
+						<select name="data[lan1]" id="lan" class="validate[required] input-xlarge" onchange="MM_jumpMenu(this.value);">
+						  <option value="<?php echo BASE_URL;?>admin/tags/edit/eng/<?php echo $this->params['pass'][1];?>" <?php if($this->params['pass'][0] == 'eng') echo 'selected="selected"';;?>>English</option>
+						  <option value="<?php echo BASE_URL;?>admin/tags/edit/spa/<?php echo $this->params['pass'][1];?>" <?php if($this->params['pass'][0] == 'spa') echo 'selected="selected"';?>>Spanish</option>
+						</select>
                     <label>Tag name</label>
 						<input type="text" name="data[tag_name]" id="title" value="<?php echo $tags['Tag']['tag_name'];?>" class="validate[required] input-xlarge">
                     

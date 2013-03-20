@@ -102,8 +102,10 @@ class TagsController extends AppController {
  * @return void
  */
 	public function admin_index() {
+		$this->checkadmin();
 		$this->Tag->recursive = 0;
-		$this->set('tags', $this->paginate());
+		//$this->set('tags', $this->paginate());
+		$this->set('tags', $this->Tag->find('all',array('conditions'=>array('lan'=>'eng'))));
 	}
 
 /**
@@ -114,6 +116,7 @@ class TagsController extends AppController {
  * @return void
  */
 	public function admin_view($id = null) {
+		$this->checkadmin();
 		if (!$this->Tag->exists($id)) {
 			throw new NotFoundException(__('Invalid tag'));
 		}
@@ -127,14 +130,31 @@ class TagsController extends AppController {
  * @return void
  */
 	public function admin_add() {
+		$this->checkadmin();
 		if ($this->request->is('post')) {
-			$this->Tag->create();
-			if ($this->Tag->save($this->request->data)) {
-				//pr($this->request->data); die;
+			if(!empty($this->request->data)){
+				
+				$str = explode("&",$this->request->data['tag_name']);
+					$link='';
+				foreach($str as $str){
+					$link .=$str;
+				}
+				$this->request->data['link'] = strtolower(str_replace(' ','_',$link));
+				$this->request->data['key'] = $this->str_rand();
+				$this->Tag->save($this->request->data);
+				
+				$last_id = $this->Tag->getInsertID();
+				$this->request->data = '';
+				$details = $this->Tag->find('first',array('conditions'=>array('tid'=>$last_id)));
+				if($details['Tag']['lan'] == 'eng')				
+				$this->request->data['lan'] = 'spa';
+				else 
+				$this->request->data['lan'] = 'eng';
+				$this->request->data['link'] = $details['Tag']['link'];
+				$this->request->data['key'] = $this->str_rand();
+				$this->Tag->saveAll($this->request->data);
 				$this->Session->setFlash(__('The tag has been saved'));
 				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(__('The tag could not be saved. Please, try again.'));
 			}
 		}
 	}
@@ -146,10 +166,9 @@ class TagsController extends AppController {
  * @param string $id
  * @return void
  */
-	public function admin_edit($id = null) {
-		if (!$this->Tag->exists($id)) {
-			throw new NotFoundException(__('Invalid tag'));
-		}
+	public function admin_edit($lan = null,$link = null) {
+		$this->checkadmin();
+		
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Tag->save($this->request->data)) {
 				$this->Session->setFlash(__('The tag has been saved'));
@@ -158,7 +177,7 @@ class TagsController extends AppController {
 				$this->Session->setFlash(__('The tag could not be saved. Please, try again.'));
 			}
 		} else {
-			$options = array('conditions' => array('Tag.' . $this->Tag->primaryKey => $id));
+			$options = array('conditions' => array('lan'=>$lan,'link'=>$link));
 			$this->set('tags',$this->Tag->find('first', $options));
 		}
 	}

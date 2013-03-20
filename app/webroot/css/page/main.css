@@ -346,6 +346,7 @@ a.return-dash{
     border: #EAEAEA 1px solid;
     padding: 10px;
     border-radius: 8px;
+	margin-bottom:20px;
 }
 
 .right-box h2{
@@ -358,6 +359,16 @@ a.return-dash{
 
 .newsletter{
     background: #F1F1F1 url(../../img/mail.png) no-repeat right bottom;
+}
+
+.tip-advice{
+    background: #F1F1F1;
+}
+
+.tip-advice p{
+    color: #7E7E7E;
+    font-size: 13px;
+    line-height: 20px;
 }
 
 .newsletter, .newsletter label{
@@ -526,4 +537,10 @@ h2#myModalLabel{
 .footer-links li a:hover{
     text-decoration: none;
     color: #d1ecff;
+}
+
+
+a .home_menu_active 
+{
+	color:#FCFCFC;
 }

@@ -65,7 +65,7 @@ class EmailcampaignsController extends AppController {
 			//$this->request->data['created_date']=$date;
 			//pr($this->request->data);exit;
 			//$this->Emailcampaign->create();
-			$this->request->data['message'] = htmlentities($this->request->data['message'],ENT_QUOTES);
+			//$this->request->data['message'] = htmlentities($this->request->data['message'],ENT_QUOTES);
 			$this->Emailcampaign->save($this->request->data);
 				$this->Session->setFlash(__('The email campaign has been saved'));
 				$this->redirect(array('action' => 'index'));

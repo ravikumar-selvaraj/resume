@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Bootstrap Admin</title>
+    <title>Cvomg Admin</title>
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -18,6 +18,12 @@
 		jQuery("#mycampaign").validationEngine();
 		jQuery("#users").validationEngine();
 	});
+</script>
+
+<script language="JavaScript">
+function MM_jumpMenu(selObj){
+window.location=selObj;
+}
 </script>
    
 
@@ -71,15 +77,15 @@
                     <li><a href="<?php echo BASE_URL;?>admin/settings" class="hidden-phone visible-tablet visible-desktop" role="button">Settings</a></li>
                     <li id="fat-menu" class="dropdown">
                         <a href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="icon-user"></i> <?php echo $_SESSION['Adminuser']['adminname']; ?>
+                            <i class="icon-user"></i> <?php echo $this->Session->read('Adminuser.adminname');//echo $_SESSION['Adminuser']['adminname']; ?>
                             <i class="icon-caret-down"></i>
                         </a>
 
                         <ul class="dropdown-menu">
                      
-                            <li><a tabindex="-1" href="<?php echo BASE_URL;?>admin/adminusers/myaccount/<?php echo $_SESSION['Adminuser']['aid'] ?>">My Account</a></li>
+                            <li><a tabindex="-1" href="<?php echo BASE_URL;?>admin/adminusers/myaccount/<?php echo $this->Session->read('Adminuser.aid')  ?>">My Account</a></li>
 							<li class="divider"></li>
-							<li><a tabindex="-1" href="<?php echo BASE_URL;?>admin/adminusers/changepassword/<?php echo $_SESSION['Adminuser']['aid'] ?>">Change password</a></li>
+							<li><a tabindex="-1" href="<?php echo BASE_URL;?>admin/adminusers/changepassword/<?php echo $this->Session->read('Adminuser.aid')?>">Change password</a></li>
                             <li class="divider"></li>
                             <li><a tabindex="-1" class="visible-phone" href="#">Settings</a></li>
                             <li class="divider visible-phone"></li>
@@ -99,12 +105,13 @@
     
     <div class="sidebar-nav">
         <form class="search form-inline">
-            <input type="text" placeholder="Search...">
+            <!--<input type="text" placeholder="Search...">-->
         </form>
-
-        <a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>Dashboard</a>
+		
+		<a class="nav-header" href="<?php echo BASE_URL;?>adminpanel/dashboard"><i class="icon-dashboard"></i>Dashboard</a>
+        <!--<a href="#dashboard-menu" class="nav-header" data-toggle="collapse"><i class="icon-dashboard"></i>Dashboard</a>
         <ul id="dashboard-menu" class="nav nav-list collapse in">
-            <li><a href="<?php echo BASE_URL;?>admin/adminusers">Adminusers</a></li>
+            <li><a href="<?php echo BASE_URL;?>adminpanel/dashboard">Dashboard</a></li>
             <li ><a href="<?php echo BASE_URL;?>admin/blogs">Blog</a></li>
             <li ><a href="<?php echo BASE_URL;?>admin/careers">Career Advice</a></li>
             <li ><a href="<?php echo BASE_URL;?>admin/staticpages">Static Pages</a></li>
@@ -112,31 +119,41 @@
             <li ><a href="<?php echo BASE_URL;?>admin/users">User Management</a></li>
             <li ><a href="<?php echo BASE_URL;?>admin/sitecontacts">Contact Management</a></li>
 			<li ><a href="<?php echo BASE_URL;?>admin/tags">Tags Management</a></li>
-        </ul>
+			<li ><a href="<?php echo BASE_URL;?>admin/tips">Tips Management</a></li>
+        </ul>-->
 
-       <!-- <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Account<span class="label label-info">+3</span></a>
+        <a href="#accounts-menu" class="nav-header" data-toggle="collapse"><i class="icon-briefcase"></i>Account</a>
         <ul id="accounts-menu" class="nav nav-list collapse">
-            <li ><a href="sign-in.html">Sign In</a></li>
-            <li ><a href="sign-up.html">Sign Up</a></li>
-            <li ><a href="reset-password.html">Reset Password</a></li>
+             <li><a href="<?php echo BASE_URL;?>admin/adminusers">Adminusers</a></li>
+			  <li><a href="<?php echo BASE_URL;?>admin/adminusers/add">New admin</a></li>
         </ul>
-
-        <a href="#error-menu" class="nav-header collapsed" data-toggle="collapse"><i class="icon-exclamation-sign"></i>Error Pages <i class="icon-chevron-up"></i></a>
-        <ul id="error-menu" class="nav nav-list collapse">
-            <li ><a href="403.html">403 page</a></li>
-            <li ><a href="404.html">404 page</a></li>
-            <li ><a href="500.html">500 page</a></li>
-            <li ><a href="503.html">503 page</a></li>
-        </ul>
-
-        <a href="#legal-menu" class="nav-header" data-toggle="collapse"><i class="icon-legal"></i>Legal</a>
-        <ul id="legal-menu" class="nav nav-list collapse">
-            <li ><a href="privacy-policy.html">Privacy Policy</a></li>
-            <li ><a href="terms-and-conditions.html">Terms and Conditions</a></li>
-        </ul>		
 		
-        <a href="help.html" class="nav-header" ><i class="icon-question-sign"></i>Help</a>
-        <a href="faq.html" class="nav-header" ><i class="icon-comment"></i>Faq</a>-->
+		<a href="#static-menu" class="nav-header" data-toggle="collapse"><i class="icon-tasks"></i>Static Pages</a>
+        <ul id="static-menu" class="nav nav-list collapse">
+             <li ><a href="<?php echo BASE_URL;?>admin/staticpages">Pages</a></li>
+        </ul>
+		
+		<a href="#blogs-menu" class="nav-header" data-toggle="collapse"><i class="icon-comment"></i>Blog</a>
+        <ul id="blogs-menu" class="nav nav-list collapse">
+             <li ><a href="<?php echo BASE_URL;?>admin/blogs">Blog</a></li>
+			  <li ><a href="<?php echo BASE_URL;?>admin/blogs/add">New blog</a></li>
+        </ul>
+		
+		<a href="#career-menu" class="nav-header" data-toggle="collapse"><i class="icon-cloud"></i>Career Advice</a>
+        <ul id="career-menu" class="nav nav-list collapse">
+             <li ><a href="<?php echo BASE_URL;?>admin/careers">Career Advice</a></li>
+			  <li ><a href="<?php echo BASE_URL;?>admin/careers">New career advice</a></li>
+        </ul>
+		
+		<a href="#user-menu" class="nav-header" data-toggle="collapse"><i class="icon-user"></i>Users</a>
+        <ul id="user-menu" class="nav nav-list collapse">
+             <li ><a href="<?php echo BASE_URL;?>admin/users">Users</a></li>
+        </ul>
+		<a class="nav-header" href="<?php echo BASE_URL;?>admin/features"><i class="icon-star"></i>Features</a>
+		<a class="nav-header" href="<?php echo BASE_URL;?>admin/emailcampaigns"><i class="icon-envelope"></i>Email Campaign</a>
+		<a class="nav-header" href="<?php echo BASE_URL;?>admin/tags"><i class="icon-tags"></i>Tags</a>
+		<a class="nav-header" href="<?php echo BASE_URL;?>admin/tips"><i class="icon-tint"></i>Tips</a>
+		<a class="nav-header" href="<?php echo BASE_URL;?>admin/sitecontacts"><i class="icon-phone"></i>Contacts<span class=""></span></a>
     </div>
 	
 	
@@ -149,15 +166,52 @@
         $(function() {
             $('.demo-cancel-click').click(function(){return false;});
         });
-		$(".close").click(function(){
-			<?php $_SESSION['Message']['flash'] = ''; ?>
-			});
+			
+			//$('.icon-eye-open').tooltip();
     </script>
 	 <script>
 $(document).ready(function() {
 $('#example').dataTable( {
 "sPaginationType": "bootstrap"
 } );
+var tr = 1;
+$('#example tbody tr').each(function(){
+	$(this).find('td:nth-child(1)').html(tr);
+	tr++; 
+});
+$('#search').keyup(function() {
+var tr = 1;
+$('#example tbody tr').each(function(){
+	$(this).find('td:nth-child(1)').html(tr);
+	$(this).find('td.dataTables_empty').html('No matching records found');
+	tr++; 
+});
+});
+$('.sorting').click(function() {
+var tr = 1;
+$('#example tbody tr').each(function(){
+	$(this).find('td:nth-child(1)').html(tr);
+	tr++; 
+});
+});
+$('.pagination').click(function() {
+var tr = ($('.pagination').find('ul li.active a').text() -1) * $('#pageselect').val() + 1;
+$('#example tbody tr').each(function(){
+	$(this).find('td:nth-child(1)').html(tr);
+	tr++; 
+});
+});
+$('#pageselect').click(function() {
+var tr = ($('.pagination').find('ul li.active a').text() -1) * $('#pageselect').val() + 1;
+$('#example tbody tr').each(function(){
+	$(this).find('td:nth-child(1)').html(tr);
+	tr++; 
+});
+$(this).prev('span').html($(this).find("option:selected").text());
+});
+$('#actionmsg').live('change',function() {
+$(this).prev('span').html($(this).find("option:selected").text());
+});
 } );
 </script>
 	

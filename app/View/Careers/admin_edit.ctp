@@ -17,6 +17,13 @@
 					  <div class="tab-pane active in" id="home">
 					<form action="" name="career" id="mycareer" method="post" enctype="multipart/form-data">
                     <input type="hidden" value="<?php echo h($careers['Career']['cid']); ?>" name="data[cid]" />
+					<input name="data[lan]" type="hidden" value="<?php echo $this->params['pass'][0];?>" />
+						<label>Language</label>
+						<select name="data[lan1]" id="lan" class="validate[required] input-xlarge" onchange="MM_jumpMenu(this.value);">
+						  <option value="<?php echo BASE_URL;?>admin/careers/edit/eng/<?php echo $this->params['pass'][1];?>" <?php if($this->params['pass'][0] == 'eng') echo 'selected="selected"';;?>>English</option>
+						  <option value="<?php echo BASE_URL;?>admin/careers/edit/spa/<?php echo $this->params['pass'][1];?>" <?php if($this->params['pass'][0] == 'spa') echo 'selected="selected"';?>>Spanish</option>
+						</select>
+						
                     <label>Title</label>
 						<input type="text" name="data[title]" id="title" value="<?php echo h($careers['Career']['title']); ?>" class="validate[required] input-xlarge">
                     <label>Category</label>
@@ -32,9 +39,11 @@
 					<option value="<?php echo $tag['Tag']['tag_name'];?>" <?php if(in_array($tag['Tag']['tag_name'],explode(',',$careers['Career']['tag']))) echo 'selected="selected"';?>><?php echo $tag['Tag']['tag_name'];?></option>
 					<?php } ?>
 					</select>
+					<?php if($this->request->data['Career']['image'] !='') { ?>
 						<label>Old Image</label><?php echo $this->html->image('career-image/small/'.$careers['Career']['image'],array('border'=>0,'alt'=>h($careers['Career']['title']))); ?>
+						<?php $opt = 'optional'; } else $opt = 'required'; ?>
 						<label>Image</label>
-						<input type="file" name="data[image]" id="image" class="validate[optional,custom[image]] input-xlarge">
+						<input type="file" name="data[image]" id="image" class="validate[<?php echo $opt;?>,custom[image]] input-xlarge">
 						<label>Content</label>
 						<textarea name="data[content]" id="content" rows="5" value="" class="validate[required] input-xlarge ckeditor"><?php echo h($careers['Career']['content']); ?></textarea>
 						<label>Status</label>

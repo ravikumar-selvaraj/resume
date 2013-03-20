@@ -29,7 +29,7 @@
 	$app = explode('app', $_SERVER['PHP_SELF']);
 	$url = explode($app[0], $_SERVER['REQUEST_URI']);
 
-if(isset($_SESSION['User']['uid'])) {
+if($this->Session->read('User.uid')) {
 ?>
         <!-- RESUME NAV BAR -->
         <div class="row resume-navigations">

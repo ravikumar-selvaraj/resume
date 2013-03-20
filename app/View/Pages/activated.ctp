@@ -3,14 +3,14 @@
        <div id="content">
         <div id="inner-content">
 <div class="about_para1" style="border-radius:10px; border:1px solid #d6d6d6; padding:20px; text-align:justify">
-		<h2><?php echo 'Validation Error'; ?> </h2>
+		<h2><?php echo __("Validation Error"); ?> </h2>
 		<p><?php
 		
-		echo 'Your email ('.$user['User']['email'].') is already Activated, you can log in ';
+		echo __("Your email (").$user['User']['email'].__(") is already Activated, you can log in");
 		//echo $this->Html->link('there',array(''),array('data-target'=>'#login')); 
 		?>
 		
-	  <button type="button" data-toggle="modal" data-target="#login" class="btn secondary_btn " ><?php echo __("there");?></button></p>
+	  <button type="button" data-toggle="modal" data-target="#login" class="btn secondary_btn " ><?php echo __("Here");?></button></p>
         
     </div>        
 </div>
