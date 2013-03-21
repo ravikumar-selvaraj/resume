@@ -203,11 +203,11 @@ $('.sub-config a').click(function (e) {
 						alert(data.error);
 				} else {										
 					if(data.msg=='success'){
-						$('#mylogo2').html('<img src="<?php echo BASE_URL;?>img/users/small/'+data.image+'" style="width:40px;"/><span id="delme1"><a id="deluploadlogo" style="cursor:pointer; color:#f00;margin:0 0 0 10px;"><?php echo $this->Html->image('delete.png',array('width'=>'18','height'=>'18'));?></a></span>');
+						$('#mylogo2').html('<img src="<?php echo BASE_URL;?>img/users/small/'+data.image+'" style="width:40px;height:50px"/><span id="delme1"><a id="deluploadlogo" style="cursor:pointer; color:#f00;margin:0 0 0 10px;"><?php echo $this->Html->image('delete.png',array('width'=>'16','height'=>'12'));?></a></span>');
 						$('#mylogos').val(data.image);
 						$('#ploading').hide();
 						$('#mylogo2').show();
-						$('#mylogo2').css({'width':'60px', 'position':'relative', 'float':'right','bottom':'25px'});
+						$('#mylogo2').css({'width':'80px', 'position':'relative', 'float':'right','bottom':'25px'});
 						//$('#makeheight').css({'height':'25px'});
 					}
 				

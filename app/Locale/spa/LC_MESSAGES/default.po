@@ -761,11 +761,20 @@ msgstr "Su mensaje fue enviado con éxito, el administrador se comunicará con u
 msgid "The Captcha code mismatch."
 msgstr "El desajuste código Captcha."
 
-msgid "Captcha"
-msgstr "Captcha"
+msgid "You're almost there!"
+msgstr "Ya casi ha terminado!"
 
-msgid "Captcha"
-msgstr "Captcha"
+msgid "Thanks for registering with us"
+msgstr "Gracias por registrarse con nosotros"
 
-msgid "Captcha"
-msgstr "Captcha"
+msgid "If you haven't received an email from us in 15 minutes, check your spam folder."
+msgstr "Si usted no ha recibido un correo electrónico de nosotros en 15 minutos, revise su carpeta de correo no deseado."
+
+msgid "Need help?"
+msgstr "¿Necesitas ayuda?"
+
+msgid "English"
+msgstr "Inglés"
+
+msgid "Spanish"
+msgstr "español"

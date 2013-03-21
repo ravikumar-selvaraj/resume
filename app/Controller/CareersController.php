@@ -40,19 +40,19 @@ class CareersController extends AppController {
 		$this->Session->write('Config.language',Configure::read('Config.language'));
 		
 		if($this->request->is('post')){
-			$this->paginate = array('conditions' => array('title LIKE ' =>"%".$this->request->data('search')."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
+			$this->paginate = array('conditions' => array('title LIKE ' =>"%".$this->request->data('search')."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active','title !='=>''),'limit' =>5);
 			$this->set('careers', $this->paginate());
 		}
 		if(!empty($this->params['pass'][0]) && $this->params['pass'][0] != 'tags' ){
-			$this->paginate = array('conditions' => array('category LIKE ' =>"%".$this->params['pass'][0]."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
+			$this->paginate = array('conditions' => array('category LIKE ' =>"%".$this->params['pass'][0]."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active','title !='=>''),'limit' =>5);
 			$this->set('careers', $this->paginate());
 		}
 		else if(!empty($this->params['pass'][0]) && $this->params['pass'][0] == 'tags' ){
-			$this->paginate = array('conditions' => array('tag LIKE ' =>"%".$this->params['pass'][1]."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
+			$this->paginate = array('conditions' => array('tag LIKE ' =>"%".$this->params['pass'][1]."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active','title !='=>''),'limit' =>5);
 			$this->set('careers', $this->paginate());
 		}
 		else{
-			$this->paginate = array('conditions' => array('lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
+			$this->paginate = array('conditions' => array('lan'=>$this->Session->read('Config.language'),'status'=>'Active','title !='=>''),'limit' =>5);
 			$this->set('careers', $this->paginate());
 		}
 		

@@ -1571,6 +1571,7 @@ class UsersController extends AppController {
 	function resumedelete()
 	{
 		if($this->request->is('post')){
+			
 			$model=$this->request->data['model'];
 			$wid=$this->request->data['wid'];
 			$did=$this->request->data['did'];
@@ -1582,6 +1583,20 @@ class UsersController extends AppController {
 		}
 		
 	}
+	function blogdelete()
+	{
+	$this->layout='';
+			  $this->render(false);
+				//$table = $_REQUEST['table'];		
+				//$field = $_REQUEST['field'];
+				$value = $_REQUEST['value'];
+				
+				$this->request->data['rss_feed']='';
+				$this->request->data['uid']=$_REQUEST['value'];
+				$this->User->save($this->request->data);
+				//pr($this->request->data);exit;
+				echo 'yes';
+				}
 	
 	function changetemplate(){
 		//$template=$_REQUEST['id'];
@@ -1621,10 +1636,10 @@ class UsersController extends AppController {
 		else if(empty($rec))
 		echo
 		 '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="padding-right:5px;" onclick="closepopup()">×</button>
-		 <div class="norecm "><textarea rows="2" cols="5" id="recm_code23" name="data[present_code]" style="width:242px;"></textarea></div>
+		 <div class="norecm "><textarea rows="2" cols="5" id="recm_code'.$skill.'" name="data[present_code]" style="width:242px;" class="myreccont"></textarea></div>
 		 <div class="resumebtn">
 			 <input type="hidden" name="" id="fetchid" value="'.$skill.'"  class="myskill" />
-			 <button class="btn btn-large btn-primary disabled recmbtn1" id="recmbtn" style="cursor:pointer" onClick="sentrecomment()"> 
+			 <button class="btn btn-large btn-primary disabled recmbtn1 butrec_m" id="recmbtn" style="cursor:pointer" > 
 			 <img src="'.BASE_URL.'img/hand_pro_icon.png" alt="" style="padding-right:15px;">'.__('Recomment '.Configure::read('userpage').'').'</button>
 			  <br /> <br />
 			 <a href="#" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline" data-toggle="modal" data-target=".recommendtr">'.__('See all recommentation').'    </a>
@@ -1656,7 +1671,7 @@ class UsersController extends AppController {
 		echo '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="padding-right:5px;" onclick="closepopup()">×</button><div class="norecm success_rec">
       '.__('Your recommendation sent successfully waiting for approval').'
      <br /> <br />
-     <a href="'.BASE_URL.'/'.Configure::read('userpage').'" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline">'.__('Back to resume').'</a>
+     <a href="" style="color:#397; cursor:pointer; font-size:12px; border:none; text-decoration:underline">'.__('Back to resume').'</a>
      </div>';
 		}
 		else

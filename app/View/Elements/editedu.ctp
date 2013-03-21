@@ -6,7 +6,7 @@
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                
-                                <h2 id="myModalLabel" style="background:none; color:#000; font-size:24px;"><?php echo __("Edit Education");?></h2>
+                                <h2 id="myModalLabel" style="background:#fff; color:#000; font-size:24px;"><?php echo __("Edit Education");?></h2>
                             </div>
 
                             <div class="modal-body" id="for_education_edit12">

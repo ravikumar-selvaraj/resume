@@ -45,10 +45,10 @@ class BlogsController extends AppController {
 		$this->Session->write('Config.language',Configure::read('Config.language'));
 		
 		if($this->request->is('post')){
-			$this->paginate = array('conditions' => array('title LIKE ' =>"%".$this->request->data('search')."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
+			$this->paginate = array('conditions' => array('title LIKE ' =>"%".$this->request->data('search')."%",'lan'=>$this->Session->read('Config.language'),'status'=>'Active','title !='=>''),'limit' =>5);
 			$this->set('blogs', $this->paginate());
 		} else {
-			$this->paginate = array('conditions' => array('lan'=>$this->Session->read('Config.language'),'status'=>'Active'),'limit' =>5);
+			$this->paginate = array('conditions' => array('lan'=>$this->Session->read('Config.language'),'status'=>'Active','title !='=>''),'limit' =>5);
 			$this->set('blogs', $this->paginate());
 		}
 	}

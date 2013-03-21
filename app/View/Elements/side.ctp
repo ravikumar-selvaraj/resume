@@ -23,8 +23,8 @@ if($this->Session->read('User')) {
     $img=ClassRegistry::init('User')->find(array('uid'=>$this->Session->read('User.uid')));
 	//pr($this->Session->read('User.uid'));pr($img);exit;
     if(empty($img['User']['image']) && $img['User']['username']==Configure::read('userpage')) { ?>
-    <img src="<?php echo Router::url('/'); ?>img/page/profile_pic_mini.jpg" alt="CVomg - The best way to show yourself" height="20" width="20"> <?php } else { ?>
-    <img src="<?php echo Router::url('/'); ?>img/user-images/small/<?php echo $img['User']['image']; ?>" height="20" width="20">
+    <img src="<?php echo Router::url('/'); ?>img/page/profile_pic_mini.jpg" alt="CVomg - The best way to show yourself" style="height:20px; width:20px;"> <?php } else { ?>
+    <img src="<?php echo Router::url('/'); ?>img/user-images/small/<?php echo $img['User']['image']; ?>" style="height:20px; width:20px;">
     <?php } ?> 
     
     
@@ -115,7 +115,13 @@ if($this->Session->read('User')) {
     <?php } ?>
     
     <li class="my-links-nav"><a href="" type="button" data-toggle="modal" data-target="#mylink" class=""><span><?php echo __("My Links");?></span></a></li>
+      <?php if(empty($new['User']['rss_feed'])) {?>
     <li class="blog-nav"><a href="" type="button" data-toggle="modal" data-target="#blogs" class=""><span><?php echo __("Blog");?></span></a></li>
+    <?php }else {?>
+      
+         <li class="blog-nav"><a href="" type="button" data-toggle="modal" data-target="#blogs_msg" class=""><span><?php echo __("Blog");?></span></a></li>
+
+    <?php } ?>
     </ul>					
     
     </div>
@@ -385,9 +391,9 @@ if(($this->Session->read('User.username')==Configure::read('userpage'))) {
         ">
         <?php 
         if(empty($new['User']['image']))
-        echo $this->Html->image('profile_pic_default.jpg',array('border'=>0,'width'=>'70','height'=>'70','alt'=>'Resume','class'=>'profile-photo'));
+        echo $this->Html->image('profile_pic_default.jpg',array('border'=>0,'style'=>'width:70px;height:70px;','alt'=>'Resume','class'=>'profile-photo'));
         else
-        echo $this->Html->image('user-images/small/'.$new['User']['image'],array('border'=>0,'width'=>'70','height'=>'70','alt'=>'Resume','class'=>'profile-photo')); ?> 
+        echo $this->Html->image('user-images/small/'.$new['User']['image'],array('border'=>0,'style'=>'width:70px;height:70px;','alt'=>'Resume','class'=>'profile-photo')); ?> 
         <div class="info">
         <?php 
         if(!empty($new['User']['country'])) {echo $cou['Country']['country_name']."<br>";}
@@ -400,9 +406,9 @@ if(($this->Session->read('User.username')==Configure::read('userpage'))) {
         <div class="profile_image">
         <?php 
         if(empty($new['User']['image']))
-        echo $this->Html->image('profile_pic_default.jpg',array('border'=>0,'width'=>'70','height'=>'70','alt'=>'Resume','class'=>'profile-photo'));
+        echo $this->Html->image('profile_pic_default.jpg',array('border'=>0,'style'=>'width:70px;height:70px;','alt'=>'Resume','class'=>'profile-photo'));
         else
-        echo $this->Html->image('user-images/small/'.$new['User']['image'],array('border'=>0,'width'=>'70','height'=>'70','alt'=>'Resume','class'=>'profile-photo'));
+        echo $this->Html->image('user-images/small/'.$new['User']['image'],array('border'=>0,'style'=>'width:70px;height:70px;','alt'=>'Resume','class'=>'profile-photo'));
         
         //echo $this->Html->image('user-images/small/'.$new['User']['image'],array('border'=>0,'width'=>'70','height'=>'70','alt'=>'Resume','class'=>'profile-photo')); ?> 
         <a href="" type="button" data-toggle="modal" data-target="#edit_pic" style="float:left"><?php echo __("Edit photo");?></a>

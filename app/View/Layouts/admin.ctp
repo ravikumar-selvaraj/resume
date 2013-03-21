@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+	<link rel="icon" href="<?php echo BASE_URL; ?>app/webroot/favicon.ico" type="image/x-icon" />
 <?php echo $this->html->css(array('lib/bootstrap/css/bootstrap','stylesheets/theme','lib/font-awesome/css/font-awesome','validationEngine.jquery','demo_table','demo_table_jui')); 
      echo $this->html->script(array('jquery-1.7.2.min','jquery.dataTables','bootstrap','jquery.validationEngine','languages/jquery.validationEngine-en')); 
 ?>

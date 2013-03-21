@@ -12,7 +12,7 @@ $catlist=ClassRegistry::init('Country')->find('all',array('conditions'=>array(''
       
     <div class="modal-header" style="margin-bottom:10px;padding-bottom:0px;"> 
      <button type="button" rel="<?php echo $exp['Experience']['eid'];?>" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h2 id="myModalLabel" style="background:none; color:#000; font-size:24px;"><?php echo __("Professional Experience");?></h2>
+      <h2 id="myModalLabel" style="background:#fff; color:#000; font-size:24px;"><?php echo __("Professional Experience");?></h2>
     </div>
    
     <div class="modal-body" style="padding-top:0px;" ><!--<div class="pull-right" id="old-img" style="padding-right:35px;">

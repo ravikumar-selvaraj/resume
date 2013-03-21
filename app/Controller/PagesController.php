@@ -135,12 +135,16 @@ class PagesController extends AppController {
 				 $link = BASE_URL.'/pages/useractivation/'.$this->request->data['user_key'];
 				 $options = array($this->request->data['email'],$this->request->data['email'],$link);
 				 $this->emailoptions(2,$options);
-				 $this->Session->setFlash(__('To complete your registration, please check your e-mail to validate your Cvomg Account'));
-				 $this->redirect(array('action'=>'index'));
+				 //$this->Session->setFlash(__('To complete your registration, please check your e-mail to validate your Cvomg Account'));
+				 $this->redirect(array('action'=>'register_success'));
 			 } else {
 				 
 			}
 		 $this->render(false);
+	 }
+	 
+	 public function register_success() {
+		 
 	 }
 	 
 	 public function session_set(){

@@ -5,7 +5,7 @@
  
 <div class="modal-header" style="margin-bottom:10px;padding-bottom:0px;">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-<h2 id="myModalLabel" style="font-size:24px; color:#000; background:none"><?php echo __("Interest");?></h2>
+<h2 id="myModalLabel" style="font-size:24px; color:#000; background:#fff"><?php echo __("Interest");?></h2>
 </div>
         <form class="form-horizontal" name="Add-Education" action="<?php echo BASE_URL; ?>users/edit_interests" method="post">
         <input type="hidden" name="data[iid]" value="<?php echo $int['Interest']['iid'];?>"  />

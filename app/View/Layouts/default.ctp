@@ -8,9 +8,10 @@
 <meta name="author" content="" />
 <meta name="copyright" content="" />
 <!--<meta http-equiv="refresh" content="0; url=http://www.photomodel.ca/">-->
-<meta http-equiv="refresh" content="0; url=<?php echo BASE_URL; ?>">
+<meta http-equiv="refresh" content="0; url=<?php echo BASE_URL; ?>users/errorpage">
 <link rel="shortcut icon" href="<?php echo BASE_URL; ?>favicon.ico" />
 <link rel="stylesheet" type="text/css" href="<?php echo BASE_URL; ?>404/404-styles.css" />
-</head><body>
-	
-</body></html>
+</head>
+<body>
+</body>
+</html>

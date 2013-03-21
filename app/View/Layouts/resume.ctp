@@ -9,6 +9,7 @@
         <title>CVomg _ Beautifully Simple Online Resume Builder _ Maker _ Generator</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
+		<link rel="icon" href="<?php echo BASE_URL; ?>app/webroot/favicon.ico" type="image/x-icon" />
 
       <?php	
 		echo $this->html->css(array('user/normalize.min','user/bootstrap','user/datepicker','user/bootstrapSwitch','user/compassCV','user/compassCVEdit')); 
@@ -1349,7 +1350,7 @@ $("#general_settings_edit").click(function(){
 <!--Footer recommend-->
  <span style="display:none" class="myrecval">edit</span>
 <div class="recommend-fix" style="display:none" id="refoot">
-            <a href="" class="add-recommend pull-left" data-toggle="modal" data-target=".recommendtr" onmouseover="rec_div_show('rec_edu_edit')" onmouseout="rec_div_hide('rec_edu_edit')" ><img src="<?php echo BASE_URL; ?>img/hand_pro_icon.png" alt="" ><?php echo __('Recommendation'); ?></a>
+            <a href="" class="add-recommend pull-left" data-toggle="modal" data-target=".recommendtr" onMouseOver="rec_div_show('rec_edu_edit')" onMouseOut="rec_div_hide('rec_edu_edit')" ><img src="<?php echo BASE_URL; ?>img/hand_pro_icon.png" alt="" ><?php echo __('Recommendation'); ?></a>
             <div class="recommend-skillsfix span5 offset7" style="margin-left:500px; width:480px;">
             <?php  $i=1; $j=1;
 			if(empty($recedu))
@@ -1392,14 +1393,7 @@ $("#general_settings_edit").click(function(){
     <a href="#" class="btn btn-primary" data-toggle="modal" data-target=".recommendtr" style="color:#fff; cursor:pointer" onClick="recclose()">View</a>
   </div>
 </div>
-     <script>
-     $("#mycl").mouseover(function(){
-		$(".myrecval").show();
-	});
-	$("#mycl").mouseout(function(){
-		$(".myrecval").hide();
-	});
-     </script>   
+   
         
         
   <?php 
@@ -1587,16 +1581,35 @@ $('.ex2').popover({
 
 
 });
-
-function sentrecomment(){
-	var recval=$('#recm_code23').val();
+$('.butrec_m').live('click',function(){
 	var recskil=$('#fetchid').val();
+	var recval=$(this).parent().prev('div').find('textarea').val();
+	if(recval!=''){
 		$.ajax({
 		type: "POST",
 		data: "content="+recval+"&user_id="+<?php  if($this->Session->read('User.uid')) echo $this->Session->read('User.uid'); else echo "nologin"  ?>+"&skill_id="+recskil,
 		url: "<?php echo BASE_URL; ?>users/sentrecomment",
 		success: function(msg){
 			$('.showing').html(msg);
+		}});
+	}else{
+		alert('Please enter the value');
+	}
+});
+
+function sentrecomment(but){
+	
+	var recskil=$('#fetchid').val();
+	var recval=$(this).attr('id');
+	alert(recval);
+		$.ajax({
+		type: "POST",
+		data: "content="+recval+"&user_id="+<?php  if($this->Session->read('User.uid')) echo $this->Session->read('User.uid'); else echo "nologin"  ?>+"&skill_id="+recskil,
+		url: "<?php echo BASE_URL; ?>users/sentrecomment",
+		success: function(msg){
+			$('.showing').html(msg);
+			//$('.myreccont').val("cxvbcxv");
+			//$('#resumebtn').load();
 		}});
 	}
 

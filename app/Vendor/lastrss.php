@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 /*
  ======================================================================
  lastRSS 0.9.1
@@ -151,6 +152,7 @@ class lastrss {
 
 			// Parse CHANNEL info
 			preg_match("'<channel.*?>(.*?)</channel>'si", $rss_content, $out_channel);
+			//pr($out_channnel); die;
 			foreach($this->channeltags as $channeltag)
 			{
 				$temp = $this->my_preg_match("'<$channeltag.*?>(.*?)</$channeltag>'si", $out_channel[1]);
