@@ -141,10 +141,6 @@ $(document).ready(function(){
 	
 
 	// edit--hover
-	/*$("#ex2").popover({
-					title: "Hello",
-					content: "Finally, I can speak!"
-				});*/
 	
 	$("#info").mouseover(function(){
 		$("#edit_in").show();
@@ -1255,7 +1251,7 @@ $("#general_settings_edit").click(function(){
                                          <?php  $i=1; foreach($recskill as $recskill) { 
 										 if(!empty($recskill['Recommentation']['skills'])) {
 										  $rec1_for_first=count(ClassRegistry::init('Recomment')->find('all',array('conditions'=>array('rid'=>$recskill['Recommentation']['rid'],'status'=>'Approved'))));?>
-                                         <a href="#" class="ex2" rel="<?php echo $recskill['Recommentation']['rid'];?>" data-placement="top">
+                                         <a href="#" class="my2" rel="<?php echo $recskill['Recommentation']['rid'];?>" data-placement="top">
                                          <button class="btn btn-info"><?php echo $recskill['Recommentation']['skills']; ?>
                                          <span class="badge badge-success" style="padding:2px; margin-left:5px;"><?php if($rec1_for_first!=0) echo $rec1_for_first; ?></span>
                                          </button></a>
@@ -1545,16 +1541,11 @@ echo $this->html->script(array('user/common','user/home_widget','user/home_portl
 
 <script>
 $(document).ready(function(){
-	
-	
-	
 	$('.ex2').click(function(){
 		$('.popover').hide();
 		})
 $('.ex2').popover({
 	html:true,
-	//title: "Hello",
-	//content: $('.showing').html()
 	content: function() {
 		var rel = $(this).attr('rel');
 		$.ajax({
@@ -1565,20 +1556,16 @@ $('.ex2').popover({
 		$('.popover').css({'top':'-240px'});
 		$('.showing').html(msg);
 		}});
-		
       return $('#ver_content').html();
     }
 	
 });
 
-
-
-
-
-
-
-
-
+$(".my").popover({
+					title: "Hello",
+					content: "Finally, I can speak!"
+				});
+	
 
 });
 $('.butrec_m').live('click',function(){
@@ -1726,8 +1713,5 @@ function changefoot(id) {
 	color:#39F;
 }
 </style>
-  
-
-	
-	 </body>
+ </body>
 </html>

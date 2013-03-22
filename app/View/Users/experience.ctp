@@ -25,8 +25,10 @@
 					<div class="options" style="overflow:hidden">
 					<h3><a class="move" href="<?php echo BASE_URL;?>pages/update_overall"><?php echo $exp['Experience']['job_title'];?></a>
 					
-					<div class="pull-right" style="width:38px; height:none; position:relative; bottom:45px;"> <a  href=""  class="pull-right thumbnail">
-					<?php if(!empty($exp['Experience']['logo']))echo $this->Html->image('users/small/'.$exp['Experience']['logo'],array('border'=>0,'width'=>'50','height'=>'50','alt'=>'Logo','class'=>'','style'=>'height:33px;width:45px;')); ?></a>
+					<div class="pull-right" style="width:38px; height:none; position:relative; bottom:45px;"> 
+					<?php if(!empty($exp['Experience']['logo'])) { ?>
+					<a  href=""  class="pull-right thumbnail">
+				   <?php echo $this->Html->image('users/small/'.$exp['Experience']['logo'],array('border'=>0,'width'=>'50','height'=>'50','alt'=>'Logo','class'=>'','style'=>'height:33px;width:45px;')); ?> </a> <?php  }?>
 					</div>
 					</h3>
 					</div>

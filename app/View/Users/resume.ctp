@@ -54,7 +54,7 @@
 														<?php }	?>
 										</div>
 									  </h3> </div>
-                                      <div class="blog_date">
+                                      <div class="blog_date" style="margin-top:1px;">
             <?php 
             	if($exp['Experience']['country'] !=''){
             $coun=ClassRegistry::init('Country')->find('first',array('conditions'=>array('iso_code2'=>$exp['Experience']['country'])));
@@ -349,6 +349,7 @@
 															<tr>
 															  <td><object height="20" width="200" data="<?php echo $this->Html->webroot('player_mp3_maxi.swf'); ?>" type="application/x-shockwave-flash">
 																  <param value="<?php echo $this->Html->webroot('player_mp3_maxi.swf'); ?>" name="movie">
+                                                                    <param value="transparent" name="wmode">
 																  <param value="mp3=<?php echo $this->Html->webroot('files/portfolio-audios/'.$portfolios['Portfolio']['audio'].''); ?>&amp;showstop=1&amp;showvolume=1&amp;bgcolor1=ffa50b&amp;bgcolor2=d07600" name="FlashVars">
 																</object>
 																<?php 	

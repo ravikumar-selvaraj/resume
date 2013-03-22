@@ -659,11 +659,12 @@ class UsersController extends AppController {
 	{
 	       if(!empty($this->request->data)){
 			  // pr($this->request->data);exit;
-			$resp = implode(',',$this->request->data['resp']);
+			        $resp = implode(',',$this->request->data['resp']);
 					$this->request->data['uid'] = $this->Session->read('User.uid');
 					$this->request->data['key'] = $this->str_rand();
 					$this->request->data['responsibility'] = $resp;
 					$this->Experience->save($this->request->data);
+					
 					$this->User->updateAll(array('modified_date'=>"'".date('Y-m-d H:i:s')."'"),array('uid'=>$this->Session->read('User.uid')));
 					$this->Session->write(array('submenu'=>'content'));
 				 $this->Session->write(array('addcontentsubmenus'=>'essential'));

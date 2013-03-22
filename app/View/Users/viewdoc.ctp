@@ -10,7 +10,6 @@ $htm='
 }
 .abttd
 {
-	height:60px;
 }
 .abtme
 {
@@ -25,6 +24,7 @@ $htm='
 	color:#000;
 	font-size:16px;
 	font-family:arial;
+	
 }
 .jobcon
 {
@@ -56,13 +56,13 @@ th
 }
 </style>';
  $htm.='
- <table width="100%" cellpadding="0" cellspacing="5" border="none"   > 
- <tr><td colspan="5" class="name"><p>'.Configure::read('userpage').'</p></td></tr>
+ <table width="70%" cellpadding="0" cellspacing="0" border="1" align="center"   > 
+ <tr><td colspan="5" class="name" align="center"><p>'.Configure::read('userpage').'</p></td></tr>
  
 <!--About me-->
 <tr style="height:60px;">
 <td colspan="5" align="center" class="abttd">
-<table width="100%" cellpadding="3" cellspacing="3" align="center" border="none">
+<table width="100%" cellpadding="0" cellspacing="0" align="center" border="none">
 <tr><td class="abtme"><p style="background-color:#e8e8e8;">About Me</p></td></tr>
 <tr><td class="abtmecon"><p class="jobcon"  align="left" style="text-indent:5px;">'.$new['User']['about_me'].'</p></td></tr>
 </table>
@@ -73,16 +73,16 @@ th
 
 <tr>
 <td colspan="5" align="right" class="abttd">
-<table width="100%" cellpadding="3" cellspacing="3"   align="center">
+<table width="100%" cellpadding="0" cellspacing="0"   align="center">
 <tr><td class="abtme"><p style="background-color:#e8e8e8;">Education Information</p></td></tr><br>
 <tr><td class="abtmecon" valign="middle" style="padding:10px">
-<table cellpadding="0" cellspacing="0"  style="" width="90%" align="center" >
+<table cellpadding="0" cellspacing="0"  style="border:1px solid #ccc" width="90%" align="center" >
 <tr>	
-<th>No</th>
-<th>Course</th>
-<th>Organization</th>
-<th>Start date</th>
-<th>End date</th>
+<th align="center">No</th>
+<th align="center">Course</th>
+<th align="center">Organization</th>
+<th align="center">Start date</th>
+<th align="center">End date</th>
 </tr>';
 if(empty($edu))
 {
@@ -92,12 +92,12 @@ else{
 
 $i=1; foreach($edu as $edu):
 $htm.='<tr>
-<td>'.$i.'</td>
-<td>'.$edu['Education']['course'].'</td>
-<td>'.$edu['Education']['organization'].'</td>
-<td>'.$edu['Education']['start_date'].'</td>
-<td>'.$edu['Education']['end_date'].'</td>
-</tr>'; $i++; endforeach; }
+<td align="center">'.$i.'</td>
+<td align="center">'.$edu['Education']['course'].'</td>
+<td align="center">'.$edu['Education']['organization'].'</td>
+<td align="center">'.$edu['Education']['start_date'].'</td>
+<td align="center">'.$edu['Education']['end_date'].'</td>
+</tr align="center">'; $i++; endforeach; }
 $htm.='</table>
 </td></tr>
 </table>
@@ -109,8 +109,8 @@ $htm.='</table>
 
 $htm.='<tr>
 <td colspan="5" align="right" class="abttd">
-<table width="100%" cellpadding="3" cellspacing="3"  align="center">
-<tr><td class="abtme"><p style="background-color:#e8e8e8;">Work Experience</p></td></tr>';
+<table width="100%" cellpadding="5" cellspacing="0"  align="center">
+<tr><td class="abtme"><p style="background-color:#e8e8e8;height:90px;">Work Experience</p></td></tr>';
 if(empty($exp))
 {
 	echo'<tr><th colspan="4">No Records Found</th></tr>';
@@ -131,7 +131,7 @@ $htm.='<tr>
             $k=1;
             foreach($sp as $sp1):
 			if(!empty($sp1)){
-            $htm.='<li class="abtmecon">'.$sp1.'</li>';
+            $htm.='<li class="abtmecon" style="font-size:14px;text-indent:5px;">'.$sp1.'</li>';
             $k++; } endforeach;
             $htm.='</ul>';
            if(!empty( $exp['Experience']['comapny_desc'])){
@@ -160,11 +160,11 @@ $htm.='</table>
 
 $htm.='<tr>
 <td colspan="5" align="right" class="abttd">
-<table width="100%" cellpadding="3" cellspacing="3"  align="center">
+<table width="100%" cellpadding="5" cellspacing="0"  align="center">
 <tr><td class="abtme"><p style="background-color:#e8e8e8;">Skill Information</p></td></tr>
 <tr><td class="abtmecon" width="50%">
 
-                    <p class="abtmecon" align="left">Skills : </p>';
+                    ';
                    
                     if(empty($skill))
 						{
@@ -192,11 +192,11 @@ $htm.='<tr>
 
  $htm.='<tr>
 <td colspan="5" align="right" class="abttd">
-<table width="100%" cellpadding="3" cellspacing="3"  border="0"   align="center">
+<table width="100%" cellpadding="5" cellspacing="0"  border="0"   align="center">
 <tr><td class="abtme"><p style="background-color:#e8e8e8;">Interest</p></td></tr>
 <tr><td class="abtmecon" width="50%">
 
-                        <p class="abtmecon" align="left">Interest : </p>
+                        
                         ';
                         if(empty($int))
 							{

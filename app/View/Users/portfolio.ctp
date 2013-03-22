@@ -95,8 +95,8 @@
 										  
 										  		<table cellpadding="0" cellspacing="5" width="100%">
 															<tr>
-															  <td><object height="20" width="200" data="<?php echo $this->Html->webroot('player_mp3_maxi.swf'); ?>" type="application/x-shockwave-flash">
-																  <param value="<?php echo $this->Html->webroot('player_mp3_maxi.swf'); ?>" name="movie">
+															  <td><object height="20" width="200" data="<?php echo $this->Html->webroot('player_mp3_maxi.swf'); ?>" type="application/x-shockwave-flash"> <param value="<?php echo $this->Html->webroot('player_mp3_maxi.swf'); ?>" name="movie">
+                                                                  <param value="transparent" name="wmode">
 																  <param value="mp3=<?php echo $this->Html->webroot('files/portfolio-audios/'.$portfolios['Portfolio']['audio'].''); ?>&amp;showstop=1&amp;showvolume=1&amp;bgcolor1=ffa50b&amp;bgcolor2=d07600" name="FlashVars">
 																</object>
 																<?php 	
